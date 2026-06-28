@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Закачалката — Админ вход</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+    <script src="../js/config.js"></script>
+    <script src="../js/supabase-client.js"></script>
+
+    <style>
+        *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+        :root {
+            --bg: #FAF7F4; --white:#FFFFFF; --border:#EDE2D8; --text:#2C2420;
+            --muted:#8B5E52; --mulberry:#89CECA; --serif:'Cormorant Garamond', serif; --sans:'Inter', sans-serif;
+        }
+        body {
+            font-family: var(--sans);
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .login-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 2.6rem 2.4rem;
+            width: 100%;
+            max-width: 380px;
+        }
+        h1 {
+            font-family: var(--serif);
+            font-size: 1.9rem;
+            margin-bottom: 0.3rem;
+            text-align: center;
+        }
+        .sub { font-size: 0.85rem; color: var(--muted); text-align: center; margin-bottom: 1.8rem; }
+        label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); display:block; margin-bottom: 0.4rem; }
+        .field { margin-bottom: 1.1rem; }
+        input {
+            width: 100%;
+            padding: 0.7rem 0.85rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-family: inherit;
+        }
+        input:focus { outline: none; border-color: var(--mulberry); }
+        button {
+            width: 100%;
+            padding: 0.8rem;
+            background: var(--mulberry);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 0.4rem;
+            transition: opacity 0.2s;
+        }
+        button:hover { opacity: 0.9; }
+        button:disabled { opacity: 0.6; cursor: default; }
+        .error-msg {
+            background: #FBEAEA; color: #B23A3A; font-size: 0.85rem;
+            padding: 0.7rem 0.9rem; border-radius: 6px; margin-bottom: 1rem; display: none;
+        }
+        .back-link { display:block; text-align:center; margin-top: 1.4rem; font-size: 0.8rem; color: var(--muted); text-decoration:none; }
+    </style>
+</head>
+<body>
+
+    <div class="login-card">
+        <h1>Закачалката</h1>
+        <p class="sub">Админ панел — вход само за собственика</p>
+
+        <div class="error-msg" id="errorMsg"></div>
+
+        <form id="loginForm">
+            <div class="field">
+                <label for="email">Имейл</label>
+                <input type="email" id="email" required autocomplete="username" />
+            </div>
+            <div class="field">
+                <label for="password">Парола</label>
+                <input type="password" id="password" required autocomplete="current-password" />
+            </div>
+            <button type="submit" id="submitBtn">Вход</button>
+        </form>
+
+        <a href="../store.html" class="back-link">← Обратно към магазина</a>
+    </div>
+
+    <script>
+        const form = document.getElementById('loginForm');
+        const errorMsg = document.getElementById('errorMsg');
+        const submitBtn = document.getElementById('submitBtn');
+
+        async function redirectIfLoggedIn() {
+            const { data } = await window.db.auth.getSession();
+            if (data.session) window.location.href = 'dashboard.html';
+        }
+        redirectIfLoggedIn();
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            errorMsg.style.display = 'none';
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Влизане…';
+
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+
+            const { error } = await window.db.auth.signInWithPassword({ email, password });
+
+            if (error) {
+                errorMsg.textContent = 'Грешен имейл или парола.';
+                errorMsg.style.display = 'block';
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Вход';
+                return;
+            }
+
+            window.location.href = 'dashboard.html';
+        });
+    </script>
+
+</body>
+</html>

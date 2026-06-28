@@ -1,0 +1,13 @@
+{
+  "name": "zakachalkata-store",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Second-hand designer store — static catalog + Supabase backend + Vercel serverless order email.",
+  "scripts": {
+    "dev": "npx serve ."
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.0"
+  }
+}
+

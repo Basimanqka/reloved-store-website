@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Закачалката — Админ панел</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+    <script src="../js/config.js"></script>
+    <script src="../js/supabase-client.js"></script>
+
+    <style>
+        *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+        :root {
+            --bg:#FAF7F4; --white:#FFFFFF; --border:#EDE2D8; --text:#2C2420;
+            --muted:#8B5E52; --faint:#C9B4AB; --mulberry:#89CECA; --accent:#AA5878;
+            --serif:'Cormorant Garamond', serif; --sans:'Inter', sans-serif;
+        }
+        body { font-family: var(--sans); background: var(--bg); color: var(--text); }
+        a { text-decoration:none; color:inherit; }
+        button { font-family: inherit; cursor: pointer; }
+        input, select, textarea { font-family: inherit; }
+
+        .topbar {
+            background: var(--white);
+            border-bottom: 1px solid var(--border);
+            padding: 1.1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .topbar h1 { font-family: var(--serif); font-size: 1.5rem; font-weight: 500; }
+        .topbar-right { display:flex; align-items:center; gap:1rem; font-size: 0.85rem; color: var(--muted); }
+        .btn {
+            padding: 0.55rem 1.1rem;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            background: var(--white);
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        .btn:hover { border-color: var(--mulberry); color: var(--mulberry); }
+        .btn-primary { background: var(--mulberry); color: white; border: none; }
+        .btn-primary:hover { opacity: 0.9; color: white; }
+        .btn-danger { color: #B23A3A; }
+        .btn-danger:hover { border-color: #B23A3A; color: #B23A3A; }
+        .btn-small { padding: 0.35rem 0.7rem; font-size: 0.78rem; }
+
+        .container { max-width: 1300px; margin: 0 auto; padding: 2rem; }
+
+        .tabs { display: flex; gap: 0.5rem; margin-bottom: 1.6rem; }
+        .tab-btn {
+            padding: 0.6rem 1.3rem;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            background: var(--white);
+            font-size: 0.88rem;
+        }
+        .tab-btn.active { background: var(--mulberry); color: white; border-color: var(--mulberry); }
+
+        .panel { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 1.6rem; margin-bottom: 1.6rem; }
+        .panel-header { display:flex; align-items:center; justify-content: space-between; margin-bottom: 1.2rem; }
+        .panel-header h2 { font-family: var(--serif); font-size: 1.3rem; font-weight: 500; }
+
+        table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+        th { text-align: left; padding: 0.6rem 0.7rem; border-bottom: 2px solid var(--border); color: var(--muted); font-weight: 500; }
+        td { padding: 0.7rem; border-bottom: 1px solid var(--border); vertical-align: middle; }
+        tr:last-child td { border-bottom: none; }
+        .thumb-sm { width: 46px; height: 46px; object-fit: cover; border-radius: 6px; background: var(--bg); }
+        .price-old { text-decoration: line-through; color: var(--faint); font-size: 0.8rem; margin-left: 0.3rem; }
+        .status-pill {
+            display:inline-block; padding: 0.2rem 0.6rem; border-radius: 99px; font-size: 0.75rem;
+        }
+        .status-available { background: rgba(137,206,202,0.15); color: #4C8B86; }
+        .status-sold { background: rgba(44,36,32,0.08); color: var(--muted); }
+        .row-actions { display:flex; gap: 0.4rem; flex-wrap: wrap; }
+
+        /* form */
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .form-grid .full { grid-column: 1 / -1; }
+        .field label { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.4px; color: var(--muted); display:block; margin-bottom: 0.35rem; }
+        .field input, .field select, .field textarea {
+            width: 100%; padding: 0.6rem 0.75rem; border: 1px solid var(--border); border-radius: 6px; font-size: 0.9rem;
+        }
+        .field textarea { resize: vertical; min-height: 70px; }
+        .field-hint { font-size: 0.72rem; color: var(--faint); margin-top: 0.3rem; }
+        .existing-images { display:flex; gap:0.5rem; margin-top: 0.5rem; flex-wrap: wrap; }
+        .existing-images img { width: 56px; height: 56px; object-fit: cover; border-radius: 6px; }
+        .form-actions { display:flex; gap:0.7rem; margin-top: 1.4rem; }
+
+        .checkbox-field { display:flex; align-items:center; gap:0.7rem; padding-top:1.6rem; }
+        .checkbox-field input[type="checkbox"] { width:16px; height:16px; accent-color:var(--accent); cursor:pointer; flex-shrink:0; }
+        .checkbox-field label { text-transform:none; letter-spacing:0; font-size:0.9rem; cursor:pointer; color:var(--text); }
+
+        .empty-msg, .loading-msg { text-align:center; padding: 2.5rem; color: var(--muted); font-size: 0.9rem; }
+        .toast {
+            position: fixed; bottom: 1.5rem; right: 1.5rem; background: var(--text); color: white;
+            padding: 0.8rem 1.2rem; border-radius: 8px; font-size: 0.85rem; opacity: 0; transform: translateY(10px);
+            transition: all 0.3s; pointer-events: none; z-index: 999;
+        }
+        .toast.show { opacity: 1; transform: translateY(0); }
+        .toast.error { background: #B23A3A; }
+
+        @media (max-width: 720px) {
+            .form-grid { grid-template-columns: 1fr; }
+            .container { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="topbar">
+        <h1>Закачалката — Админ</h1>
+        <div class="topbar-right">
+            <span id="userEmail"></span>
+            <button class="btn" onclick="logout()">Изход</button>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <div class="tabs">
+            <button class="tab-btn active" id="tabProductsBtn" onclick="switchTab('products')">Продукти</button>
+            <button class="tab-btn" id="tabOrdersBtn" onclick="switchTab('orders')">Поръчки</button>
+        </div>
+
+        <!-- PRODUCTS TAB -->
+        <div id="productsTab">
+
+            <div class="panel" id="productFormPanel" style="display:none;">
+                <div class="panel-header">
+                    <h2 id="formTitle">Нов продукт</h2>
+                    <button class="btn btn-small" onclick="closeProductForm()">Затвори</button>
+                </div>
+
+                <form id="productForm">
+                    <input type="hidden" id="productId" />
+                    <div class="form-grid">
+                        <div class="field"><label>Марка *</label><input type="text" id="f_brand" required /></div>
+                        <div class="field"><label>Название *</label><input type="text" id="f_name" required /></div>
+
+                        <div class="field">
+                            <label>Категория *</label>
+                            <select id="f_category" required>
+                                <option value="jackets">Якета</option>
+                                <option value="dresses">Рокли</option>
+                                <option value="tops">Блузи</option>
+                                <option value="jeans">Дънки</option>
+                                <option value="shoes">Обувки</option>
+                                <option value="accessories">Аксесоари</option>
+                                <option value="bags">Чанти</option>
+                                <option value="knitwear">Плетива</option>
+                                <option value="skirts">Поли</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label>Състояние</label>
+                            <select id="f_condition">
+                                <option value="Отлично">Отлично</option>
+                                <option value="Много добро">Много добро</option>
+                                <option value="Добро">Добро</option>
+                            </select>
+                        </div>
+
+                        <div class="field"><label>Текуща цена (лв) *</label><input type="number" step="0.01" min="0" id="f_price" required /></div>
+                        <div class="field"><label>Оригинална цена (лв)</label><input type="number" step="0.01" min="0" id="f_original_price" placeholder="Преди намалението" /></div>
+
+                        <div class="field"><label>Тагове (разделени със запетая)</label><input type="text" id="f_tags" placeholder="винтидж, официален, есен" /></div>
+                        <div class="checkbox-field">
+                            <input type="checkbox" id="f_is_sold" />
+                            <label for="f_is_sold">Маркирай като Продадено</label>
+                        </div>
+
+                        <div class="field full"><label>Описание</label><textarea id="f_description"></textarea></div>
+
+                        <div class="field full">
+                            <label>Снимки</label>
+                            <input type="file" id="f_images" accept="image/*" multiple />
+                            <p class="field-hint">Изберете няколко снимки. Първата ще е основната снимка в каталога.</p>
+                            <div class="existing-images" id="existingImages"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary" id="saveProductBtn">Запази продукта</button>
+                        <button type="button" class="btn" onclick="closeProductForm()">Отказ</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="panel">
+                <div class="panel-header">
+                    <h2>Всички продукти</h2>
+                    <button class="btn btn-primary" onclick="openProductForm()">+ Нов продукт</button>
+                </div>
+                <div id="productsTableWrap"><p class="loading-msg">Зареждане...</p></div>
+            </div>
+        </div>
+
+        <!-- ORDERS TAB -->
+        <div id="ordersTab" style="display:none;">
+            <div class="panel">
+                <div class="panel-header"><h2>Поръчки</h2></div>
+                <div id="ordersTableWrap"><p class="loading-msg">Зареждане...</p></div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        const BUCKET = 'product-images';
+        let editingProductId = null;
+        let allProducts = [];
+
+        /* auth */
+        async function requireAuth() {
+            const { data } = await window.db.auth.getSession();
+            if (!data.session) {
+                window.location.href = 'login.html';
+                return;
+            }
+            document.getElementById('userEmail').textContent = data.session.user.email;
+        }
+
+        async function logout() {
+            await window.db.auth.signOut();
+            window.location.href = 'login.html';
+        }
+
+        /* tabs */
+        function switchTab(tab) {
+            document.getElementById('productsTab').style.display = tab === 'products' ? 'block' : 'none';
+            document.getElementById('ordersTab').style.display   = tab === 'orders'   ? 'block' : 'none';
+            document.getElementById('tabProductsBtn').classList.toggle('active', tab === 'products');
+            document.getElementById('tabOrdersBtn').classList.toggle('active', tab === 'orders');
+            if (tab === 'orders') loadOrders();
+        }
+
+        /* toast */
+        function toast(msg, isError) {
+            const el = document.getElementById('toast');
+            el.textContent = msg;
+            el.className = 'toast show' + (isError ? ' error' : '');
+            setTimeout(() => el.classList.remove('show'), 3200);
+        }
+
+        /* products: load + render */
+        async function loadProducts() {
+            const wrap = document.getElementById('productsTableWrap');
+            const { data, error } = await window.db.from('products').select('*').order('created_at', { ascending: false });
+            if (error) {
+                wrap.innerHTML = '<p class="empty-msg">Грешка при зареждане: ' + escapeHtml(error.message) + '</p>';
+                return;
+            }
+            allProducts = data || [];
+            renderProductsTable();
+        }
+
+        function renderProductsTable() {
+            const wrap = document.getElementById('productsTableWrap');
+            if (!allProducts.length) {
+                wrap.innerHTML = '<p class="empty-msg">Все още няма продукти. Натиснете "+ Нов продукт".</p>';
+                return;
+            }
+
+            const rows = allProducts.map(p => {
+                const imgs = Array.isArray(p.image_urls) ? p.image_urls : [];
+                const img  = imgs[0] || '';
+                const priceHtml = (p.original_price != null && Number(p.original_price) > Number(p.price))
+                    ? p.price + ' лв <span class="price-old">' + p.original_price + ' лв</span>'
+                    : p.price + ' лв';
+                const statusLabel = p.is_sold ? 'Продаден' : 'Активен';
+                const statusClass = p.is_sold ? 'status-sold' : 'status-available';
+                return '<tr>' +
+                    '<td>' + (img ? '<img class="thumb-sm" src="' + escapeHtml(img) + '" />' : '') + '</td>' +
+                    '<td><strong>' + escapeHtml(p.brand || '') + '</strong><br><span style="color:var(--muted)">' + escapeHtml(p.name || '') + '</span></td>' +
+                    '<td>' + escapeHtml(p.category || '') + '</td>' +
+                    '<td>' + priceHtml + '</td>' +
+                    '<td><span class="status-pill ' + statusClass + '">' + statusLabel + '</span></td>' +
+                    '<td><div class="row-actions">' +
+                        '<button class="btn btn-small" onclick="openProductForm(\'' + p.id + '\')">Редактирай</button>' +
+                        '<button class="btn btn-small btn-danger" onclick="deleteProduct(\'' + p.id + '\')">Изтрий</button>' +
+                    '</div></td>' +
+                    '</tr>';
+            }).join('');
+
+            wrap.innerHTML =
+                '<table>' +
+                    '<thead><tr><th></th><th>Продукт</th><th>Категория</th><th>Цена</th><th>Статус</th><th>Действия</th></tr></thead>' +
+                    '<tbody>' + rows + '</tbody>' +
+                '</table>';
+        }
+
+        function escapeHtml(str) {
+            return String(str ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+        }
+
+        /* product form open/close */
+        function openProductForm(id) {
+            editingProductId = id || null;
+            const panel = document.getElementById('productFormPanel');
+            document.getElementById('productForm').reset();
+            document.getElementById('existingImages').innerHTML = '';
+            document.getElementById('formTitle').textContent = id ? 'Редактирай продукт' : 'Нов продукт';
+            document.getElementById('f_is_sold').checked = false;
+
+            if (id) {
+                const p = allProducts.find(x => x.id === id);
+                if (p) {
+                    document.getElementById('f_brand').value          = p.brand || '';
+                    document.getElementById('f_name').value           = p.name  || '';
+                    document.getElementById('f_category').value       = p.category || 'jackets';
+                    document.getElementById('f_condition').value      = p.condition || 'Отлично';
+                    document.getElementById('f_price').value          = p.price ?? '';
+                    document.getElementById('f_original_price').value = p.original_price ?? '';
+                    document.getElementById('f_tags').value           = (p.tags || []).join(', ');
+                    document.getElementById('f_is_sold').checked      = !!p.is_sold;
+                    document.getElementById('f_description').value    = p.description || '';
+
+                    const imgsWrap = document.getElementById('existingImages');
+                    (p.image_urls || []).forEach(url => {
+                        const img = document.createElement('img');
+                        img.src = url;
+                        imgsWrap.appendChild(img);
+                    });
+                }
+            }
+
+            panel.style.display = 'block';
+            panel.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function closeProductForm() {
+            document.getElementById('productFormPanel').style.display = 'none';
+            editingProductId = null;
+        }
+
+        /* save */
+        document.getElementById('productForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('saveProductBtn');
+            btn.disabled = true;
+            btn.textContent = 'Запазване...';
+
+            try {
+                const tags = document.getElementById('f_tags').value
+                    .split(',').map(t => t.trim()).filter(Boolean);
+
+                const originalPriceVal = document.getElementById('f_original_price').value;
+
+                const payload = {
+                    brand:          document.getElementById('f_brand').value.trim(),
+                    name:           document.getElementById('f_name').value.trim(),
+                    category:       document.getElementById('f_category').value,
+                    condition:      document.getElementById('f_condition').value,
+                    price:          parseFloat(document.getElementById('f_price').value),
+                    original_price: originalPriceVal ? parseFloat(originalPriceVal) : null,
+                    tags,
+                    is_sold:        document.getElementById('f_is_sold').checked,
+                    description:    document.getElementById('f_description').value.trim() || null,
+                };
+
+                let productId = editingProductId;
+
+                if (productId) {
+                    const { error } = await window.db.from('products').update(payload).eq('id', productId);
+                    if (error) throw error;
+                } else {
+                    const { data, error } = await window.db.from('products').insert(payload).select().single();
+                    if (error) throw error;
+                    productId = data.id;
+                }
+
+                /* upload any new images and append to image_urls */
+                const fileInput = document.getElementById('f_images');
+                if (fileInput.files.length) {
+                    const newUrls = await uploadImages(productId, fileInput.files);
+                    const existing = editingProductId
+                        ? (allProducts.find(p => p.id === productId)?.image_urls || [])
+                        : [];
+                    const { error: imgErr } = await window.db
+                        .from('products')
+                        .update({ image_urls: [...existing, ...newUrls] })
+                        .eq('id', productId);
+                    if (imgErr) throw imgErr;
+                }
+
+                toast(editingProductId ? 'Продуктът е обновен.' : 'Продуктът е добавен.');
+                closeProductForm();
+                await loadProducts();
+            } catch (err) {
+                console.error(err);
+                toast('Грешка: ' + err.message, true);
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Запази продукта';
+            }
+        });
+
+        async function uploadImages(productId, files) {
+            const urls = [];
+            for (const file of Array.from(files)) {
+                const safeName = file.name.replace(/[^a-zA-Z0-9.\-_]/g, '_');
+                const path = productId + '/' + Date.now() + '-' + safeName;
+                const { error } = await window.db.storage.from(BUCKET).upload(path, file, { upsert: false });
+                if (error) throw error;
+                const { data } = window.db.storage.from(BUCKET).getPublicUrl(path);
+                urls.push(data.publicUrl);
+            }
+            return urls;
+        }
+
+        async function deleteProduct(id) {
+            if (!confirm('Сигурни ли сте, че искате да изтриете този продукт?')) return;
+            const { error } = await window.db.from('products').delete().eq('id', id);
+            if (error) { toast('Грешка: ' + error.message, true); return; }
+            toast('Продуктът е изтрит.');
+            await loadProducts();
+        }
+
+        /* orders */
+        async function loadOrders() {
+            const wrap = document.getElementById('ordersTableWrap');
+            const { data, error } = await window.db.from('orders').select('*').order('created_at', { ascending: false });
+            if (error) {
+                wrap.innerHTML = '<p class="empty-msg">Грешка при зареждане: ' + escapeHtml(error.message) + '</p>';
+                return;
+            }
+            if (!data || !data.length) {
+                wrap.innerHTML = '<p class="empty-msg">Все още няма поръчки.</p>';
+                return;
+            }
+
+            const rows = data.map(o => {
+                const snap = o.product_snapshot || {};
+                const date = new Date(o.created_at).toLocaleString('bg-BG');
+                return '<tr>' +
+                    '<td style="white-space:nowrap;">' + date + '</td>' +
+                    '<td>' + escapeHtml((snap.brand || '') + ' ' + (snap.name || '')) + '</td>' +
+                    '<td>' + escapeHtml(o.full_name || '') + '<br><span style="color:var(--muted)">' + escapeHtml(o.email || '') + '</span></td>' +
+                    '<td>' + escapeHtml((o.street || '') + ', ' + (o.city || '') + ' ' + (o.postcode || '')) + '</td>' +
+                    '<td>' + escapeHtml(o.notes || '') + '</td>' +
+                    '<td><select onchange="updateOrderStatus(\'' + o.id + '\', this.value)">' +
+                        ['new','contacted','confirmed','cancelled'].map(s =>
+                            '<option value="' + s + '"' + (o.status === s ? ' selected' : '') + '>' + orderStatusLabel(s) + '</option>'
+                        ).join('') +
+                    '</select></td>' +
+                    '</tr>';
+            }).join('');
+
+            wrap.innerHTML =
+                '<table>' +
+                    '<thead><tr><th>Дата</th><th>Продукт</th><th>Клиент</th><th>Адрес</th><th>Бележки</th><th>Статус</th></tr></thead>' +
+                    '<tbody>' + rows + '</tbody>' +
+                '</table>';
+        }
+
+        function orderStatusLabel(s) {
+            return { new: 'Нова', contacted: 'Свързахме се', confirmed: 'Потвърдена', cancelled: 'Отказана' }[s] || s;
+        }
+
+        async function updateOrderStatus(id, status) {
+            const { error } = await window.db.from('orders').update({ status }).eq('id', id);
+            if (error) { toast('Грешка: ' + error.message, true); return; }
+            toast('Статусът е обновен.');
+        }
+
+        /* init */
+        (async function init() {
+            await requireAuth();
+            await loadProducts();
+        })();
+    </script>
+
+</body>
+</html>

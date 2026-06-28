@@ -1,0 +1,9 @@
+node_modules/
+.vercel/
+.env
+.env.local
+*.log
+.DS_Store
+.claude/
+scratch1.txt
+*.testwrite

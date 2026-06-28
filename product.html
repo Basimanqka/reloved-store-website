@@ -1,0 +1,1504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Закачалката — Продукт</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+
+        /* ========================= */
+        /* RESET & BASE */
+        /* ========================= */
+
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg:          #FAF7F4;
+            --white:       #FFFFFF;
+            --border:      #EDE2D8;
+            --text:        #2C2420;
+            --muted:        #8B5E52;
+            --accent:      #89CECA;
+            --accent-dark: #5BA8A0;
+            --gold:        #C9998A;
+            --gold-light:  #F2EBE3;
+            --bg-card:      #F2EBE3;
+            --rose:         #C9998A;
+            --rose-dark:    #8B5E52;
+            --mulberry:     #AA5878;
+            --mulberry-light: #F5E6EC;
+            --serif:       'Cormorant Garamond', serif;
+            --sans:        'Inter', sans-serif;
+            --transition:  0.3s ease;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--sans);
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        img { width: 100%; display: block; }
+        ul  { list-style: none; }
+        a   { text-decoration: none; color: inherit; }
+
+        button, select, input, textarea {
+            font-family: inherit;
+        }
+
+
+        /* ========================= */
+        /* NAVBAR */
+        /* ========================= */
+
+        .navbar {
+            width: 100%;
+            background-color: var(--white);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.4rem 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo a {
+            display: flex;
+            align-items: center;
+            line-height: 1;
+        }
+
+        .nav-links ul {
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        .nav-links a {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 0;
+            height: 1px;
+            background-color: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after { width: 100%; }
+
+        .nav-icons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-icons button {
+            border: none;
+            background: transparent;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .nav-icons button:hover { color: var(--rose-dark); }
+
+
+        /* ========================= */
+        /* PAGE HEADER / BREADCRUMB */
+        /* ========================= */
+
+        .page-header {
+            padding: 2.5rem 3rem 1.5rem;
+        }
+
+        .page-header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .breadcrumb {
+            font-size: 0.82rem;
+            color: var(--muted);
+            letter-spacing: 0.5px;
+        }
+
+        .breadcrumb a {
+            transition: color 0.2s;
+        }
+
+        .breadcrumb a:hover {
+            color: var(--mulberry);
+        }
+
+        .breadcrumb span {
+            margin: 0 0.5rem;
+            opacity: 0.5;
+        }
+
+
+        /* ========================= */
+        /* PRODUCT LAYOUT */
+        /* ========================= */
+
+        .product-layout {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 3rem 6rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: start;
+        }
+
+
+        /* ========================= */
+        /* IMAGE GALLERY */
+        /* ========================= */
+
+        .gallery {
+            position: sticky;
+            top: 100px;
+        }
+
+        .main-image-wrapper {
+            background-color: var(--bg-card);
+            overflow: hidden;
+            margin-bottom: 1.2rem;
+        }
+
+        .main-image-wrapper img {
+            width: 100%;
+            height: 580px;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .main-image-wrapper:hover img {
+            transform: scale(1.03);
+        }
+
+        .thumbnails {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.8rem;
+        }
+
+        .thumb {
+            background: var(--bg-card);
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: border-color 0.2s ease;
+        }
+
+        .thumb.active {
+            border-color: var(--accent);
+        }
+
+        .thumb img {
+            width: 100%;
+            height: 110px;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .thumb:hover img {
+            transform: scale(1.06);
+        }
+
+
+        /* ========================= */
+        /* PRODUCT INFO */
+        /* ========================= */
+
+        .product-info {
+            padding-top: 0.5rem;
+        }
+
+        .product-brand-tag {
+            display: inline-block;
+            font-size: 0.72rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--mulberry);
+            border: 1px solid var(--mulberry);
+            padding: 0.3rem 0.9rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .product-name {
+            font-family: var(--serif);
+            font-size: 3rem;
+            font-weight: 400;
+            line-height: 1.15;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.5px;
+        }
+
+        .product-name em {
+            font-style: italic;
+            color: var(--mulberry);
+        }
+
+        .product-meta-line {
+            font-size: 0.88rem;
+            color: var(--muted);
+            letter-spacing: 0.5px;
+            margin-bottom: 1.8rem;
+        }
+
+        .product-price-block {
+            display: flex;
+            align-items: baseline;
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .price-current {
+            font-family: var(--serif);
+            font-size: 2.4rem;
+            font-weight: 500;
+            color: var(--text);
+            letter-spacing: -0.5px;
+        }
+
+        .price-badge {
+            font-size: 0.75rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            background-color: var(--gold-light);
+            color: var(--gold);
+            padding: 0.3rem 0.8rem;
+            border: 1px solid rgba(201,153,138,0.35);
+        }
+
+
+        /* ========================= */
+        /* DESCRIPTION */
+        /* ========================= */
+
+        .product-description {
+            margin-bottom: 2.5rem;
+            padding-bottom: 2.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .product-description p {
+            font-size: 0.93rem;
+            color: #7A6560;
+            line-height: 1.85;
+        }
+
+        .product-description p + p {
+            margin-top: 0.9rem;
+        }
+
+
+        /* ========================= */
+        /* ACCORDION / DROPDOWNS */
+        /* ========================= */
+
+        .accordion {
+            margin-bottom: 2.5rem;
+        }
+
+        .accordion-item {
+            border-bottom: 1px solid var(--border);
+        }
+
+        .accordion-trigger {
+            width: 100%;
+            background: none;
+            border: none;
+            padding: 1.1rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .accordion-trigger-label {
+            font-size: 0.8rem;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--text);
+        }
+
+        .accordion-icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease;
+            color: var(--muted);
+        }
+
+        .accordion-icon::before {
+            content: '+';
+            font-size: 1.2rem;
+            font-weight: 300;
+            line-height: 1;
+        }
+
+        .accordion-item.open .accordion-icon {
+            transform: rotate(45deg);
+        }
+
+        .accordion-body {
+            overflow: hidden;
+            max-height: 0;
+            transition: max-height 0.4s ease;
+        }
+
+        .accordion-item.open .accordion-body {
+            max-height: 200px;
+        }
+
+        .accordion-content {
+            padding: 0.2rem 0 1.5rem;
+        }
+
+        .tag-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tag {
+            font-size: 0.75rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding: 0.35rem 0.9rem;
+            border: 1px solid var(--border);
+            color: var(--muted);
+            background: var(--white);
+            transition: all 0.2s ease;
+            cursor: default;
+        }
+
+        .tag:hover {
+            border-color: var(--mulberry);
+            color: var(--mulberry);
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            padding: 0.4rem 0;
+        }
+
+        .detail-row .detail-label {
+            color: var(--muted);
+            font-size: 0.83rem;
+        }
+
+        .detail-row .detail-value {
+            font-weight: 500;
+            color: var(--text);
+        }
+
+
+        /* ========================= */
+        /* BUY NOW BUTTON */
+        /* ========================= */
+
+        .buy-btn {
+            width: 100%;
+            padding: 1.2rem 2rem;
+            background-color: var(--text);
+            color: var(--white);
+            border: none;
+            font-size: 0.82rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background-color 0.3s ease, letter-spacing 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.7rem;
+        }
+
+        .buy-btn:hover {
+            background-color: var(--mulberry);
+            letter-spacing: 4px;
+        }
+
+        .buy-btn-arrow {
+            font-size: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .buy-btn:hover .buy-btn-arrow {
+            transform: translateX(4px);
+        }
+
+        .wishlist-line {
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .wishlist-link {
+            background: none;
+            border: none;
+            font-size: 0.8rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--muted);
+            cursor: pointer;
+            text-decoration: underline;
+            text-decoration-color: transparent;
+            text-underline-offset: 3px;
+            transition: all 0.2s ease;
+        }
+
+        .wishlist-link:hover {
+            color: var(--mulberry);
+            text-decoration-color: var(--mulberry);
+        }
+
+
+        /* ========================= */
+        /* MODAL OVERLAY */
+        /* ========================= */
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(70, 66, 69, 0.45);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.35s ease, visibility 0.35s ease;
+            backdrop-filter: blur(3px);
+            -webkit-backdrop-filter: blur(3px);
+        }
+
+        .modal-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background: var(--white);
+            width: 100%;
+            max-width: 520px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 3rem;
+            position: relative;
+            transform: translateY(24px);
+            transition: transform 0.35s ease;
+        }
+
+        .modal-overlay.open .modal {
+            transform: translateY(0);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.4rem;
+            color: var(--muted);
+            transition: color 0.2s ease, transform 0.2s ease;
+            line-height: 1;
+        }
+
+        .modal-close:hover {
+            color: var(--text);
+            transform: rotate(90deg);
+        }
+
+        .modal-eyebrow {
+            font-size: 0.72rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--mulberry);
+            margin-bottom: 0.6rem;
+        }
+
+        .modal-title {
+            font-family: var(--serif);
+            font-size: 2rem;
+            font-weight: 400;
+            line-height: 1.2;
+            margin-bottom: 0.4rem;
+        }
+
+        .modal-subtitle {
+            font-size: 0.85rem;
+            color: var(--muted);
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .modal-product-summary {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: var(--bg);
+            padding: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .modal-product-img {
+            width: 64px;
+            height: 80px;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .modal-product-name {
+            font-family: var(--serif);
+            font-size: 1.15rem;
+            font-weight: 500;
+            margin-bottom: 0.2rem;
+        }
+
+        .modal-product-price {
+            font-size: 0.88rem;
+            color: var(--muted);
+        }
+
+        .form-group {
+            margin-bottom: 1.4rem;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.73rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 0.55rem;
+        }
+
+        .form-input,
+        .form-textarea {
+            width: 100%;
+            border: 1px solid var(--border);
+            background: var(--white);
+            padding: 0.85rem 1rem;
+            font-size: 0.9rem;
+            color: var(--text);
+            outline: none;
+            transition: border-color 0.2s ease;
+            appearance: none;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus {
+            border-color: var(--accent);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 88px;
+        }
+        .gdpr-group {
+            margin-bottom: 1.4rem;
+        }
+
+        .gdpr-label {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.7rem;
+            cursor: pointer;
+            font-size: 0.8rem;
+            color: var(--muted);
+            line-height: 1.5;
+        }
+
+        .gdpr-checkbox {
+            width: 15px;
+            height: 15px;
+            flex-shrink: 0;
+            margin-top: 2px;
+            accent-color: var(--accent);
+            cursor: pointer;
+        }
+
+        .gdpr-label a {
+            color: var(--accent-dark);
+            text-decoration: underline;
+            text-decoration-color: rgba(91,168,160,0.4);
+            text-underline-offset: 2px;
+        }
+
+        .gdpr-label a:hover {
+            text-decoration-color: var(--accent-dark);
+        }
+
+        .gdpr-checkbox.error {
+            outline: 2px solid #c0392b;
+            outline-offset: 1px;
+        }
+
+
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .confirm-btn {
+            width: 100%;
+            padding: 1.15rem 2rem;
+            background-color: var(--text);
+            color: var(--white);
+            border: none;
+            font-size: 0.78rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 0.5rem;
+        }
+
+        .confirm-btn:hover {
+            background-color: var(--mulberry);
+        }
+
+
+        /* ========================= */
+        /* ORDER CONFIRMATION STATE */
+        /* ========================= */
+
+        .modal-confirm-state {
+            display: none;
+            text-align: center;
+            padding: 1rem 0;
+        }
+
+        .modal-confirm-state.visible {
+            display: block;
+        }
+
+        .modal-form-state.hidden {
+            display: none;
+        }
+
+        .confirm-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background-color: var(--gold-light);
+            border: 1px solid rgba(201,153,138,0.40);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.8rem;
+            font-size: 1.6rem;
+        }
+
+        .confirm-title {
+            font-family: var(--serif);
+            font-size: 2rem;
+            font-weight: 400;
+            margin-bottom: 0.8rem;
+        }
+
+        .confirm-msg {
+            font-size: 0.9rem;
+            color: var(--muted);
+            line-height: 1.7;
+            max-width: 340px;
+            margin: 0 auto 2rem;
+        }
+
+        .back-btn {
+            display: inline-block;
+            font-size: 0.75rem;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--muted);
+            border: 1px solid var(--border);
+            padding: 0.8rem 1.8rem;
+            cursor: pointer;
+            background: none;
+            transition: all 0.2s ease;
+        }
+
+        .back-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+
+        /* ========================= */
+        /* FOOTER */
+        /* ========================= */
+
+        .footer {
+            background-color: var(--white);
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 4rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 2rem;
+        }
+
+        .footer-branding h2 {
+            font-family: var(--serif);
+            font-size: 2rem;
+            margin-bottom: 0.7rem;
+        }
+
+        .footer-branding p { color: var(--muted); }
+
+        .footer-links,
+        .footer-socials {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .footer-links a,
+        .footer-socials a {
+            font-size: 0.9rem;
+            color: #7A6560;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover,
+        .footer-socials a:hover { color: var(--mulberry); }
+
+
+        /* ========================= */
+        /* RESPONSIVE */
+        /* ========================= */
+
+        @media (max-width: 1100px) {
+            .product-layout {
+                gap: 3rem;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .product-layout {
+                grid-template-columns: 1fr;
+                padding: 0 2rem 5rem;
+                gap: 2.5rem;
+            }
+
+            .gallery {
+                position: static;
+            }
+
+            .main-image-wrapper img {
+                height: 420px;
+            }
+
+            .nav-container {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .page-header {
+                padding: 2rem 2rem 1rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .product-name {
+                font-size: 2.2rem;
+            }
+
+            .price-current {
+                font-size: 1.9rem;
+            }
+
+            .modal {
+                padding: 2rem 1.5rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .thumbnails {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 0.5rem;
+            }
+
+            .thumb img {
+                height: 80px;
+            }
+
+            .footer-container {
+                flex-direction: column;
+                padding: 2.5rem 1.5rem;
+            }
+        }
+
+        /* Scrollbar (modal) */
+        .modal::-webkit-scrollbar { width: 4px; }
+        .modal::-webkit-scrollbar-track { background: transparent; }
+        .modal::-webkit-scrollbar-thumb { background: var(--border); }
+
+    </style>
+</head>
+<body>
+
+    <!-- ========================= -->
+    <!-- NAVBAR -->
+    <!-- ========================= -->
+
+    <header class="navbar">
+        <div class="nav-container">
+            <div class="logo"><a href="index.html"><img src="logo.jpeg" height="56" alt="Закачалката — reloved store" style="display:block"></a></div>
+            <nav class="nav-links">
+                <ul>
+                    <li><a href="#">Начало</a></li>
+                    <li><a href="store.html">Магазин</a></li>
+                    <li><a href="#">Контакти</a></li>
+                </ul>
+            </nav>
+            <div class="nav-icons">
+                <button aria-label="Wishlist">♡</button>
+                <button aria-label="Cart">👜</button>
+            </div>
+        </div>
+    </header>
+
+
+    <!-- ========================= -->
+    <!-- BREADCRUMB -->
+    <!-- ========================= -->
+
+    <section class="page-header">
+        <div class="page-header-container">
+            <p class="breadcrumb">
+                <a href="#">Начало</a>
+                <span>›</span>
+                <a href="store.html">Магазин</a>
+                <span>›</span>
+                Вълнено Сако
+            </p>
+        </div>
+    </section>
+
+
+    <!-- ========================= -->
+    <!-- PRODUCT LAYOUT -->
+    <!-- ========================= -->
+
+    <main class="product-layout">
+
+
+        <!-- ========================= -->
+        <!-- GALLERY -->
+        <!-- ========================= -->
+
+        <div class="gallery">
+
+            <div class="main-image-wrapper">
+                <img
+                    id="mainImage"
+                    src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=900&q=80"
+                    alt="Prada Вълнено Сако — front view"
+                />
+            </div>
+
+            <div class="thumbnails">
+                <div class="thumb active" onclick="switchImage(this, 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=900&q=80', 'Front view')">
+                    <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=300&q=70" alt="Front view" />
+                </div>
+                <div class="thumb" onclick="switchImage(this, 'https://images.unsplash.com/photo-1608731267464-ef6b462d5c89?w=900&q=80', 'Back view')">
+                    <img src="https://images.unsplash.com/photo-1608731267464-ef6b462d5c89?w=300&q=70" alt="Back view" />
+                </div>
+                <div class="thumb" onclick="switchImage(this, 'https://images.unsplash.com/photo-1512374382149-233c42b6a83b?w=900&q=80', 'Detail')">
+                    <img src="https://images.unsplash.com/photo-1512374382149-233c42b6a83b?w=300&q=70" alt="Detail shot" />
+                </div>
+                <div class="thumb" onclick="switchImage(this, 'https://images.unsplash.com/photo-1509631179647-0177331693ae?w=900&q=80', 'Label')">
+                    <img src="https://images.unsplash.com/photo-1509631179647-0177331693ae?w=300&q=70" alt="Label" />
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- ========================= -->
+        <!-- PRODUCT INFO -->
+        <!-- ========================= -->
+
+        <div class="product-info">
+
+            <span class="product-brand-tag">Prada</span>
+
+            <h1 class="product-name">
+                Вълнено<br><em>Сако</em>
+            </h1>
+
+            <p class="product-meta-line">Размер M &nbsp;·&nbsp; Есен / Зима &nbsp;·&nbsp; Отлично Състояние</p>
+
+            <div class="product-price-block">
+                <span class="price-current">240 лв</span>
+                <span class="price-badge">Проверен</span>
+            </div>
+
+            <div class="product-description">
+                <p>
+                    Изключително парче от гардероба на предишния собственик — структурирано вълнено сако в антрацитно сиво с двуреден силует, връхни ревери и характерни копчета. Класика, която не се влияе от тенденциите.
+                </p>
+                <p>
+                    Произхождащо от частна колекция и носено не повече от два пъти, то запазва nts in exceptional condition with all original hardware intact. The lining bears Prada's classic logo weave, and the internal pocket seams remain crisp and unfrayed. A rare find for the discerning collector.
+                </p>
+            </div>
+
+
+            <!-- ACCORDION -->
+
+            <div class="accordion">
+
+                <div class="accordion-item open">
+                    <button class="accordion-trigger" onclick="toggleAccordion(this)" aria-expanded="true">
+                        <span class="accordion-trigger-label">Размер</span>
+                        <span class="accordion-icon"></span>
+                    </button>
+                    <div class="accordion-body">
+                        <div class="accordion-content">
+                            <div class="detail-row">
+                                <span class="detail-label">Дизайнерски размер</span>
+                                <span class="detail-value">IT 42 (EU M)</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Гърди</span>
+                                <span class="detail-value">96 cm / 37.8"</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Рамо</span>
+                                <span class="detail-value">43 cm / 16.9"</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Дължина</span>
+                                <span class="detail-value">72 cm / 28.3"</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-trigger" onclick="toggleAccordion(this)" aria-expanded="false">
+                        <span class="accordion-trigger-label">Цвят и Материал</span>
+                        <span class="accordion-icon"></span>
+                    </button>
+                    <div class="accordion-body">
+                        <div class="accordion-content">
+                            <div class="detail-row">
+                                <span class="detail-label">Цвят</span>
+                                <span class="detail-value">Антрацитно Сиво</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Материя</span>
+                                <span class="detail-value">80% Вълна, 20% Кашмир</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Хастар</span>
+                                <span class="detail-value">100% Коприна</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Грижа</span>
+                                <span class="detail-value">Само химическо чистене</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-trigger" onclick="toggleAccordion(this)" aria-expanded="false">
+                        <span class="accordion-trigger-label">Стилови Тагове</span>
+                        <span class="accordion-icon"></span>
+                    </button>
+                    <div class="accordion-body">
+                        <div class="accordion-content">
+                            <div class="tag-list">
+                                <span class="tag">Официален</span>
+                                <span class="tag">Винтидж</span>
+                                <span class="tag">Статусен Стил</span>
+                                <span class="tag">Архивен</span>
+                                <span class="tag">Есен / Зима</span>
+                                <span class="tag">Инвестиционен Артикул</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-trigger" onclick="toggleAccordion(this)" aria-expanded="false">
+                        <span class="accordion-trigger-label">Автентичност и Състояние</span>
+                        <span class="accordion-icon"></span>
+                    </button>
+                    <div class="accordion-body">
+                        <div class="accordion-content">
+                            <div class="detail-row">
+                                <span class="detail-label">Състояние</span>
+                                <span class="detail-value">Отлично (9 / 10)</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Автентичност</span>
+                                <span class="detail-value">Проверен от нас</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Оригинални тагове</span>
+                                <span class="detail-value">Налични</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Торбичка</span>
+                                <span class="detail-value">Включена</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- BUY NOW -->
+
+            <button class="buy-btn" onclick="openModal()">
+                Поръчай сега
+                <span class="buy-btn-arrow">→</span>
+            </button>
+
+            <div class="wishlist-line">
+                <button class="wishlist-link">♡ &nbsp; Запази в любими</button>
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- ========================= -->
+    <!-- FOOTER -->
+    <!-- ========================= -->
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-branding">
+                <h2>Закачалката</h2>
+                <p>Внимателно избрана препродадена мода.</p>
+            </div>
+            <div class="footer-links">
+                <a href="#">Начало</a>
+                <a href="store.html">Магазин</a>
+                <a href="#">Контакти</a>
+            </div>
+            <div class="footer-socials">
+                <a href="#">Instagram</a>
+                <a href="#">Pinterest</a>
+                <a href="#">TikTok</a>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- ========================= -->
+    <!-- BUY NOW MODAL -->
+    <!-- ========================= -->
+
+    <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+
+        <div class="modal">
+
+            <button class="modal-close" onclick="closeModal()" aria-label="Close">&times;</button>
+
+            <!-- FORM STATE -->
+            <div class="modal-form-state" id="formState">
+
+                <p class="modal-eyebrow">Завърши поръчката</p>
+                <h2 class="modal-title" id="modalTitle">Само няколко детайла</h2>
+                <p class="modal-subtitle">Ще запазим артикула за 24 часа, докато потвърдим поръчката ви.</p>
+
+                <div class="modal-product-summary">
+                    <img
+                        class="modal-product-img"
+                        src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=200&q=70"
+                        alt="Prada Вълнено Сако"
+                    />
+                    <div>
+                        <p class="modal-product-name">Prada — Вълнено Сако</p>
+                        <p class="modal-product-price">Размер IT 42 &nbsp;·&nbsp; Антрацитно Сиво &nbsp;·&nbsp; 240 лв</p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="fullName">Пълно Име</label>
+                    <input class="form-input" type="text" id="fullName" placeholder="Вашето пълно име" autocomplete="name" />
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label" for="email">Имейл адрес</label>
+                        <input class="form-input" type="email" id="email" placeholder="you@email.com" autocomplete="email" />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="mobile">Телефонен номер</label>
+                        <input class="form-input" type="tel" id="mobile" placeholder="+359 88 000 0000" autocomplete="tel" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="street">Улица и номер</label>
+                    <input class="form-input" type="text" id="street" placeholder="Улица и номер" autocomplete="street-address" />
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label" for="city">Град</label>
+                        <input class="form-input" type="text" id="city" placeholder="Град" autocomplete="address-level2" />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="postcode">Пощенски код</label>
+                        <input class="form-input" type="text" id="postcode" placeholder="Пощенски код" autocomplete="postal-code" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="notes">Допълнителни бележки (по избор)</label>
+                    <textarea class="form-textarea" id="notes" placeholder="Инструкции за доставка или въпроси…"></textarea>
+                </div>
+
+                <div class="form-group gdpr-group">
+                    <label class="gdpr-label">
+                        <input type="checkbox" id="gdprConsent" class="gdpr-checkbox" />
+                        <span>Съгласен/а съм личните ми данни да бъдат използвани за обработка на тази поръчка. <a href="privacy.html" target="_blank">Политика за поверителност</a></span>
+                    </label>
+                </div>
+                <button class="confirm-btn" onclick="submitOrder()">Потвърди поръчката</button>
+
+            </div>
+
+            <!-- CONFIRMATION STATE -->
+            <div class="modal-confirm-state" id="confirmState">
+
+                <div class="confirm-icon">✓</div>
+
+                <h2 class="confirm-title">Поръчката е приета</h2>
+
+                <p class="confirm-msg">
+                    Благодарим ви — получихме вашата поръчка. Ще се свържем с вас скоро на посочения имейл или телефон, за да уточним доставката и плащането при получаване.
+                </p>
+
+                <button class="back-btn" onclick="closeModal()">← Обратно към магазина</button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- JAVASCRIPT -->
+    <!-- ========================= -->
+
+    <script>
+
+        /* ——— Config ——— */
+        const SUPABASE_URL = 'https://ozwydlffpvrcgnhdcjvw.supabase.co';
+        const SUPABASE_KEY = 'sb_publishable_wyBLx6NPlR8uk-jC-qyupQ_FeQzE37l';
+
+        let currentProduct = null;
+
+        /* ——— Load product from URL param ——— */
+        async function loadProduct() {
+            const id = new URLSearchParams(window.location.search).get('id');
+            if (!id) { showError('Продуктът не е намерен.'); return; }
+
+            try {
+                const res = await fetch(
+                    `${SUPABASE_URL}/rest/v1/products?id=eq.${id}&select=*`,
+                    { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` } }
+                );
+                const data = await res.json();
+                if (!data || data.length === 0) { showError('Продуктът не е намерен.'); return; }
+                currentProduct = data[0];
+                renderProduct(currentProduct);
+            } catch(e) {
+                showError('Грешка при зареждане на продукта.');
+            }
+        }
+
+        function renderProduct(p) {
+            /* Page title */
+            document.title = `${p.brand || ''} ${p.name} — Закачалката`;
+
+            /* Breadcrumb */
+            document.querySelector('.breadcrumb').innerHTML = `
+                <a href="index.html">Начало</a><span>›</span>
+                <a href="store.html">Магазин</a><span>›</span>
+                ${p.name}
+            `;
+
+            /* Gallery */
+            const images = (p.image_urls && p.image_urls.length > 0)
+                ? p.image_urls
+                : ['https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=900&q=60'];
+
+            const mainImg = document.getElementById('mainImage');
+            mainImg.src = images[0];
+            mainImg.alt = `${p.brand} ${p.name}`;
+
+            const thumbsEl = document.querySelector('.thumbnails');
+            thumbsEl.innerHTML = images.map((url, i) => `
+                <div class="thumb ${i === 0 ? 'active' : ''}" onclick="switchImage(this, '${url}', '${p.name}')">
+                    <img src="${url}" alt="${p.name} ${i+1}" />
+                </div>
+            `).join('');
+
+            /* Brand tag */
+            document.querySelector('.product-brand-tag').textContent = p.brand || '';
+
+            /* Name */
+            const nameParts = (p.name || '').split(' ');
+            const first = nameParts.slice(0, -1).join(' ');
+            const last  = nameParts.slice(-1)[0] || '';
+            document.querySelector('.product-name').innerHTML = first
+                ? `${first}<br><em>${last}</em>`
+                : `<em>${last}</em>`;
+
+            /* Meta line */
+            document.querySelector('.product-meta-line').textContent =
+                [p.size, p.category, p.condition].filter(Boolean).join(' · ');
+
+            /* Price */
+            document.querySelector('.price-current').textContent = `${parseFloat(p.price).toLocaleString()} лв`;
+            const origEl = document.querySelector('.price-original');
+            if (origEl) {
+                if (p.original_price && p.original_price > p.price) {
+                    origEl.textContent = `${parseFloat(p.original_price).toLocaleString()} лв`;
+                    origEl.style.display = '';
+                } else {
+                    origEl.style.display = 'none';
+                }
+            }
+
+            /* Description */
+            document.querySelector('.product-description').innerHTML =
+                p.description ? `<p>${p.description}</p>` : '';
+
+            /* Accordion — size */
+            document.querySelector('.accordion .accordion-item:nth-child(1) .accordion-content').innerHTML = `
+                <div class="detail-row"><span class="detail-label">Размер</span><span class="detail-value">${p.size || '—'}</span></div>
+            `;
+
+            /* Accordion — color */
+            document.querySelector('.accordion .accordion-item:nth-child(2) .accordion-content').innerHTML = `
+                <div class="detail-row"><span class="detail-label">Цвят</span><span class="detail-value">${p.color || '—'}</span></div>
+            `;
+
+            /* Accordion — tags */
+            const tags = p.tags || [];
+            document.querySelector('.accordion .accordion-item:nth-child(3) .accordion-content').innerHTML =
+                tags.length > 0
+                    ? `<div class="tag-list">${tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>`
+                    : '<p style="color:var(--muted);font-size:0.9rem">Няма добавени тагове</p>';
+
+            /* Accordion — condition */
+            document.querySelector('.accordion .accordion-item:nth-child(4) .accordion-content').innerHTML = `
+                <div class="detail-row"><span class="detail-label">Състояние</span><span class="detail-value">${p.condition || '—'}</span></div>
+            `;
+
+            /* Modal product name */
+            const modalName = document.querySelector('.modal-product-name');
+            if (modalName) modalName.textContent = `${p.brand} ${p.name}`;
+
+            /* Sold state */
+            if (p.is_sold) {
+                const buyBtn = document.querySelector('.buy-btn');
+                if (buyBtn) { buyBtn.textContent = 'Запазено'; buyBtn.disabled = true; buyBtn.style.opacity = '0.5'; }
+            }
+        }
+
+        function showError(msg) {
+            document.querySelector('.product-layout').innerHTML =
+                `<p style="padding:4rem;font-size:1.2rem;color:var(--muted)">${msg}</p>`;
+        }
+
+
+        /* ------ Gallery ------ */
+        function switchImage(thumb, src, alt) {
+            const main = document.getElementById('mainImage');
+            main.style.opacity = '0';
+            main.style.transform = 'scale(0.98)';
+            main.style.transition = 'opacity 0.25s ease, transform 0.25s ease';
+            setTimeout(() => {
+                main.src = src; main.alt = alt;
+                main.style.opacity = '1'; main.style.transform = 'scale(1)';
+            }, 220);
+            document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
+            thumb.classList.add('active');
+        }
+
+
+        /* ------ Accordion ------ */
+        function toggleAccordion(trigger) {
+            const item = trigger.closest('.accordion-item');
+            const isOpen = item.classList.contains('open');
+            document.querySelectorAll('.accordion-item').forEach(i => {
+                i.classList.remove('open');
+                i.querySelector('.accordion-trigger').setAttribute('aria-expanded', 'false');
+            });
+            if (!isOpen) { item.classList.add('open'); trigger.setAttribute('aria-expanded', 'true'); }
+        }
+
+
+        /* ------ Modal ------ */
+        const overlay    = document.getElementById('modalOverlay');
+        const formState  = document.getElementById('formState');
+        const confirmState = document.getElementById('confirmState');
+
+        function openModal() {
+            overlay.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            overlay.classList.remove('open');
+            document.body.style.overflow = '';
+            setTimeout(() => {
+                formState.classList.remove('hidden');
+                confirmState.classList.remove('visible');
+                clearForm();
+            }, 400);
+        }
+
+        async function submitOrder() {
+            const requiredFields = ['fullName', 'email', 'mobile', 'street', 'city', 'postcode'];
+            const empty = requiredFields.filter(id => !document.getElementById(id).value.trim());
+
+            const gdpr = document.getElementById('gdprConsent');
+            if (!gdpr.checked) {
+                gdpr.classList.add('error');
+                gdpr.addEventListener('change', () => gdpr.classList.remove('error'), { once: true });
+                empty.push('gdprConsent');
+            }
+
+            if (empty.filter(id => id !== 'gdprConsent').length) {
+                empty.filter(id => id !== 'gdprConsent').forEach(id => {
+                    const el = document.getElementById(id);
+                    el.style.borderColor = '#c0392b';
+                    el.addEventListener('input', () => el.style.borderColor = '', { once: true });
+                });
+            }
+            if (empty.length) return;
+
+            const btn = document.querySelector('.confirm-btn');
+            btn.textContent = 'Изпращане…';
+            btn.disabled = true;
+
+            const orderData = {
+                product_id:   currentProduct?.id || null,
+                product_name: currentProduct ? `${currentProduct.brand} ${currentProduct.name}` : '',
+                full_name:    document.getElementById('fullName').value.trim(),
+                email:        document.getElementById('email').value.trim(),
+                mobile:       document.getElementById('mobile').value.trim(),
+                street:       document.getElementById('street').value.trim(),
+                city:         document.getElementById('city').value.trim(),
+                postcode:     document.getElementById('postcode').value.trim(),
+                notes:        document.getElementById('notes').value.trim(),
+            };
+
+            try {
+                /* 1. Save order to Supabase */
+                await fetch(`${SUPABASE_URL}/rest/v1/orders`, {
+                    method: 'POST',
+                    headers: {
+                        'apikey': SUPABASE_KEY,
+                        'Authorization': `Bearer ${SUPABASE_KEY}`,
+                        'Content-Type': 'application/json',
+                        'Prefer': 'return=minimal'
+                    },
+                    body: JSON.stringify(orderData)
+                });
+
+                /* 2. Send email via serverless function */
+                await fetch('/api/send-order', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(orderData)
+                });
+            } catch(e) {
+                console.error('Order error:', e);
+                /* Still show success — order was likely saved */
+            }
+
+            formState.classList.add('hidden');
+            confirmState.classList.add('visible');
+            overlay.querySelector('.modal').scrollTop = 0;
+        }
+
+        function clearForm() {
+            ['fullName','email','mobile','street','city','postcode','notes'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) { el.value = ''; el.style.borderColor = ''; }
+            });
+            const btn = document.querySelector('.confirm-btn');
+            if (btn) { btn.textContent = 'Потвърди поръчката'; btn.disabled = false; }
+        }
+
+        overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape' && overlay.classList.contains('open')) closeModal();
+        });
+
+        /* ——— Init ——— */
+        loadProduct();
+
+    </script>
+
+</body>
+</html>
