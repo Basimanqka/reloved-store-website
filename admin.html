@@ -15,7 +15,7 @@
         :root {
             --bg: #FAF7F4; --white: #FFFFFF; --border: #EDE2D8;
             --text: #2C2420; --muted: #8B5E52; --faint: #C9B4AB;
-            --accent: #AA5878; --teal: #89CECA;
+            --accent: #AA5878; --accent-dark: #7A3E56; --accent-soft: #F5E6EC; --teal: #89CECA;
             --serif: 'Cormorant Garamond', serif; --sans: 'Inter', sans-serif;
         }
         body { font-family: var(--sans); background: var(--bg); color: var(--text); min-height: 100vh; }
@@ -133,9 +133,9 @@
             font-weight: 500;
             transition: border-color 0.2s, color 0.2s;
         }
-        .btn:hover { border-color: var(--teal); color: var(--teal); }
-        .btn-primary { background: var(--teal); color: white; border-color: var(--teal); }
-        .btn-primary:hover { opacity: 0.9; color: white; }
+        .btn:hover { border-color: var(--accent); color: var(--accent); }
+        .btn-primary { background: var(--accent); color: white; border-color: var(--accent); box-shadow: 0 2px 8px rgba(170,88,120,0.25); }
+        .btn-primary:hover { background: var(--accent-dark); border-color: var(--accent-dark); opacity: 1; color: white; }
         .btn-danger { color: #B23A3A; }
         .btn-danger:hover { border-color: #B23A3A; color: #B23A3A; }
         .btn-small { padding: 0.35rem 0.7rem; font-size: 0.78rem; }
@@ -151,15 +151,19 @@
             font-size: 0.88rem;
             transition: all 0.2s;
         }
-        .tab-btn.active { background: var(--teal); color: white; border-color: var(--teal); }
+        .tab-btn:hover { border-color: var(--accent); color: var(--accent); }
+        .tab-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+        .tab-btn.active:hover { color: white; }
 
         .panel {
             background: var(--white);
             border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 1.6rem;
+            border-radius: 12px;
+            padding: 1.8rem;
             margin-bottom: 1.6rem;
+            box-shadow: 0 4px 24px rgba(44,36,32,0.05);
         }
+        #productFormPanel { border-color: var(--accent-soft); box-shadow: 0 8px 40px rgba(170,88,120,0.10); }
         .panel-header {
             display: flex;
             align-items: center;
@@ -204,8 +208,75 @@
         }
         .field textarea { resize: vertical; min-height: 80px; }
         .field-hint { font-size: 0.72rem; color: var(--faint); margin-top: 0.3rem; }
-        .existing-images { display: flex; gap: 0.5rem; margin-top: 0.6rem; flex-wrap: wrap; }
-        .existing-images img { width: 60px; height: 60px; object-fit: cover; border-radius: 6px; }
+
+        /* ===== IMAGE UPLOADER ===== */
+        .dropzone {
+            border: 2px dashed var(--border);
+            border-radius: 10px;
+            background: var(--bg);
+            padding: 1.8rem 1.2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: border-color 0.2s, background 0.2s;
+        }
+        .dropzone:hover { border-color: var(--accent); background: var(--accent-soft); }
+        .dropzone.dragover { border-color: var(--accent); background: var(--accent-soft); }
+        .dropzone svg { width: 30px; height: 30px; stroke: var(--muted); margin-bottom: 0.6rem; }
+        .dropzone:hover svg, .dropzone.dragover svg { stroke: var(--accent); }
+        .dropzone-title { font-size: 0.9rem; color: var(--text); }
+        .dropzone-title span { color: var(--accent); text-decoration: underline; }
+        .dropzone-hint { font-size: 0.72rem; color: var(--faint); margin-top: 0.35rem; }
+
+        .image-manager {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+            gap: 0.7rem;
+            margin-top: 0.9rem;
+        }
+        .image-manager:empty { display: none; }
+        .img-tile {
+            position: relative;
+            aspect-ratio: 1;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            background: var(--bg);
+            cursor: grab;
+            transition: box-shadow 0.15s, transform 0.15s;
+        }
+        .img-tile:active { cursor: grabbing; }
+        .img-tile.dragging { opacity: 0.4; }
+        .img-tile.drop-target { box-shadow: 0 0 0 2px var(--accent); }
+        .img-tile img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+        .img-tile .img-remove {
+            position: absolute;
+            top: 4px; right: 4px;
+            width: 22px; height: 22px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(44,36,32,0.6);
+            color: #fff;
+            font-size: 15px;
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.15s, background 0.15s;
+        }
+        .img-tile:hover .img-remove { opacity: 1; }
+        .img-tile .img-remove:hover { background: #B23A3A; }
+        .img-tile .img-main-badge {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            background: var(--accent);
+            color: #fff;
+            font-size: 0.62rem;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            text-align: center;
+            padding: 2px 0;
+        }
         .checkbox-field { display: flex; align-items: center; gap: 0.7rem; padding-top: 1.6rem; }
         .checkbox-field input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--accent); cursor: pointer; }
         .checkbox-field label { font-size: 0.9rem; cursor: pointer; color: var(--text); }
@@ -231,10 +302,110 @@
         .toast.show { opacity: 1; transform: translateY(0); }
         .toast.error { background: #B23A3A; }
 
+        /* image reorder arrows (shown on touch, since drag-drop doesn't work there) */
+        .img-move {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 28px; height: 28px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(44,36,32,0.55);
+            color: #fff;
+            font-size: 18px; line-height: 1;
+            display: flex; align-items: center; justify-content: center;
+            z-index: 2;
+        }
+        .img-move.left  { left: 4px; }
+        .img-move.right { right: 4px; }
+        .img-move:active { background: var(--accent); }
+
+        /* ===== RESPONSIVE / MOBILE ===== */
         @media (max-width: 720px) {
             .form-grid { grid-template-columns: 1fr; }
             .container { padding: 1rem; }
             .topbar { padding: 1rem; }
+        }
+
+        /* touch devices: no hover, so keep the image remove button visible */
+        @media (hover: none) {
+            .img-tile .img-remove { opacity: 1; width: 26px; height: 26px; font-size: 17px; }
+        }
+
+        @media (max-width: 640px) {
+            /* topbar wraps and shrinks; email truncates instead of overflowing */
+            .topbar { padding: 0.8rem 1rem; flex-wrap: wrap; gap: 0.4rem 0.8rem; }
+            .topbar h1 { font-size: 1.2rem; }
+            .topbar-right { font-size: 0.75rem; gap: 0.7rem; }
+            #userEmail { max-width: 42vw; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+            /* tabs share the width */
+            .tabs { gap: 0.4rem; }
+            .tab-btn { flex: 1; text-align: center; padding: 0.7rem 0.4rem; }
+
+            .panel { padding: 1.1rem; border-radius: 10px; }
+            .panel-header { flex-wrap: wrap; gap: 0.6rem; }
+            .panel-header h2 { font-size: 1.15rem; }
+
+            /* larger tap targets; 16px inputs stop iOS from auto-zooming on focus */
+            .btn { padding: 0.62rem 1rem; }
+            .btn-small { padding: 0.55rem 0.85rem; font-size: 0.82rem; }
+            .field input, .field select, .field textarea, .lfield input { font-size: 16px; }
+
+            /* action buttons stack full width */
+            .form-actions { flex-direction: column; }
+            .form-actions .btn { width: 100%; text-align: center; padding: 0.85rem; }
+            .checkbox-field { padding-top: 0; }
+
+            /* ---- tables collapse into stacked cards ---- */
+            #productsTableWrap thead, #ordersTableWrap thead { display: none; }
+            #productsTableWrap table, #ordersTableWrap table,
+            #productsTableWrap tbody, #ordersTableWrap tbody,
+            #productsTableWrap tr, #ordersTableWrap tr,
+            #productsTableWrap td, #ordersTableWrap td { display: block; width: 100%; }
+            #productsTableWrap tr, #ordersTableWrap tr {
+                border: 1px solid var(--border);
+                border-radius: 10px;
+                margin-bottom: 0.85rem;
+                padding: 0.25rem 0.95rem;
+                background: var(--white);
+                box-shadow: 0 1px 6px rgba(44,36,32,0.04);
+            }
+            #productsTableWrap td, #ordersTableWrap td {
+                border: none;
+                border-bottom: 1px solid var(--border);
+                padding: 0.6rem 0;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 1rem;
+                text-align: right;
+            }
+            #productsTableWrap tr td:last-child,
+            #ordersTableWrap tr td:last-child { border-bottom: none; }
+            /* keep separators inside the very last card too */
+            #productsTableWrap tr:last-child td:not(:last-child),
+            #ordersTableWrap tr:last-child td:not(:last-child) { border-bottom: 1px solid var(--border); }
+            #productsTableWrap td::before, #ordersTableWrap td::before {
+                content: attr(data-label);
+                font-size: 0.68rem;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                color: var(--muted);
+                font-weight: 600;
+                text-align: left;
+                flex: 0 0 auto;
+            }
+            #productsTableWrap td:empty, #ordersTableWrap td:empty { display: none; }
+            td.cell-img { justify-content: center; }
+            td.cell-img::before { display: none; }
+            td.cell-img .thumb-sm { width: 96px; height: 96px; }
+            .row-actions { flex: 1; flex-wrap: nowrap; }
+            .row-actions .btn { flex: 1; text-align: center; }
+            #productsTableWrap td select, #ordersTableWrap td select { max-width: 62%; font-size: 16px; padding: 0.5rem; }
+
+            /* toast spans the width so it never runs off-screen */
+            .toast { left: 1rem; right: 1rem; bottom: 1rem; text-align: center; }
         }
     </style>
 </head>
@@ -327,8 +498,34 @@
                                 </select>
                             </div>
 
-                            <div class="field"><label>Текуща цена (лв) *</label><input type="number" step="0.01" min="0" id="f_price" required /></div>
-                            <div class="field"><label>Оригинална цена (лв)</label><input type="number" step="0.01" min="0" id="f_original_price" placeholder="Преди намалението" /></div>
+                            <div class="field">
+                                <label>Размер</label>
+                                <select id="f_size">
+                                    <option value="">—</option>
+                                    <option value="XS">XS</option>
+                                    <option value="S">S</option>
+                                    <option value="M">M</option>
+                                    <option value="L">L</option>
+                                    <option value="XL">XL</option>
+                                    <option value="one-size">Един размер</option>
+                                </select>
+                            </div>
+                            <div class="field">
+                                <label>Цвят</label>
+                                <select id="f_color">
+                                    <option value="">—</option>
+                                    <option value="black">Черен</option>
+                                    <option value="white">Бял</option>
+                                    <option value="beige">Бежов</option>
+                                    <option value="grey">Сив</option>
+                                    <option value="navy">Тъмносин</option>
+                                    <option value="pink">Розов</option>
+                                    <option value="red">Червен</option>
+                                </select>
+                            </div>
+
+                            <div class="field"><label>Текуща цена (EUR) *</label><input type="number" step="0.01" min="0" id="f_price" required /></div>
+                            <div class="field"><label>Оригинална цена (EUR)</label><input type="number" step="0.01" min="0" id="f_original_price" placeholder="Преди намалението" /></div>
 
                             <div class="field"><label>Тагове (разделени със запетая)</label><input type="text" id="f_tags" placeholder="винтидж, официален, есен" /></div>
                             <div class="checkbox-field">
@@ -340,9 +537,13 @@
 
                             <div class="field full">
                                 <label>Снимки</label>
-                                <input type="file" id="f_images" accept="image/*" multiple />
-                                <p class="field-hint">Изберете няколко снимки. Първата ще е основната снимка в каталога.</p>
-                                <div class="existing-images" id="existingImages"></div>
+                                <div class="dropzone" id="dropzone">
+                                    <input type="file" id="f_images" accept="image/*" multiple hidden />
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                                    <p class="dropzone-title">Плъзнете снимки тук или <span>изберете файлове</span></p>
+                                    <p class="dropzone-hint">Може да добавяте няколко пъти. Първата снимка е основна. Влачете, за да пренаредите.</p>
+                                </div>
+                                <div class="image-manager" id="imageManager"></div>
                             </div>
                         </div>
 
@@ -380,6 +581,101 @@
         const BUCKET = 'product-images';
         let editingProductId = null;
         let allProducts      = [];
+
+        /* ===== IMAGE MANAGER ===== */
+        let imageItems = [];   // ordered: { id, type:'url'|'file', url, file? }
+        let draggedId  = null;
+
+        function uid() { return 'i' + Math.random().toString(36).slice(2, 9); }
+
+        function resetImageItems(items) {
+            imageItems.forEach(it => { if (it.type === 'file') URL.revokeObjectURL(it.url); });
+            imageItems = items || [];
+            renderImageManager();
+        }
+
+        function addFiles(fileList) {
+            Array.from(fileList).forEach(file => {
+                if (!file.type.startsWith('image/')) return;
+                imageItems.push({ id: uid(), type: 'file', file, url: URL.createObjectURL(file) });
+            });
+            renderImageManager();
+        }
+
+        function removeImage(id) {
+            const it = imageItems.find(x => x.id === id);
+            if (it && it.type === 'file') URL.revokeObjectURL(it.url);
+            imageItems = imageItems.filter(x => x.id !== id);
+            renderImageManager();
+        }
+
+        function reorderImages(fromId, toId) {
+            if (!fromId || fromId === toId) return;
+            const from = imageItems.findIndex(x => x.id === fromId);
+            const to   = imageItems.findIndex(x => x.id === toId);
+            if (from < 0 || to < 0) return;
+            const [moved] = imageItems.splice(from, 1);
+            imageItems.splice(to, 0, moved);
+            renderImageManager();
+        }
+
+        /* step an image one slot left/right — used by the touch reorder arrows */
+        function moveImage(id, dir) {
+            const i = imageItems.findIndex(x => x.id === id);
+            const j = i + dir;
+            if (i < 0 || j < 0 || j >= imageItems.length) return;
+            const [moved] = imageItems.splice(i, 1);
+            imageItems.splice(j, 0, moved);
+            renderImageManager();
+        }
+
+        function renderImageManager() {
+            const wrap = document.getElementById('imageManager');
+            if (!wrap) return;
+            const isTouch = window.matchMedia('(hover: none)').matches;
+            wrap.innerHTML = '';
+            imageItems.forEach((it, i) => {
+                const tile = document.createElement('div');
+                tile.className = 'img-tile';
+                tile.draggable = !isTouch;   // native drag only where it actually works
+                tile.dataset.id = it.id;
+                tile.innerHTML =
+                    '<img src="' + it.url + '" alt="" />' +
+                    (i === 0 ? '<span class="img-main-badge">Основна</span>' : '') +
+                    (isTouch && i > 0 ? '<button type="button" class="img-move left" aria-label="Премести наляво">&lsaquo;</button>' : '') +
+                    (isTouch && i < imageItems.length - 1 ? '<button type="button" class="img-move right" aria-label="Премести надясно">&rsaquo;</button>' : '') +
+                    '<button type="button" class="img-remove" aria-label="Премахни">&times;</button>';
+                tile.querySelector('.img-remove').addEventListener('click', (e) => { e.stopPropagation(); removeImage(it.id); });
+                const mvL = tile.querySelector('.img-move.left');
+                const mvR = tile.querySelector('.img-move.right');
+                if (mvL) mvL.addEventListener('click', (e) => { e.stopPropagation(); moveImage(it.id, -1); });
+                if (mvR) mvR.addEventListener('click', (e) => { e.stopPropagation(); moveImage(it.id, 1); });
+                if (!isTouch) {
+                    tile.addEventListener('dragstart', () => { draggedId = it.id; tile.classList.add('dragging'); });
+                    tile.addEventListener('dragend',   () => { draggedId = null; tile.classList.remove('dragging'); document.querySelectorAll('.img-tile').forEach(t => t.classList.remove('drop-target')); });
+                    tile.addEventListener('dragover',  (e) => { e.preventDefault(); tile.classList.add('drop-target'); });
+                    tile.addEventListener('dragleave', () => tile.classList.remove('drop-target'));
+                    tile.addEventListener('drop',      (e) => { e.preventDefault(); tile.classList.remove('drop-target'); reorderImages(draggedId, it.id); });
+                }
+                wrap.appendChild(tile);
+            });
+        }
+
+        /* dropzone wiring */
+        (function () {
+            const dz = document.getElementById('dropzone');
+            const input = document.getElementById('f_images');
+            if (!dz || !input) return;
+            dz.addEventListener('click', () => input.click());
+            input.addEventListener('change', (e) => { addFiles(e.target.files); input.value = ''; });
+            ['dragenter', 'dragover'].forEach(ev => dz.addEventListener(ev, (e) => { e.preventDefault(); dz.classList.add('dragover'); }));
+            dz.addEventListener('dragleave', (e) => { if (!dz.contains(e.relatedTarget)) dz.classList.remove('dragover'); });
+            dz.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dz.classList.remove('dragover');
+                if (e.dataTransfer && e.dataTransfer.files) addFiles(e.dataTransfer.files);
+            });
+        })();
 
         /* ===== AUTH STATE ===== */
 
@@ -480,18 +776,18 @@
                 const img   = imgs[0] || '';
                 const hasDiscount = p.original_price != null && Number(p.original_price) > Number(p.price);
                 const priceHtml = hasDiscount
-                    ? p.price + ' лв <span class="price-old">' + p.original_price + ' лв</span>'
-                    : p.price + ' лв';
+                    ? '€' + Number(p.price).toFixed(2) + ' <span class="price-old">€' + Number(p.original_price).toFixed(2) + '</span>'
+                    : '€' + Number(p.price).toFixed(2);
                 const statusLabel = p.is_sold ? 'Продаден' : 'Активен';
                 const statusClass = p.is_sold ? 'status-sold' : 'status-available';
 
                 return '<tr>' +
-                    '<td>' + (img ? '<img class="thumb-sm" src="' + escHtml(img) + '" />' : '') + '</td>' +
-                    '<td><strong>' + escHtml(p.brand || '') + '</strong><br><span style="color:var(--muted)">' + escHtml(p.name || '') + '</span></td>' +
-                    '<td>' + escHtml(p.category || '') + '</td>' +
-                    '<td>' + priceHtml + '</td>' +
-                    '<td><span class="status-pill ' + statusClass + '">' + statusLabel + '</span></td>' +
-                    '<td><div class="row-actions">' +
+                    '<td class="cell-img" data-label="Снимка">' + (img ? '<img class="thumb-sm" src="' + escHtml(img) + '" />' : '') + '</td>' +
+                    '<td data-label="Продукт"><span><strong>' + escHtml(p.brand || '') + '</strong><br><span style="color:var(--muted)">' + escHtml(p.name || '') + (p.size ? ' · ' + escHtml(p.size) : '') + '</span></span></td>' +
+                    '<td data-label="Категория">' + escHtml(p.category || '') + '</td>' +
+                    '<td data-label="Цена">' + priceHtml + '</td>' +
+                    '<td data-label="Статус"><span class="status-pill ' + statusClass + '">' + statusLabel + '</span></td>' +
+                    '<td data-label="Действия"><div class="row-actions">' +
                         '<button class="btn btn-small" onclick="openProductForm(\'' + p.id + '\')">Редактирай</button>' +
                         '<button class="btn btn-small btn-danger" onclick="deleteProduct(\'' + p.id + '\')">Изтрий</button>' +
                     '</div></td>' +
@@ -514,7 +810,7 @@
             editingProductId = id || null;
             const panel = document.getElementById('productFormPanel');
             document.getElementById('productForm').reset();
-            document.getElementById('existingImages').innerHTML = '';
+            resetImageItems([]);
             document.getElementById('formTitle').textContent     = id ? 'Редактирай продукт' : 'Нов продукт';
             document.getElementById('f_is_sold').checked         = false;
 
@@ -525,18 +821,15 @@
                     document.getElementById('f_name').value           = p.name  || '';
                     document.getElementById('f_category').value       = p.category  || 'jackets';
                     document.getElementById('f_condition').value      = p.condition || 'Отлично';
+                    document.getElementById('f_size').value           = p.size  || '';
+                    document.getElementById('f_color').value          = p.color || '';
                     document.getElementById('f_price').value          = p.price ?? '';
                     document.getElementById('f_original_price').value = p.original_price ?? '';
                     document.getElementById('f_tags').value           = (p.tags || []).join(', ');
                     document.getElementById('f_is_sold').checked      = !!p.is_sold;
                     document.getElementById('f_description').value    = p.description || '';
 
-                    const imgsWrap = document.getElementById('existingImages');
-                    (p.image_urls || []).forEach(url => {
-                        const img = document.createElement('img');
-                        img.src = url;
-                        imgsWrap.appendChild(img);
-                    });
+                    resetImageItems((p.image_urls || []).map(url => ({ id: uid(), type: 'url', url })));
                 }
             }
 
@@ -565,6 +858,8 @@
                     name:           document.getElementById('f_name').value.trim(),
                     category:       document.getElementById('f_category').value,
                     condition:      document.getElementById('f_condition').value,
+                    size:           document.getElementById('f_size').value || null,
+                    color:          document.getElementById('f_color').value || null,
                     price:          parseFloat(document.getElementById('f_price').value),
                     original_price: origPrice ? parseFloat(origPrice) : null,
                     tags,
@@ -583,18 +878,18 @@
                     productId = data.id;
                 }
 
-                const fileInput = document.getElementById('f_images');
-                if (fileInput.files.length) {
-                    const newUrls  = await uploadImages(productId, fileInput.files);
-                    const existing = editingProductId
-                        ? (allProducts.find(p => p.id === productId)?.image_urls || [])
-                        : [];
-                    const { error: imgErr } = await window.db
-                        .from('products')
-                        .update({ image_urls: [...existing, ...newUrls] })
-                        .eq('id', productId);
-                    if (imgErr) throw imgErr;
+                /* Assemble the final ordered image list: keep existing images in
+                   place, upload any newly-added files, honour removals + reordering. */
+                const finalUrls = [];
+                for (const item of imageItems) {
+                    if (item.type === 'url') finalUrls.push(item.url);
+                    else finalUrls.push(await uploadOneImage(productId, item.file));
                 }
+                const { error: imgErr } = await window.db
+                    .from('products')
+                    .update({ image_urls: finalUrls })
+                    .eq('id', productId);
+                if (imgErr) throw imgErr;
 
                 toast(editingProductId ? 'Продуктът е обновен.' : 'Продуктът е добавен.');
                 closeProductForm();
@@ -608,17 +903,14 @@
             }
         });
 
-        async function uploadImages(productId, files) {
-            const urls = [];
-            for (const file of Array.from(files)) {
-                const safeName = file.name.replace(/[^a-zA-Z0-9.\-_]/g, '_');
-                const path     = productId + '/' + Date.now() + '-' + safeName;
-                const { error } = await window.db.storage.from(BUCKET).upload(path, file, { upsert: false });
-                if (error) throw error;
-                const { data } = window.db.storage.from(BUCKET).getPublicUrl(path);
-                urls.push(data.publicUrl);
-            }
-            return urls;
+        async function uploadOneImage(productId, file) {
+            const safeName = file.name.replace(/[^a-zA-Z0-9.\-_]/g, '_');
+            const token    = Math.random().toString(36).slice(2, 7);
+            const path     = productId + '/' + Date.now() + '-' + token + '-' + safeName;
+            const { error } = await window.db.storage.from(BUCKET).upload(path, file, { upsert: false });
+            if (error) throw error;
+            const { data } = window.db.storage.from(BUCKET).getPublicUrl(path);
+            return data.publicUrl;
         }
 
         async function deleteProduct(id) {
@@ -646,12 +938,12 @@
                 const snap = o.product_snapshot || {};
                 const date = new Date(o.created_at).toLocaleString('bg-BG');
                 return '<tr>' +
-                    '<td style="white-space:nowrap;">' + date + '</td>' +
-                    '<td>' + escHtml((snap.brand || '') + ' ' + (snap.name || '')) + '</td>' +
-                    '<td>' + escHtml(o.full_name || '') + '<br><span style="color:var(--muted)">' + escHtml(o.email || '') + '</span></td>' +
-                    '<td>' + escHtml((o.street || '') + ', ' + (o.city || '') + ' ' + (o.postcode || '')) + '</td>' +
-                    '<td>' + escHtml(o.notes || '') + '</td>' +
-                    '<td><select onchange="updateOrderStatus(\'' + o.id + '\', this.value)">' +
+                    '<td data-label="Дата" style="white-space:nowrap;">' + date + '</td>' +
+                    '<td data-label="Продукт">' + escHtml((snap.brand || '') + ' ' + (snap.name || '')) + '</td>' +
+                    '<td data-label="Клиент"><span>' + escHtml(o.full_name || '') + '<br><span style="color:var(--muted)">' + escHtml(o.email || '') + '</span></span></td>' +
+                    '<td data-label="Адрес">' + escHtml((o.street || '') + ', ' + (o.city || '') + ' ' + (o.postcode || '')) + '</td>' +
+                    '<td data-label="Бележки">' + escHtml(o.notes || '') + '</td>' +
+                    '<td data-label="Статус"><select onchange="updateOrderStatus(\'' + o.id + '\', this.value)">' +
                         ['new','contacted','confirmed','cancelled'].map(s =>
                             '<option value="' + s + '"' + (o.status === s ? ' selected' : '') + '>' + orderStatusLabel(s) + '</option>'
                         ).join('') +

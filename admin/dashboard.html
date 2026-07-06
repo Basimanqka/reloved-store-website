@@ -163,8 +163,8 @@
                             </select>
                         </div>
 
-                        <div class="field"><label>Текуща цена (лв) *</label><input type="number" step="0.01" min="0" id="f_price" required /></div>
-                        <div class="field"><label>Оригинална цена (лв)</label><input type="number" step="0.01" min="0" id="f_original_price" placeholder="Преди намалението" /></div>
+                        <div class="field"><label>Текуща цена (EUR) *</label><input type="number" step="0.01" min="0" id="f_price" required /></div>
+                        <div class="field"><label>Оригинална цена (EUR)</label><input type="number" step="0.01" min="0" id="f_original_price" placeholder="Преди намалението" /></div>
 
                         <div class="field"><label>Тагове (разделени със запетая)</label><input type="text" id="f_tags" placeholder="винтидж, официален, есен" /></div>
                         <div class="checkbox-field">
@@ -270,8 +270,8 @@
                 const imgs = Array.isArray(p.image_urls) ? p.image_urls : [];
                 const img  = imgs[0] || '';
                 const priceHtml = (p.original_price != null && Number(p.original_price) > Number(p.price))
-                    ? p.price + ' лв <span class="price-old">' + p.original_price + ' лв</span>'
-                    : p.price + ' лв';
+                    ? '€' + Number(p.price).toFixed(2) + ' <span class="price-old">€' + Number(p.original_price).toFixed(2) + '</span>'
+                    : '€' + Number(p.price).toFixed(2);
                 const statusLabel = p.is_sold ? 'Продаден' : 'Активен';
                 const statusClass = p.is_sold ? 'status-sold' : 'status-available';
                 return '<tr>' +

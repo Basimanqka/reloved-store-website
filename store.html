@@ -29,8 +29,8 @@
             --text:        #2C2420;
             --muted:        #8B5E52;
             --faint:       #C9B4AB;
-            --accent:      #89CECA;
-            --accent-dark: #5BA8A0;
+            --accent:      #AA5878;
+            --accent-dark: #7A3E56;
             --gold:        #C9998A;
             --gold-light:  #F2EBE3;
             --bg-card:      #F2EBE3;
@@ -88,6 +88,8 @@
             line-height: 1;
         }
 
+        .logo img { height: 56px; width: auto; display: block; }
+
         .nav-links ul { display: flex; gap: 2.5rem; }
 
         .nav-links a {
@@ -111,16 +113,98 @@
         .nav-links a.active::after { width: 100%; }
         .nav-links a.active { color: var(--accent); }
 
-        .nav-icons { display: flex; gap: 1rem; }
+        .nav-icons { display: flex; align-items: center; gap: 1rem; }
 
         .nav-icons button {
             border: none;
             background: transparent;
-            font-size: 1.1rem;
+            font-size: 0;
+            line-height: 1;
+            cursor: pointer;
             transition: color 0.3s;
+            display: flex;
+            align-items: center;
         }
 
         .nav-icons button:hover { color: var(--accent); }
+
+        .nav-icons .social-link {
+            display: flex;
+            align-items: center;
+            color: var(--text);
+            transition: color 0.3s;
+        }
+        .nav-icons .social-link:hover { color: var(--accent); }
+
+        /* hamburger toggle (mobile) */
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            width: 40px;
+            height: 40px;
+            background: transparent;
+            border: none;
+            padding: 0;
+            flex-shrink: 0;
+        }
+
+        .nav-toggle span {
+            display: block;
+            width: 22px;
+            height: 1.5px;
+            background: var(--text);
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .nav-toggle.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+        .nav-toggle.open span:nth-child(2) { opacity: 0; }
+        .nav-toggle.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+        .nav-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(44,36,32,0.35);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            z-index: 98;
+        }
+
+        .nav-overlay.open { opacity: 1; visibility: visible; }
+
+        @media (max-width: 860px) {
+            .nav-toggle { display: flex; }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                width: min(78vw, 320px);
+                background: var(--white);
+                padding: 5.5rem 2rem 2.5rem;
+                display: flex;
+                flex-direction: column;
+                transform: translateX(100%);
+                transition: transform 0.35s ease;
+                z-index: 99;
+                overflow-y: auto;
+                box-shadow: -8px 0 30px rgba(0,0,0,0.10);
+            }
+
+            .nav-links.open { transform: translateX(0); }
+
+            .nav-links ul { flex-direction: column; gap: 0; }
+            .nav-links li { border-bottom: 1px solid var(--border); }
+
+            .nav-links a {
+                display: block;
+                padding: 1rem 0.2rem;
+                font-size: 1rem;
+            }
+        }
 
 
         /* ========================= */
@@ -220,6 +304,63 @@
             align-items: stretch;
             gap: 0;
         }
+
+        .filter-search-row {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0.9rem 3rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .filter-search-wrap {
+            position: relative;
+            max-width: 480px;
+        }
+
+        .filter-search-wrap svg {
+            position: absolute;
+            left: 0.9rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 15px;
+            height: 15px;
+            stroke: var(--muted);
+            pointer-events: none;
+        }
+
+        #searchInput {
+            width: 100%;
+            height: 42px;
+            border: 1px solid var(--border);
+            background: var(--bg);
+            padding: 0 2.6rem 0 2.6rem;
+            font-size: 0.85rem;
+            color: var(--text);
+            outline: none;
+            transition: border-color 0.2s ease, background 0.2s ease;
+        }
+
+        #searchInput:focus {
+            border-color: var(--accent);
+            background: var(--white);
+        }
+
+        #searchClear {
+            position: absolute;
+            right: 0.7rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--muted);
+            cursor: pointer;
+            font-size: 1rem;
+            line-height: 1;
+            display: none;
+            padding: 0.2rem;
+        }
+
+        #searchClear.visible { display: block; }
 
         /* Each filter cell */
         .filter-cell {
@@ -367,7 +508,7 @@
         }
 
         .view-btn:hover { background: var(--bg); color: var(--text); }
-        .view-btn.active { color: var(--accent-dark); background: rgba(137,206,202,0.15); }
+        .view-btn.active { color: var(--accent-dark); background: rgba(170,88,120,0.15); }
 
         .view-btn svg {
             width: 15px;
@@ -663,9 +804,9 @@
         }
 
         .card-badge.new {
-            background: rgba(137,206,202,0.15);
+            background: rgba(170,88,120,0.15);
             color: var(--accent-dark);
-            border: 1px solid rgba(137,206,202,0.35);
+            border: 1px solid rgba(170,88,120,0.35);
         }
 
         .card-badge.archive {
@@ -780,9 +921,9 @@
             letter-spacing: 1.5px;
             text-transform: uppercase;
             padding: 0.18rem 0.55rem;
-            background: rgba(137,206,202,0.12);
+            background: rgba(170,88,120,0.12);
             color: var(--accent-dark);
-            border: 1px solid rgba(137,206,202,0.30);
+            border: 1px solid rgba(170,88,120,0.30);
         }
 
 
@@ -942,6 +1083,38 @@
             color: var(--mulberry);
         }
 
+        .mobile-filter-btn svg { flex-shrink: 0; }
+
+        .filter-count {
+            display: none;
+            min-width: 18px;
+            height: 18px;
+            padding: 0 5px;
+            border-radius: 9px;
+            background: var(--mulberry);
+            color: #fff;
+            font-size: 0.62rem;
+            line-height: 18px;
+            text-align: center;
+            letter-spacing: 0;
+        }
+        .filter-count.visible { display: inline-block; }
+
+        /* Filter drawer chrome — hidden on desktop, shown inside the mobile drawer */
+        .filter-drawer-head,
+        .filter-drawer-foot { display: none; }
+
+        .filter-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(44,36,32,0.35);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            z-index: 96;
+        }
+        .filter-overlay.open { opacity: 1; visibility: visible; }
+
 
         /* ========================= */
         /* EMPTY STATE               */
@@ -995,7 +1168,6 @@
             }
 
             .mobile-filter-bar { display: flex; }
-            .filter-bar-wrap { display: none; }
 
             .store-content { padding-top: 2rem; }
 
@@ -1007,23 +1179,148 @@
             .products-grid.view-4 {
                 grid-template-columns: repeat(2, 1fr);
             }
+
+            /* ——— Filter bar becomes a slide-in drawer ——— */
+            .filter-bar-wrap {
+                position: fixed;
+                top: var(--nav-h);
+                right: 0;
+                bottom: 0;
+                left: auto;
+                width: min(90vw, 380px);
+                background: var(--white);
+                border-bottom: none;
+                box-shadow: -8px 0 30px rgba(0,0,0,0.12);
+                transform: translateX(100%);
+                transition: transform 0.35s ease;
+                z-index: 97;
+                display: flex;
+                flex-direction: column;
+                overflow-y: auto;
+            }
+            .filter-bar-wrap.open { transform: translateX(0); }
+
+            .filter-drawer-head {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 1.2rem 1.4rem;
+                border-bottom: 1px solid var(--border);
+                position: sticky;
+                top: 0;
+                background: var(--white);
+                z-index: 2;
+            }
+            .filter-drawer-title {
+                font-family: var(--serif);
+                font-size: 1.4rem;
+                color: var(--text);
+            }
+            .filter-drawer-close {
+                background: none;
+                border: none;
+                font-size: 1.8rem;
+                line-height: 1;
+                color: var(--muted);
+                cursor: pointer;
+                padding: 0 0.2rem;
+            }
+
+            .filter-search-row {
+                padding: 1.2rem 1.4rem;
+                margin: 0;
+                max-width: none;
+            }
+            .filter-search-wrap { max-width: none; }
+
+            .filter-bar {
+                flex-direction: column;
+                align-items: stretch;
+                padding: 0;
+                margin: 0;
+                max-width: none;
+            }
+
+            .filter-cell {
+                flex: none;
+                border: none;
+                border-bottom: 1px solid var(--border);
+            }
+            .filter-cell:first-child { border-left: none; }
+            .filter-cell select {
+                height: 58px;
+                font-size: 0.82rem;
+                padding: 0 2.8rem 0 1.4rem;
+            }
+            .filter-cell::after { right: 1.4rem; }
+
+            .filter-price {
+                flex: none;
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+                padding: 1.1rem 1.4rem;
+            }
+
+            .filter-right {
+                flex-direction: column;
+                align-items: stretch;
+                margin-left: 0;
+            }
+            .sort-cell {
+                border-left: none;
+                border-bottom: 1px solid var(--border);
+                height: 58px;
+                padding: 0 1.4rem;
+                justify-content: space-between;
+            }
+            .view-toggle { display: none; }
+
+            .filter-drawer-foot {
+                display: flex;
+                gap: 0.8rem;
+                padding: 1rem 1.4rem;
+                border-top: 1px solid var(--border);
+                position: sticky;
+                bottom: 0;
+                background: var(--white);
+                margin-top: auto;
+            }
+            .filter-reset {
+                flex: 1;
+                border: 1px solid var(--border);
+                background: transparent;
+                color: var(--text);
+                padding: 0.9rem;
+                font-size: 0.72rem;
+                letter-spacing: 1.5px;
+                text-transform: uppercase;
+                cursor: pointer;
+            }
+            .filter-apply {
+                flex: 2;
+                border: none;
+                background: var(--mulberry);
+                color: #fff;
+                padding: 0.9rem;
+                font-size: 0.72rem;
+                letter-spacing: 1.5px;
+                text-transform: uppercase;
+                cursor: pointer;
+            }
+        }
+
+        @media (max-width: 860px) {
+            .nav-container { padding: 1.1rem 1.5rem; }
+            .logo img { height: 46px; }
         }
 
         @media (max-width: 768px) {
-            .nav-container {
-                flex-direction: column;
-                gap: 1.2rem;
-                padding: 1.2rem 2rem;
-            }
-
             .page-header {
                 padding: 2.5rem 1.5rem 2rem;
             }
 
             .header-row { flex-direction: column; align-items: flex-start; }
             .header-right { text-align: left; }
-
-            .mobile-filter-bar { top: 116px; }
         }
 
         @media (max-width: 500px) {
@@ -1053,7 +1350,7 @@
     <header class="navbar">
         <div class="nav-container">
             <div class="logo"><a href="index.html"><img src="logo.jpeg" height="56" alt="Закачалката — reloved store" style="display:block"></a></div>
-            <nav class="nav-links">
+            <nav class="nav-links" id="navLinks">
                 <ul>
                     <li><a href="index.html">Начало</a></li>
                     <li><a href="store.html" class="active">Магазин</a></li>
@@ -1061,11 +1358,15 @@
                 </ul>
             </nav>
             <div class="nav-icons">
-                <button aria-label="Wishlist">♡</button>
-                <button aria-label="Cart">👜</button>
+                <a class="social-link" href="https://www.facebook.com/p/%D0%97%D0%B0%D0%BA%D0%B0%D1%87%D0%B0%D0%BB%D0%BA%D0%B0%D1%82%D0%B0-Reloved-Store-100083130402532/" target="_blank" rel="noopener" aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+                <a class="social-link" href="https://www.instagram.com/zakachalkatarelovedstore/" target="_blank" rel="noopener" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+                <button class="nav-toggle" id="navToggle" aria-label="Отвори меню" aria-expanded="false" aria-controls="navLinks">
+                    <span></span><span></span><span></span>
+                </button>
             </div>
         </div>
     </header>
+    <div class="nav-overlay" id="navOverlay"></div>
 
 
     <!-- ========================= -->
@@ -1097,7 +1398,24 @@
     <!-- DESKTOP FILTER BAR        -->
     <!-- ========================= -->
 
-    <div class="filter-bar-wrap">
+    <div class="filter-bar-wrap" id="filterDrawer">
+        <div class="filter-drawer-head">
+            <span class="filter-drawer-title">Филтри и сортиране</span>
+            <button class="filter-drawer-close" id="filterClose" aria-label="Затвори">&times;</button>
+        </div>
+        <div class="filter-search-row">
+            <div class="filter-search-wrap">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Търсене по продукт, марка, таг или описание…"
+                    oninput="applyFilters()"
+                    aria-label="Search products"
+                />
+                <button id="searchClear" onclick="clearSearch()" aria-label="Clear search">×</button>
+            </div>
+        </div>
         <div class="filter-bar">
 
             <div class="filter-cell">
@@ -1190,7 +1508,13 @@
             </div>
 
         </div>
+
+        <div class="filter-drawer-foot">
+            <button class="filter-reset" id="filterReset" onclick="clearFilters()">Изчисти</button>
+            <button class="filter-apply" id="filterApply">Покажи резултатите</button>
+        </div>
     </div>
+    <div class="filter-overlay" id="filterOverlay"></div>
 
 
     <!-- ========================= -->
@@ -1198,11 +1522,13 @@
     <!-- ========================= -->
 
     <div class="mobile-filter-bar" id="mobileFilterBar">
-        <button class="mobile-filter-btn" onclick="alert('Filter panel — connect to your preferred mobile drawer component')">
-            ⊟ &nbsp; Филтри
+        <button class="mobile-filter-btn" id="openFiltersBtn" onclick="openFilters()">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="7" y1="12" x2="17" y2="12"/><line x1="10" y1="18" x2="14" y2="18"/></svg>
+            &nbsp; Филтри <span class="filter-count" id="filterCount"></span>
         </button>
-        <button class="mobile-filter-btn" onclick="alert('Sort panel')">
-            ⇅ &nbsp; Сортиране
+        <button class="mobile-filter-btn" onclick="openFilters()">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h13M3 12h9M3 18h5"/><path d="m17 15 3 3 3-3M20 18V9"/></svg>
+            &nbsp; Сортиране
         </button>
     </div>
 
@@ -1220,14 +1546,14 @@
             <div class="sidebar-section">
                 <p class="sidebar-heading">Категория</p>
                 <ul class="category-list" id="catList">
-                    <li><a href="#" class="active" data-cat="">Всички <span class="cat-count">36</span></a></li>
-                    <li><a href="#" data-cat="jackets">Якета <span class="cat-count">6</span></a></li>
-                    <li><a href="#" data-cat="dresses">Рокли <span class="cat-count">5</span></a></li>
-                    <li><a href="#" data-cat="bags">Чанти <span class="cat-count">7</span></a></li>
-                    <li><a href="#" data-cat="shoes">Обувки <span class="cat-count">4</span></a></li>
-                    <li><a href="#" data-cat="knitwear">Плетива <span class="cat-count">4</span></a></li>
-                    <li><a href="#" data-cat="skirts">Поли <span class="cat-count">3</span></a></li>
-                    <li><a href="#" data-cat="accessories">Аксесоари <span class="cat-count">7</span></a></li>
+                    <li><a href="#" class="active" data-cat="">Всички <span class="cat-count">0</span></a></li>
+                    <li><a href="#" data-cat="jackets">Якета <span class="cat-count">0</span></a></li>
+                    <li><a href="#" data-cat="dresses">Рокли <span class="cat-count">0</span></a></li>
+                    <li><a href="#" data-cat="bags">Чанти <span class="cat-count">0</span></a></li>
+                    <li><a href="#" data-cat="shoes">Обувки <span class="cat-count">0</span></a></li>
+                    <li><a href="#" data-cat="knitwear">Плетива <span class="cat-count">0</span></a></li>
+                    <li><a href="#" data-cat="skirts">Поли <span class="cat-count">0</span></a></li>
+                    <li><a href="#" data-cat="accessories">Аксесоари <span class="cat-count">0</span></a></li>
                 </ul>
             </div>
 
@@ -1297,9 +1623,8 @@
                 <a href="contact.html">Контакти</a>
             </div>
             <div class="footer-socials">
-                <a href="#">Instagram</a>
-                <a href="#">Pinterest</a>
-                <a href="#">TikTok</a>
+                <a href="https://www.instagram.com/zakachalkatarelovedstore/" target="_blank" rel="noopener">Instagram</a>
+                <a href="https://www.facebook.com/p/%D0%97%D0%B0%D0%BA%D0%B0%D1%87%D0%B0%D0%BB%D0%BA%D0%B0%D1%82%D0%B0-Reloved-Store-100083130402532/" target="_blank" rel="noopener">Facebook</a>
             </div>
         </div>
         <div class="footer-bottom">
@@ -1340,21 +1665,30 @@
                     { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` } }
                 );
                 const data = await res.json();
-                PRODUCTS = data.map(p => ({
-                    id:        p.id,
-                    brand:     p.brand || '',
-                    name:      p.name || '',
-                    meta:      [p.size, p.condition].filter(Boolean).join(' · '),
-                    price:     parseFloat(p.price) || 0,
-                    cat:       p.category || '',
-                    size:      p.size || '',
-                    color:     p.color || '',
-                    badge:     p.badge || null,
-                    condition: p.condition || '',
-                    img:       (p.image_urls && p.image_urls[0]) || 'https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=600&q=60',
-                }));
+                PRODUCTS = data.map(p => {
+                    const tags = Array.isArray(p.tags) ? p.tags : [];
+                    const description = p.description || '';
+                    return {
+                        id:          p.id,
+                        brand:       p.brand || '',
+                        name:        p.name || '',
+                        meta:        [p.size, p.condition].filter(Boolean).join(' · '),
+                        price:       parseFloat(p.price) || 0,
+                        cat:         p.category || '',
+                        size:        p.size || '',
+                        color:       p.color || '',
+                        badge:       p.badge || null,
+                        condition:   p.condition || '',
+                        description,
+                        tags,
+                        img:         (p.image_urls && p.image_urls[0]) || 'https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=600&q=60',
+                        // pre-built lowercase blob: name + brand + tags + description
+                        searchBlob:  [p.name, p.brand, ...tags, description].filter(Boolean).join(' ').toLowerCase(),
+                    };
+                });
                 filtered = [...PRODUCTS];
                 renderCards();
+                updateCategoryCounts();
             } catch(e) {
                 console.error('Failed to load products:', e);
             }
@@ -1411,7 +1745,7 @@
                         <h2 class="card-name">${p.name}</h2>
                         <p class="card-meta">${p.meta}</p>
                         <div class="card-price-row">
-                            <span class="card-price">${p.price.toLocaleString()} лв</span>
+                            <span class="card-price">€${p.price.toFixed(2)}</span>
                             ${p.condition ? `<span class="auth-pill">${p.condition}</span>` : ''}
                         </div>
                     </div>
@@ -1455,12 +1789,15 @@
         /* ——— filters ——— */
 
         function applyFilters() {
-            const cat   = document.getElementById('filterCat').value;
-            const size  = document.getElementById('filterSize').value;
-            const color = document.getElementById('filterColor').value;
-            const brand = document.getElementById('filterBrand').value;
-            const price = parseInt(document.getElementById('priceRange').value);
-            const sort  = document.getElementById('sortBy').value;
+            const cat    = document.getElementById('filterCat').value;
+            const size   = document.getElementById('filterSize').value;
+            const color  = document.getElementById('filterColor').value;
+            const brand  = document.getElementById('filterBrand').value;
+            const price  = parseInt(document.getElementById('priceRange').value);
+            const sort   = document.getElementById('sortBy').value;
+            const search = document.getElementById('searchInput').value.trim().toLowerCase();
+
+            document.getElementById('searchClear').classList.toggle('visible', !!search);
 
             filtered = PRODUCTS.filter(p => {
                 if (cat   && p.cat   !== cat)   return false;
@@ -1468,6 +1805,11 @@
                 if (color && p.color !== color) return false;
                 if (brand && p.brand !== brand) return false;
                 if (price < 2000 && p.price > price) return false;
+                if (search) {
+                    // Keyword search across product name, brand, tags, and description.
+                    const terms = search.split(/\s+/).filter(Boolean);
+                    if (!terms.every(term => p.searchBlob.includes(term))) return false;
+                }
                 return true;
             });
 
@@ -1477,18 +1819,31 @@
 
             visibleCount = PAGE_SIZE;
             renderCards();
-            renderTags({ cat, size, color, brand, price });
+            renderTags({ cat, size, color, brand, price, search });
         }
 
-        function renderTags({ cat, size, color, brand, price }) {
+        function clearSearch() {
+            document.getElementById('searchInput').value = '';
+            applyFilters();
+        }
+
+        function renderTags({ cat, size, color, brand, price, search }) {
             const container = document.getElementById('activeFilters');
             container.innerHTML = '';
             const active = [];
+            if (search)     active.push({ label: `„${search}“`, key: 'searchInput' });
             if (cat)        active.push({ label: cat,   key: 'filterCat' });
             if (size)       active.push({ label: size,  key: 'filterSize' });
             if (color)      active.push({ label: color, key: 'filterColor' });
             if (brand)      active.push({ label: brand, key: 'filterBrand' });
-            if (price < 2000) active.push({ label: 'Max $' + price, key: 'priceRange', isPrice: true });
+            if (price < 2000) active.push({ label: 'Max €' + price, key: 'priceRange', isPrice: true });
+
+            /* reflect active-filter count on the mobile "Филтри" button */
+            const badge = document.getElementById('filterCount');
+            if (badge) {
+                badge.textContent = active.length;
+                badge.classList.toggle('visible', active.length > 0);
+            }
 
             active.forEach(({ label, key, isPrice }) => {
                 const tag = document.createElement('button');
@@ -1516,6 +1871,7 @@
             ['filterCat','filterSize','filterColor','filterBrand'].forEach(id => {
                 document.getElementById(id).value = '';
             });
+            document.getElementById('searchInput').value = '';
             document.getElementById('priceRange').value = 2000;
             updatePrice(2000);
             applyFilters();
@@ -1523,7 +1879,18 @@
 
         function updatePrice(val) {
             const display = document.getElementById('priceDisplay');
-            display.textContent = parseInt(val) >= 2000 ? 'All' : '$' + parseInt(val).toLocaleString();
+            display.textContent = parseInt(val) >= 2000 ? 'Всички' : '€' + parseInt(val).toLocaleString();
+        }
+
+        /* Fill in real counts on the category sidebar from actual inventory
+           (these used to be hardcoded placeholder numbers). */
+        function updateCategoryCounts() {
+            document.querySelectorAll('#catList a').forEach(a => {
+                const cat = a.dataset.cat;
+                const count = cat ? PRODUCTS.filter(p => p.cat === cat).length : PRODUCTS.length;
+                const countEl = a.querySelector('.cat-count');
+                if (countEl) countEl.textContent = count;
+            });
         }
 
         /* sidebar category links */
@@ -1585,6 +1952,51 @@
         }
         setNavHeight();
         window.addEventListener('resize', setNavHeight);
+
+        /* ——— mobile nav toggle ——— */
+        (function () {
+            const toggle  = document.getElementById('navToggle');
+            const links   = document.getElementById('navLinks');
+            const overlay = document.getElementById('navOverlay');
+            if (!toggle || !links) return;
+
+            function closeMenu() {
+                toggle.classList.remove('open');
+                links.classList.remove('open');
+                if (overlay) overlay.classList.remove('open');
+                toggle.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = '';
+            }
+            function openMenu() {
+                toggle.classList.add('open');
+                links.classList.add('open');
+                if (overlay) overlay.classList.add('open');
+                toggle.setAttribute('aria-expanded', 'true');
+                document.body.style.overflow = 'hidden';
+            }
+            toggle.addEventListener('click', () => {
+                links.classList.contains('open') ? closeMenu() : openMenu();
+            });
+            if (overlay) overlay.addEventListener('click', closeMenu);
+            links.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+            window.addEventListener('resize', () => { if (window.innerWidth > 860) closeMenu(); });
+        })();
+
+        /* ——— mobile filter drawer ——— */
+        function openFilters() {
+            document.getElementById('filterDrawer').classList.add('open');
+            document.getElementById('filterOverlay').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeFilters() {
+            document.getElementById('filterDrawer').classList.remove('open');
+            document.getElementById('filterOverlay').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+        document.getElementById('filterClose').addEventListener('click', closeFilters);
+        document.getElementById('filterApply').addEventListener('click', closeFilters);
+        document.getElementById('filterOverlay').addEventListener('click', closeFilters);
+        window.addEventListener('resize', () => { if (window.innerWidth > 1000) closeFilters(); });
 
         /* ——— init ——— */
         loadProducts();

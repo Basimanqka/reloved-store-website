@@ -56,8 +56,9 @@ function mapProductRow(row) {
     };
 }
 
+/* EUR is the site's master currency. */
 function formatPrice(amount) {
-    return Number(amount).toLocaleString("bg-BG") + " лв";
+    return "€" + Number(amount).toFixed(2);
 }
 
 function getQueryParam(name) {

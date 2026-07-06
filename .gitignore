@@ -7,3 +7,6 @@ node_modules/
 .claude/
 scratch1.txt
 *.testwrite
+
+.vercel
+.env*

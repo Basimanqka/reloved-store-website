@@ -27,8 +27,8 @@
             --border:      #EDE2D8;
             --text:        #2C2420;
             --muted:        #8B5E52;
-            --accent:      #89CECA;
-            --accent-dark: #5BA8A0;
+            --accent:      #AA5878;
+            --accent-dark: #7A3E56;
             --gold:        #C9998A;
             --gold-light:  #F2EBE3;
             --bg-card:      #F2EBE3;
@@ -87,6 +87,8 @@
             line-height: 1;
         }
 
+        .logo img { height: 56px; width: auto; display: block; }
+
         .nav-links ul {
             display: flex;
             gap: 2.5rem;
@@ -115,18 +117,103 @@
 
         .nav-icons {
             display: flex;
+            align-items: center;
             gap: 1rem;
         }
 
         .nav-icons button {
             border: none;
             background: transparent;
-            font-size: 1.1rem;
+            font-size: 0;
+            line-height: 1;
             cursor: pointer;
             transition: var(--transition);
+            display: flex;
+            align-items: center;
         }
 
         .nav-icons button:hover { color: var(--rose-dark); }
+
+        .nav-icons .social-link {
+            display: flex;
+            align-items: center;
+            color: var(--text);
+            transition: color 0.3s;
+        }
+        .nav-icons .social-link:hover { color: var(--accent); }
+
+        /* hamburger toggle (mobile) */
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            width: 40px;
+            height: 40px;
+            background: transparent;
+            border: none;
+            padding: 0;
+            flex-shrink: 0;
+        }
+
+        .nav-toggle span {
+            display: block;
+            width: 22px;
+            height: 1.5px;
+            background: var(--text);
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .nav-toggle.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+        .nav-toggle.open span:nth-child(2) { opacity: 0; }
+        .nav-toggle.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+        .nav-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(44,36,32,0.35);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            z-index: 98;
+        }
+
+        .nav-overlay.open { opacity: 1; visibility: visible; }
+
+        @media (max-width: 860px) {
+            .nav-toggle { display: flex; }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                width: min(78vw, 320px);
+                background: var(--white);
+                padding: 5.5rem 2rem 2.5rem;
+                display: flex;
+                flex-direction: column;
+                transform: translateX(100%);
+                transition: transform 0.35s ease;
+                z-index: 99;
+                overflow-y: auto;
+                box-shadow: -8px 0 30px rgba(0,0,0,0.10);
+            }
+
+            .nav-links.open { transform: translateX(0); }
+
+            .nav-links ul { flex-direction: column; gap: 0; }
+            .nav-links li { border-bottom: 1px solid var(--border); }
+
+            .nav-links a {
+                display: block;
+                padding: 1rem 0.2rem;
+                font-size: 1rem;
+            }
+
+            .nav-container { padding: 1.1rem 1.5rem; }
+            .logo img { height: 46px; }
+        }
 
 
         /* ========================= */
@@ -174,7 +261,33 @@
             grid-template-columns: 1fr 1fr;
             gap: 5rem;
             align-items: start;
+            position: relative;
+            min-height: 60vh;
         }
+
+        /* Hide real content until the product data has loaded, so the
+           previous/placeholder listing never flashes on screen. */
+        .product-layout.is-loading .gallery,
+        .product-layout.is-loading .product-info { visibility: hidden; }
+
+        .product-loading {
+            display: none;
+            position: absolute;
+            inset: 0;
+            align-items: center;
+            justify-content: center;
+        }
+        .product-layout.is-loading .product-loading { display: flex; }
+
+        .product-loading .spinner {
+            width: 34px;
+            height: 34px;
+            border: 2px solid var(--border);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: pl-spin 0.8s linear infinite;
+        }
+        @keyframes pl-spin { to { transform: rotate(360deg); } }
 
 
         /* ========================= */
@@ -275,11 +388,10 @@
 
         .product-price-block {
             display: flex;
+            flex-wrap: wrap;
             align-items: baseline;
             gap: 1rem;
-            margin-bottom: 2.5rem;
-            padding-bottom: 2rem;
-            border-bottom: 1px solid var(--border);
+            margin-bottom: 0.5rem;
         }
 
         .price-current {
@@ -288,6 +400,24 @@
             font-weight: 500;
             color: var(--text);
             letter-spacing: -0.5px;
+        }
+
+        .price-original {
+            font-size: 1.2rem;
+            color: var(--muted);
+            text-decoration: line-through;
+        }
+
+        .price-bgn-row {
+            margin-bottom: 2.5rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .price-bgn {
+            font-size: 0.85rem;
+            color: var(--muted);
+            letter-spacing: 0.3px;
         }
 
         .price-badge {
@@ -840,11 +970,6 @@
                 height: 420px;
             }
 
-            .nav-container {
-                flex-direction: column;
-                gap: 1.5rem;
-            }
-
             .page-header {
                 padding: 2rem 2rem 1rem;
             }
@@ -898,19 +1023,23 @@
     <header class="navbar">
         <div class="nav-container">
             <div class="logo"><a href="index.html"><img src="logo.jpeg" height="56" alt="Закачалката — reloved store" style="display:block"></a></div>
-            <nav class="nav-links">
+            <nav class="nav-links" id="navLinks">
                 <ul>
-                    <li><a href="#">Начало</a></li>
+                    <li><a href="index.html">Начало</a></li>
                     <li><a href="store.html">Магазин</a></li>
-                    <li><a href="#">Контакти</a></li>
+                    <li><a href="contact.html">Контакти</a></li>
                 </ul>
             </nav>
             <div class="nav-icons">
-                <button aria-label="Wishlist">♡</button>
-                <button aria-label="Cart">👜</button>
+                <a class="social-link" href="https://www.facebook.com/p/%D0%97%D0%B0%D0%BA%D0%B0%D1%87%D0%B0%D0%BB%D0%BA%D0%B0%D1%82%D0%B0-Reloved-Store-100083130402532/" target="_blank" rel="noopener" aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+                <a class="social-link" href="https://www.instagram.com/zakachalkatarelovedstore/" target="_blank" rel="noopener" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+                <button class="nav-toggle" id="navToggle" aria-label="Отвори меню" aria-expanded="false" aria-controls="navLinks">
+                    <span></span><span></span><span></span>
+                </button>
             </div>
         </div>
     </header>
+    <div class="nav-overlay" id="navOverlay"></div>
 
 
     <!-- ========================= -->
@@ -934,7 +1063,9 @@
     <!-- PRODUCT LAYOUT -->
     <!-- ========================= -->
 
-    <main class="product-layout">
+    <main class="product-layout is-loading">
+
+        <div class="product-loading"><div class="spinner"></div></div>
 
 
         <!-- ========================= -->
@@ -944,27 +1075,10 @@
         <div class="gallery">
 
             <div class="main-image-wrapper">
-                <img
-                    id="mainImage"
-                    src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=900&q=80"
-                    alt="Prada Вълнено Сако — front view"
-                />
+                <img id="mainImage" src="" alt="" />
             </div>
 
-            <div class="thumbnails">
-                <div class="thumb active" onclick="switchImage(this, 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=900&q=80', 'Front view')">
-                    <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=300&q=70" alt="Front view" />
-                </div>
-                <div class="thumb" onclick="switchImage(this, 'https://images.unsplash.com/photo-1608731267464-ef6b462d5c89?w=900&q=80', 'Back view')">
-                    <img src="https://images.unsplash.com/photo-1608731267464-ef6b462d5c89?w=300&q=70" alt="Back view" />
-                </div>
-                <div class="thumb" onclick="switchImage(this, 'https://images.unsplash.com/photo-1512374382149-233c42b6a83b?w=900&q=80', 'Detail')">
-                    <img src="https://images.unsplash.com/photo-1512374382149-233c42b6a83b?w=300&q=70" alt="Detail shot" />
-                </div>
-                <div class="thumb" onclick="switchImage(this, 'https://images.unsplash.com/photo-1509631179647-0177331693ae?w=900&q=80', 'Label')">
-                    <img src="https://images.unsplash.com/photo-1509631179647-0177331693ae?w=300&q=70" alt="Label" />
-                </div>
-            </div>
+            <div class="thumbnails"></div>
 
         </div>
 
@@ -984,8 +1098,12 @@
             <p class="product-meta-line">Размер M &nbsp;·&nbsp; Есен / Зима &nbsp;·&nbsp; Отлично Състояние</p>
 
             <div class="product-price-block">
-                <span class="price-current">240 лв</span>
+                <span class="price-current">€122.71</span>
+                <span class="price-original" style="display:none"></span>
                 <span class="price-badge">Проверен</span>
+            </div>
+            <div class="price-bgn-row">
+                <span class="price-bgn">≈ 240.00 лв</span>
             </div>
 
             <div class="product-description">
@@ -1112,10 +1230,6 @@
                 <span class="buy-btn-arrow">→</span>
             </button>
 
-            <div class="wishlist-line">
-                <button class="wishlist-link">♡ &nbsp; Запази в любими</button>
-            </div>
-
         </div>
 
     </main>
@@ -1137,9 +1251,8 @@
                 <a href="#">Контакти</a>
             </div>
             <div class="footer-socials">
-                <a href="#">Instagram</a>
-                <a href="#">Pinterest</a>
-                <a href="#">TikTok</a>
+                <a href="https://www.instagram.com/zakachalkatarelovedstore/" target="_blank" rel="noopener">Instagram</a>
+                <a href="https://www.facebook.com/p/%D0%97%D0%B0%D0%BA%D0%B0%D1%87%D0%B0%D0%BB%D0%BA%D0%B0%D1%82%D0%B0-Reloved-Store-100083130402532/" target="_blank" rel="noopener">Facebook</a>
             </div>
         </div>
     </footer>
@@ -1163,14 +1276,10 @@
                 <p class="modal-subtitle">Ще запазим артикула за 24 часа, докато потвърдим поръчката ви.</p>
 
                 <div class="modal-product-summary">
-                    <img
-                        class="modal-product-img"
-                        src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=200&q=70"
-                        alt="Prada Вълнено Сако"
-                    />
+                    <img class="modal-product-img" src="" alt="" />
                     <div>
                         <p class="modal-product-name">Prada — Вълнено Сако</p>
-                        <p class="modal-product-price">Размер IT 42 &nbsp;·&nbsp; Антрацитно Сиво &nbsp;·&nbsp; 240 лв</p>
+                        <p class="modal-product-price">Размер IT 42 &nbsp;·&nbsp; Антрацитно Сиво &nbsp;·&nbsp; €122.71</p>
                     </div>
                 </div>
 
@@ -1247,11 +1356,51 @@
 
     <script>
 
+        /* ——— mobile nav toggle ——— */
+        (function () {
+            const toggle  = document.getElementById('navToggle');
+            const links   = document.getElementById('navLinks');
+            const overlay = document.getElementById('navOverlay');
+            if (!toggle || !links) return;
+
+            function closeMenu() {
+                toggle.classList.remove('open');
+                links.classList.remove('open');
+                if (overlay) overlay.classList.remove('open');
+                toggle.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = '';
+            }
+            function openMenu() {
+                toggle.classList.add('open');
+                links.classList.add('open');
+                if (overlay) overlay.classList.add('open');
+                toggle.setAttribute('aria-expanded', 'true');
+                document.body.style.overflow = 'hidden';
+            }
+            toggle.addEventListener('click', () => {
+                links.classList.contains('open') ? closeMenu() : openMenu();
+            });
+            if (overlay) overlay.addEventListener('click', closeMenu);
+            links.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+            window.addEventListener('resize', () => { if (window.innerWidth > 860) closeMenu(); });
+        })();
+
         /* ——— Config ——— */
         const SUPABASE_URL = 'https://ozwydlffpvrcgnhdcjvw.supabase.co';
         const SUPABASE_KEY = 'sb_publishable_wyBLx6NPlR8uk-jC-qyupQ_FeQzE37l';
 
         let currentProduct = null;
+
+        /* ——— Currency: EUR is the master currency site-wide; BGN is
+           derived using the fixed, legally-pegged rate (1 EUR = 1.95583 BGN)
+           and shown alongside on this page only. ——— */
+        const BGN_PER_EUR = 1.95583;
+        function formatEur(amount) {
+            return `€${Number(amount).toFixed(2)}`;
+        }
+        function formatBgn(amountInEur) {
+            return `${(Number(amountInEur) * BGN_PER_EUR).toFixed(2)} лв`;
+        }
 
         /* ——— Load product from URL param ——— */
         async function loadProduct() {
@@ -1314,12 +1463,16 @@
             document.querySelector('.product-meta-line').textContent =
                 [p.size, p.category, p.condition].filter(Boolean).join(' · ');
 
-            /* Price */
-            document.querySelector('.price-current').textContent = `${parseFloat(p.price).toLocaleString()} лв`;
+            /* Price — EUR is the master currency; BGN shown alongside at the
+               fixed peg rate (1 EUR = 1.95583 BGN) since this is a BG store. */
+            const priceEur = parseFloat(p.price) || 0;
+            document.querySelector('.price-current').textContent = formatEur(priceEur);
+            document.querySelector('.price-bgn').textContent = `≈ ${formatBgn(priceEur)}`;
+
             const origEl = document.querySelector('.price-original');
             if (origEl) {
                 if (p.original_price && p.original_price > p.price) {
-                    origEl.textContent = `${parseFloat(p.original_price).toLocaleString()} лв`;
+                    origEl.textContent = formatEur(parseFloat(p.original_price));
                     origEl.style.display = '';
                 } else {
                     origEl.style.display = 'none';
@@ -1352,15 +1505,24 @@
                 <div class="detail-row"><span class="detail-label">Състояние</span><span class="detail-value">${p.condition || '—'}</span></div>
             `;
 
-            /* Modal product name */
+            /* Modal product name + price */
             const modalName = document.querySelector('.modal-product-name');
             if (modalName) modalName.textContent = `${p.brand} ${p.name}`;
+            const modalPrice = document.querySelector('.modal-product-price');
+            if (modalPrice) {
+                modalPrice.textContent = [p.size, p.color, formatEur(priceEur)].filter(Boolean).join(' · ');
+            }
+            const modalImg = document.querySelector('.modal-product-img');
+            if (modalImg) { modalImg.src = images[0]; modalImg.alt = `${p.brand} ${p.name}`; }
 
             /* Sold state */
             if (p.is_sold) {
                 const buyBtn = document.querySelector('.buy-btn');
                 if (buyBtn) { buyBtn.textContent = 'Запазено'; buyBtn.disabled = true; buyBtn.style.opacity = '0.5'; }
             }
+
+            /* Reveal the now-populated content */
+            document.querySelector('.product-layout').classList.remove('is-loading');
         }
 
         function showError(msg) {
@@ -1437,48 +1599,63 @@
             if (empty.length) return;
 
             const btn = document.querySelector('.confirm-btn');
+            const originalBtnText = btn.textContent;
             btn.textContent = 'Изпращане…';
             btn.disabled = true;
+            hideOrderError();
 
             const orderData = {
-                product_id:   currentProduct?.id || null,
-                product_name: currentProduct ? `${currentProduct.brand} ${currentProduct.name}` : '',
-                full_name:    document.getElementById('fullName').value.trim(),
-                email:        document.getElementById('email').value.trim(),
-                mobile:       document.getElementById('mobile').value.trim(),
-                street:       document.getElementById('street').value.trim(),
-                city:         document.getElementById('city').value.trim(),
-                postcode:     document.getElementById('postcode').value.trim(),
-                notes:        document.getElementById('notes').value.trim(),
+                productId: currentProduct?.id || null,
+                fullName:  document.getElementById('fullName').value.trim(),
+                email:     document.getElementById('email').value.trim(),
+                mobile:    document.getElementById('mobile').value.trim(),
+                street:    document.getElementById('street').value.trim(),
+                city:      document.getElementById('city').value.trim(),
+                postcode:  document.getElementById('postcode').value.trim(),
+                notes:     document.getElementById('notes').value.trim(),
+                consent:   gdpr.checked,
             };
 
             try {
-                /* 1. Save order to Supabase */
-                await fetch(`${SUPABASE_URL}/rest/v1/orders`, {
-                    method: 'POST',
-                    headers: {
-                        'apikey': SUPABASE_KEY,
-                        'Authorization': `Bearer ${SUPABASE_KEY}`,
-                        'Content-Type': 'application/json',
-                        'Prefer': 'return=minimal'
-                    },
-                    body: JSON.stringify(orderData)
-                });
-
-                /* 2. Send email via serverless function */
-                await fetch('/api/send-order', {
+                /* Single call: the serverless function re-validates
+                   everything, saves the order in Supabase, marks the product
+                   as sold, and emails the shop owner via Resend. */
+                const res = await fetch('/api/create-order', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(orderData)
                 });
-            } catch(e) {
-                console.error('Order error:', e);
-                /* Still show success — order was likely saved */
-            }
+                const result = await res.json().catch(() => ({}));
 
-            formState.classList.add('hidden');
-            confirmState.classList.add('visible');
-            overlay.querySelector('.modal').scrollTop = 0;
+                if (!res.ok || !result.success) {
+                    throw new Error(result.error || 'Възникна грешка при изпращането на поръчката.');
+                }
+
+                formState.classList.add('hidden');
+                confirmState.classList.add('visible');
+                overlay.querySelector('.modal').scrollTop = 0;
+            } catch (e) {
+                console.error('Order error:', e);
+                showOrderError(e.message || 'Възникна грешка. Моля, опитайте отново.');
+                btn.textContent = originalBtnText;
+                btn.disabled = false;
+            }
+        }
+
+        function showOrderError(msg) {
+            let el = document.getElementById('orderError');
+            if (!el) {
+                el = document.createElement('p');
+                el.id = 'orderError';
+                el.style.cssText = 'color:#c0392b;font-size:0.9rem;margin:-0.5rem 0 1rem;';
+                document.querySelector('.confirm-btn').insertAdjacentElement('beforebegin', el);
+            }
+            el.textContent = msg;
+        }
+
+        function hideOrderError() {
+            const el = document.getElementById('orderError');
+            if (el) el.remove();
         }
 
         function clearForm() {

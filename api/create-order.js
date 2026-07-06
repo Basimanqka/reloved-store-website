@@ -3,9 +3,17 @@
  *
  * Receives an order from product.html's "Поръчай сега" modal, re-validates
  * everything server-side (never trust the client for price/availability),
- * logs the order in Supabase, marks the product as reserved, and emails the
- * shop owner via Resend so they can follow up and arrange cash-on-delivery /
- * in-person payment.
+ * logs the order in Supabase, marks the product as sold so it can't be
+ * ordered twice, and emails the shop owner via Resend so they can follow up
+ * and arrange delivery / cash-on-delivery payment.
+ *
+ * NOTE on schema: this matches the *actual* live Supabase tables —
+ *   products: id, name, brand, description, price, original_price,
+ *             category, condition, tags, image_urls, is_sold, created_at
+ *   orders:   id, product_id, product_name, full_name, email, mobile,
+ *             street, city, postcode, notes, status, created_at
+ * `price` is always the current/selling price (in EUR); `original_price`
+ * is only set when there's a discount and is always higher than `price`.
  *
  * Required environment variables (set in Vercel → Project → Settings →
  * Environment Variables — see ../SETUP.md):
@@ -13,14 +21,15 @@
  *   SUPABASE_SERVICE_ROLE_KEY   (secret — never expose to the browser)
  *   RESEND_API_KEY
  *   OWNER_EMAIL                 comma-separated list, e.g. "a@b.com,c@d.com"
- *   FROM_EMAIL                  verified Resend sender, e.g. "orders@yourdomain.com"
+ *   FROM_EMAIL                  verified Resend sender, e.g. "onboarding@resend.dev"
  *   SEND_CUSTOMER_CONFIRMATION  "true" / "false" (optional, defaults to true)
  */
 
 const { createClient } = require("@supabase/supabase-js");
 
-const REQUIRED_FIELDS = ["productId", "fullName", "email", "phone", "street", "city", "postcode"];
+const REQUIRED_FIELDS = ["productId", "fullName", "email", "mobile", "street", "city", "postcode"];
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const BGN_PER_EUR = 1.95583;
 
 module.exports = async function handler(req, res) {
     if (req.method !== "POST") {
@@ -76,35 +85,27 @@ module.exports = async function handler(req, res) {
     if (!product) {
         return res.status(404).json({ success: false, error: "Product not found" });
     }
-    if (product.status === "sold") {
+    if (product.is_sold) {
         return res.status(409).json({ success: false, error: "This item has already been sold" });
     }
-    if (product.status === "reserved") {
-        return res.status(409).json({ success: false, error: "This item is already reserved by another customer" });
-    }
 
-    const effectivePrice = product.discount_price ?? product.price;
+    const effectivePriceEur = Number(product.price);
+    const productLabel = `${product.brand || ""} ${product.name || ""}`.trim();
 
     // ---- insert order -------------------------------------------------------
     const { data: order, error: orderError } = await supabase
         .from("orders")
         .insert({
             product_id: product.id,
-            product_snapshot: {
-                brand: product.brand,
-                name: product.name,
-                price: effectivePrice,
-                currency: product.currency,
-            },
+            product_name: productLabel,
             full_name: String(body.fullName).trim(),
             email: String(body.email).trim(),
-            phone: String(body.phone).trim(),
+            mobile: String(body.mobile).trim(),
             street: String(body.street).trim(),
             city: String(body.city).trim(),
             postcode: String(body.postcode).trim(),
-            country: body.country || "BG",
             notes: body.notes ? String(body.notes).trim() : null,
-            consent: true,
+            status: "new",
         })
         .select()
         .single();
@@ -114,26 +115,27 @@ module.exports = async function handler(req, res) {
         return res.status(500).json({ success: false, error: "Could not save order" });
     }
 
-    // ---- reserve the product so it can't be double-sold --------------------
+    // ---- mark the product sold so it can't be ordered twice ----------------
     const { error: updateError } = await supabase
         .from("products")
-        .update({ status: "reserved" })
+        .update({ is_sold: true })
         .eq("id", product.id);
 
     if (updateError) {
-        console.error("[create-order] product reserve error (non-fatal):", updateError);
+        console.error("[create-order] product update error (non-fatal):", updateError);
     }
 
     // ---- email the shop owner ----------------------------------------------
     const ownerEmails = OWNER_EMAIL.split(",").map((e) => e.trim()).filter(Boolean);
+    const priceLine = `€${effectivePriceEur.toFixed(2)} (≈ ${(effectivePriceEur * BGN_PER_EUR).toFixed(2)} лв)`;
 
     const ownerHtml = `
-        <h2>Нова поръчка — ${escapeHtml(product.brand)} ${escapeHtml(product.name)}</h2>
-        <p><strong>Цена:</strong> ${effectivePrice} ${product.currency || "BGN"}</p>
+        <h2>Нова поръчка — ${escapeHtml(productLabel)}</h2>
+        <p><strong>Цена:</strong> ${priceLine}</p>
         <hr />
         <p><strong>Клиент:</strong> ${escapeHtml(body.fullName)}</p>
         <p><strong>Имейл:</strong> ${escapeHtml(body.email)}</p>
-        <p><strong>Телефон:</strong> ${escapeHtml(body.phone)}</p>
+        <p><strong>Телефон:</strong> ${escapeHtml(body.mobile)}</p>
         <p><strong>Адрес:</strong> ${escapeHtml(body.street)}, ${escapeHtml(body.city)}, ${escapeHtml(body.postcode)}</p>
         ${body.notes ? `<p><strong>Бележки:</strong> ${escapeHtml(body.notes)}</p>` : ""}
         <hr />
@@ -146,7 +148,7 @@ module.exports = async function handler(req, res) {
             from: FROM_EMAIL,
             to: ownerEmails,
             replyTo: body.email,
-            subject: `Нова поръчка: ${product.brand} ${product.name}`,
+            subject: `Нова поръчка: ${productLabel}`,
             html: ownerHtml,
         });
     } catch (err) {
@@ -160,9 +162,9 @@ module.exports = async function handler(req, res) {
     if (sendConfirmation) {
         const customerHtml = `
             <p>Здравейте, ${escapeHtml(body.fullName)},</p>
-            <p>Получихме поръчката ви за <strong>${escapeHtml(product.brand)} — ${escapeHtml(product.name)}</strong>
-               (${effectivePrice} ${product.currency || "BGN"}). Запазваме артикула за 24 часа, докато се свържем
-               с вас на този имейл или телефон, за да уточним доставката и плащането при получаване.</p>
+            <p>Получихме поръчката ви за <strong>${escapeHtml(productLabel)}</strong>
+               (${priceLine}). Ще се свържем с вас скоро на този имейл или телефон, за да уточним
+               доставката и плащането при получаване.</p>
             <p>Благодарим ви, че пазарувате от Закачалката!</p>
         `;
         try {
