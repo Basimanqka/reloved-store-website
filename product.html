@@ -1421,6 +1421,17 @@
             }
         }
 
+        const COLOR_LABELS = {
+            black:'Черен', white:'Бял', beige:'Бежов', grey:'Сив', navy:'Тъмносин',
+            blue:'Син', green:'Зелен', yellow:'Жълт', purple:'Лилав', pink:'Розов',
+            red:'Червен', brown:'Кафяв', gold:'Златен', silver:'Сребърен', multicolor:'Многоцветен'
+        };
+        const MATERIAL_LABELS = {
+            'genuine-leather':'Естествена кожа', 'faux-leather':'Изкуствена кожа',
+            cotton:'Памук', viscose:'Вискоза', wool:'Вълна', cashmere:'Кашмир',
+            linen:'Лен', polyester:'Полиестер', silk:'Коприна', lyocell:'Лиосел'
+        };
+
         function renderProduct(p) {
             /* Page title */
             document.title = `${p.brand || ''} ${p.name} — Закачалката`;
@@ -1488,9 +1499,10 @@
                 <div class="detail-row"><span class="detail-label">Размер</span><span class="detail-value">${p.size || '—'}</span></div>
             `;
 
-            /* Accordion — color */
+            /* Accordion — color & material */
             document.querySelector('.accordion .accordion-item:nth-child(2) .accordion-content').innerHTML = `
-                <div class="detail-row"><span class="detail-label">Цвят</span><span class="detail-value">${p.color || '—'}</span></div>
+                <div class="detail-row"><span class="detail-label">Цвят</span><span class="detail-value">${p.color ? (COLOR_LABELS[p.color] || p.color) : '—'}</span></div>
+                <div class="detail-row"><span class="detail-label">Материал</span><span class="detail-value">${p.material ? (MATERIAL_LABELS[p.material] || p.material) : '—'}</span></div>
             `;
 
             /* Accordion — tags */
@@ -1510,7 +1522,7 @@
             if (modalName) modalName.textContent = `${p.brand} ${p.name}`;
             const modalPrice = document.querySelector('.modal-product-price');
             if (modalPrice) {
-                modalPrice.textContent = [p.size, p.color, formatEur(priceEur)].filter(Boolean).join(' · ');
+                modalPrice.textContent = [p.size, (p.color ? (COLOR_LABELS[p.color] || p.color) : ''), formatEur(priceEur)].filter(Boolean).join(' · ');
             }
             const modalImg = document.querySelector('.modal-product-img');
             if (modalImg) { modalImg.src = images[0]; modalImg.alt = `${p.brand} ${p.name}`; }

@@ -1421,27 +1421,40 @@
             <div class="filter-cell">
                 <select id="filterCat" onchange="applyFilters()" aria-label="Category">
                     <option value="">Категория</option>
-                    <option value="jackets">Якета</option>
+                    <option value="outerwear">Връхни дрехи</option>
                     <option value="dresses">Рокли</option>
                     <option value="tops">Блузи</option>
+                    <option value="shirts">Ризи</option>
+                    <option value="pants">Панталони</option>
                     <option value="jeans">Дънки</option>
-                    <option value="shoes">Обувки</option>
-                    <option value="accessories">Аксесоари</option>
-                    <option value="bags">Чанти</option>
-                    <option value="knitwear">Плетива</option>
                     <option value="skirts">Поли</option>
+                    <option value="knitwear">Плетива</option>
+                    <option value="shoes">Обувки</option>
+                    <option value="bags">Чанти</option>
+                    <option value="accessories">Аксесоари</option>
                 </select>
             </div>
 
             <div class="filter-cell">
                 <select id="filterSize" onchange="applyFilters()" aria-label="Size">
                     <option value="">Размер</option>
-                    <option value="XS">XS</option>
-                    <option value="S">S</option>
-                    <option value="M">M</option>
-                    <option value="L">L</option>
-                    <option value="XL">XL</option>
-                    <option value="one-size">Един размер</option>
+                    <optgroup label="Дрехи">
+                        <option value="XS">XS</option>
+                        <option value="S">S</option>
+                        <option value="M">M</option>
+                        <option value="L">L</option>
+                        <option value="XL">XL</option>
+                        <option value="one-size">Един размер</option>
+                    </optgroup>
+                    <optgroup label="Обувки">
+                        <option value="35">35</option>
+                        <option value="36">36</option>
+                        <option value="37">37</option>
+                        <option value="38">38</option>
+                        <option value="39">39</option>
+                        <option value="40">40</option>
+                        <option value="41">41</option>
+                    </optgroup>
                 </select>
             </div>
 
@@ -1453,8 +1466,32 @@
                     <option value="beige">Бежов</option>
                     <option value="grey">Сив</option>
                     <option value="navy">Тъмносин</option>
+                    <option value="blue">Син</option>
+                    <option value="green">Зелен</option>
+                    <option value="yellow">Жълт</option>
+                    <option value="purple">Лилав</option>
                     <option value="pink">Розов</option>
                     <option value="red">Червен</option>
+                    <option value="brown">Кафяв</option>
+                    <option value="gold">Златен</option>
+                    <option value="silver">Сребърен</option>
+                    <option value="multicolor">Многоцветен</option>
+                </select>
+            </div>
+
+            <div class="filter-cell">
+                <select id="filterMaterial" onchange="applyFilters()" aria-label="Material">
+                    <option value="">Материал</option>
+                    <option value="genuine-leather">Естествена кожа</option>
+                    <option value="faux-leather">Изкуствена кожа</option>
+                    <option value="cotton">Памук</option>
+                    <option value="viscose">Вискоза</option>
+                    <option value="wool">Вълна</option>
+                    <option value="cashmere">Кашмир</option>
+                    <option value="linen">Лен</option>
+                    <option value="polyester">Полиестер</option>
+                    <option value="silk">Коприна</option>
+                    <option value="lyocell">Лиосел</option>
                 </select>
             </div>
 
@@ -1547,12 +1584,16 @@
                 <p class="sidebar-heading">Категория</p>
                 <ul class="category-list" id="catList">
                     <li><a href="#" class="active" data-cat="">Всички <span class="cat-count">0</span></a></li>
-                    <li><a href="#" data-cat="jackets">Якета <span class="cat-count">0</span></a></li>
+                    <li><a href="#" data-cat="outerwear">Връхни дрехи <span class="cat-count">0</span></a></li>
                     <li><a href="#" data-cat="dresses">Рокли <span class="cat-count">0</span></a></li>
-                    <li><a href="#" data-cat="bags">Чанти <span class="cat-count">0</span></a></li>
-                    <li><a href="#" data-cat="shoes">Обувки <span class="cat-count">0</span></a></li>
-                    <li><a href="#" data-cat="knitwear">Плетива <span class="cat-count">0</span></a></li>
+                    <li><a href="#" data-cat="tops">Блузи <span class="cat-count">0</span></a></li>
+                    <li><a href="#" data-cat="shirts">Ризи <span class="cat-count">0</span></a></li>
+                    <li><a href="#" data-cat="pants">Панталони <span class="cat-count">0</span></a></li>
+                    <li><a href="#" data-cat="jeans">Дънки <span class="cat-count">0</span></a></li>
                     <li><a href="#" data-cat="skirts">Поли <span class="cat-count">0</span></a></li>
+                    <li><a href="#" data-cat="knitwear">Плетива <span class="cat-count">0</span></a></li>
+                    <li><a href="#" data-cat="shoes">Обувки <span class="cat-count">0</span></a></li>
+                    <li><a href="#" data-cat="bags">Чанти <span class="cat-count">0</span></a></li>
                     <li><a href="#" data-cat="accessories">Аксесоари <span class="cat-count">0</span></a></li>
                 </ul>
             </div>
@@ -1677,6 +1718,7 @@
                         cat:         p.category || '',
                         size:        p.size || '',
                         color:       p.color || '',
+                        material:    p.material || '',
                         badge:       p.badge || null,
                         condition:   p.condition || '',
                         description,
@@ -1788,11 +1830,29 @@
 
         /* ——— filters ——— */
 
+        /* slug → Bulgarian label maps (for active-filter pills) */
+        const CAT_LABELS = {
+            outerwear:'Връхни дрехи', dresses:'Рокли', tops:'Блузи', shirts:'Ризи',
+            pants:'Панталони', jeans:'Дънки', skirts:'Поли', knitwear:'Плетива',
+            shoes:'Обувки', bags:'Чанти', accessories:'Аксесоари'
+        };
+        const COLOR_LABELS = {
+            black:'Черен', white:'Бял', beige:'Бежов', grey:'Сив', navy:'Тъмносин',
+            blue:'Син', green:'Зелен', yellow:'Жълт', purple:'Лилав', pink:'Розов',
+            red:'Червен', brown:'Кафяв', gold:'Златен', silver:'Сребърен', multicolor:'Многоцветен'
+        };
+        const MATERIAL_LABELS = {
+            'genuine-leather':'Естествена кожа', 'faux-leather':'Изкуствена кожа',
+            cotton:'Памук', viscose:'Вискоза', wool:'Вълна', cashmere:'Кашмир',
+            linen:'Лен', polyester:'Полиестер', silk:'Коприна', lyocell:'Лиосел'
+        };
+
         function applyFilters() {
-            const cat    = document.getElementById('filterCat').value;
-            const size   = document.getElementById('filterSize').value;
-            const color  = document.getElementById('filterColor').value;
-            const brand  = document.getElementById('filterBrand').value;
+            const cat      = document.getElementById('filterCat').value;
+            const size     = document.getElementById('filterSize').value;
+            const color    = document.getElementById('filterColor').value;
+            const material = document.getElementById('filterMaterial').value;
+            const brand    = document.getElementById('filterBrand').value;
             const price  = parseInt(document.getElementById('priceRange').value);
             const sort   = document.getElementById('sortBy').value;
             const search = document.getElementById('searchInput').value.trim().toLowerCase();
@@ -1803,6 +1863,7 @@
                 if (cat   && p.cat   !== cat)   return false;
                 if (size  && p.size  !== size)  return false;
                 if (color && p.color !== color) return false;
+                if (material && p.material !== material) return false;
                 if (brand && p.brand !== brand) return false;
                 if (price < 2000 && p.price > price) return false;
                 if (search) {
@@ -1819,7 +1880,7 @@
 
             visibleCount = PAGE_SIZE;
             renderCards();
-            renderTags({ cat, size, color, brand, price, search });
+            renderTags({ cat, size, color, material, brand, price, search });
         }
 
         function clearSearch() {
@@ -1827,14 +1888,15 @@
             applyFilters();
         }
 
-        function renderTags({ cat, size, color, brand, price, search }) {
+        function renderTags({ cat, size, color, material, brand, price, search }) {
             const container = document.getElementById('activeFilters');
             container.innerHTML = '';
             const active = [];
             if (search)     active.push({ label: `„${search}“`, key: 'searchInput' });
-            if (cat)        active.push({ label: cat,   key: 'filterCat' });
+            if (cat)        active.push({ label: CAT_LABELS[cat] || cat,   key: 'filterCat' });
             if (size)       active.push({ label: size,  key: 'filterSize' });
-            if (color)      active.push({ label: color, key: 'filterColor' });
+            if (color)      active.push({ label: COLOR_LABELS[color] || color, key: 'filterColor' });
+            if (material)   active.push({ label: MATERIAL_LABELS[material] || material, key: 'filterMaterial' });
             if (brand)      active.push({ label: brand, key: 'filterBrand' });
             if (price < 2000) active.push({ label: 'Max €' + price, key: 'priceRange', isPrice: true });
 
@@ -1868,7 +1930,7 @@
         }
 
         function clearFilters() {
-            ['filterCat','filterSize','filterColor','filterBrand'].forEach(id => {
+            ['filterCat','filterSize','filterColor','filterMaterial','filterBrand'].forEach(id => {
                 document.getElementById(id).value = '';
             });
             document.getElementById('searchInput').value = '';

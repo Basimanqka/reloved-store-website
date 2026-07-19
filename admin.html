@@ -478,15 +478,17 @@
                             <div class="field">
                                 <label>Категория *</label>
                                 <select id="f_category" required>
-                                    <option value="jackets">Якета</option>
+                                    <option value="outerwear">Връхни дрехи</option>
                                     <option value="dresses">Рокли</option>
                                     <option value="tops">Блузи</option>
+                                    <option value="shirts">Ризи</option>
+                                    <option value="pants">Панталони</option>
                                     <option value="jeans">Дънки</option>
-                                    <option value="shoes">Обувки</option>
-                                    <option value="accessories">Аксесоари</option>
-                                    <option value="bags">Чанти</option>
-                                    <option value="knitwear">Плетива</option>
                                     <option value="skirts">Поли</option>
+                                    <option value="knitwear">Плетива</option>
+                                    <option value="shoes">Обувки</option>
+                                    <option value="bags">Чанти</option>
+                                    <option value="accessories">Аксесоари</option>
                                 </select>
                             </div>
                             <div class="field">
@@ -502,12 +504,23 @@
                                 <label>Размер</label>
                                 <select id="f_size">
                                     <option value="">—</option>
-                                    <option value="XS">XS</option>
-                                    <option value="S">S</option>
-                                    <option value="M">M</option>
-                                    <option value="L">L</option>
-                                    <option value="XL">XL</option>
-                                    <option value="one-size">Един размер</option>
+                                    <optgroup label="Дрехи">
+                                        <option value="XS">XS</option>
+                                        <option value="S">S</option>
+                                        <option value="M">M</option>
+                                        <option value="L">L</option>
+                                        <option value="XL">XL</option>
+                                        <option value="one-size">Един размер</option>
+                                    </optgroup>
+                                    <optgroup label="Обувки">
+                                        <option value="35">35</option>
+                                        <option value="36">36</option>
+                                        <option value="37">37</option>
+                                        <option value="38">38</option>
+                                        <option value="39">39</option>
+                                        <option value="40">40</option>
+                                        <option value="41">41</option>
+                                    </optgroup>
                                 </select>
                             </div>
                             <div class="field">
@@ -519,8 +532,32 @@
                                     <option value="beige">Бежов</option>
                                     <option value="grey">Сив</option>
                                     <option value="navy">Тъмносин</option>
+                                    <option value="blue">Син</option>
+                                    <option value="green">Зелен</option>
+                                    <option value="yellow">Жълт</option>
+                                    <option value="purple">Лилав</option>
                                     <option value="pink">Розов</option>
                                     <option value="red">Червен</option>
+                                    <option value="brown">Кафяв</option>
+                                    <option value="gold">Златен</option>
+                                    <option value="silver">Сребърен</option>
+                                    <option value="multicolor">Многоцветен</option>
+                                </select>
+                            </div>
+                            <div class="field">
+                                <label>Материал</label>
+                                <select id="f_material">
+                                    <option value="">—</option>
+                                    <option value="genuine-leather">Естествена кожа</option>
+                                    <option value="faux-leather">Изкуствена кожа</option>
+                                    <option value="cotton">Памук</option>
+                                    <option value="viscose">Вискоза</option>
+                                    <option value="wool">Вълна</option>
+                                    <option value="cashmere">Кашмир</option>
+                                    <option value="linen">Лен</option>
+                                    <option value="polyester">Полиестер</option>
+                                    <option value="silk">Коприна</option>
+                                    <option value="lyocell">Лиосел</option>
                                 </select>
                             </div>
 
@@ -819,10 +856,11 @@
                 if (p) {
                     document.getElementById('f_brand').value          = p.brand || '';
                     document.getElementById('f_name').value           = p.name  || '';
-                    document.getElementById('f_category').value       = p.category  || 'jackets';
+                    document.getElementById('f_category').value       = p.category  || 'outerwear';
                     document.getElementById('f_condition').value      = p.condition || 'Отлично';
                     document.getElementById('f_size').value           = p.size  || '';
                     document.getElementById('f_color').value          = p.color || '';
+                    document.getElementById('f_material').value       = p.material || '';
                     document.getElementById('f_price').value          = p.price ?? '';
                     document.getElementById('f_original_price').value = p.original_price ?? '';
                     document.getElementById('f_tags').value           = (p.tags || []).join(', ');
@@ -860,6 +898,7 @@
                     condition:      document.getElementById('f_condition').value,
                     size:           document.getElementById('f_size').value || null,
                     color:          document.getElementById('f_color').value || null,
+                    material:       document.getElementById('f_material').value || null,
                     price:          parseFloat(document.getElementById('f_price').value),
                     original_price: origPrice ? parseFloat(origPrice) : null,
                     tags,
