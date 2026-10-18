@@ -3,870 +3,532 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Закачалката — Магазин за Препродадена Мода</title>
+    <!-- META:START -->
+    <title>Закачалката — магазин за препродадена мода</title>
+    <meta name="description" content="Закачалката е магазин за внимателно избрана препродадена дизайнерска мода във Варна. Всеки артикул е единствен — една бройка, един размер." />
+    <link rel="canonical" href="https://www.zakachalkata.com/" />
+    <meta name="robots" content="index, follow" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Закачалката" />
+    <meta property="og:locale" content="bg_BG" />
+    <meta property="og:title" content="Закачалката — магазин за препродадена мода" />
+    <meta property="og:description" content="Закачалката е магазин за внимателно избрана препродадена дизайнерска мода във Варна. Всеки артикул е единствен — една бройка, един размер." />
+    <meta property="og:url" content="https://www.zakachalkata.com/" />
+    <meta property="og:image" content="https://www.zakachalkata.com/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png" />
+    <link rel="apple-touch-icon" href="favicon-180.png" />
+    <!-- META:END -->
+    <meta name="theme-color" content="#FBF5E8" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oranienbaum&family=Onest:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/site.css">
+    <link rel="preload" as="image" href="img/shop-rail.jpg">
+    <script>document.documentElement.classList.add('js')</script>
+    <script src="js/site.js" defer></script>
 
     <style>
 
-        /* ========================= */
-        /* RESET & BASE */
-        /* ========================= */
-
-        *, *::before, *::after {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --bg:           #FAF7F4;
-            --white:        #FFFFFF;
-            --border:       #EDE2D8;
-            --text:         #2C2420;
-            --muted:        #8B5E52;
-            --faint:        #C9B4AB;
-            --accent:       #AA5878;
-            --accent-dark:  #F5E6EC;
-            --gold:         #C9998A;
-            --gold-light:   #F2EBE3;
-            --bg-card:      #F2EBE3;
-            --rose:         #C9998A;
-            --rose-dark:    #8B5E52;
-            --mulberry:     #89CECA;
-            --mulberry-light: #5BA8A0;
-            --serif:        'Cormorant Garamond', serif;
-            --sans:         'Inter', sans-serif;
-            --ease:         0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            --nav-h:        80px;
-        }
-
-        html { scroll-behavior: smooth; }
-
-        body {
-            font-family: var(--sans);
-            background-color: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        img { display: block; }
-        ul  { list-style: none; }
-        a   { text-decoration: none; color: inherit; }
-        button, input { font-family: inherit; }
-
-
-        /* ========================= */
-        /* NAVBAR */
-        /* ========================= */
-
-        .navbar {
-            width: 100%;
-            background-color: var(--white);
-            border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            overflow: visible;
-        }
-
-        .nav-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 1.4rem 3rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .logo a {
-            display: flex;
-            align-items: center;
-            line-height: 1;
-        }
-
-        .logo img { height: 56px; width: auto; display: block; }
-
-        .nav-links ul {
-            display: flex;
-            gap: 2.5rem;
-        }
-
-        .nav-links a {
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: color 0.3s;
-            position: relative;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: -3px;
-            width: 0;
-            height: 1px;
-            background-color: var(--accent);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover::after,
-        .nav-links a.active::after { width: 100%; }
-        .nav-links a.active { color: var(--accent); }
-
-        .nav-icons {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .nav-icons button {
-            border: none;
-            background: transparent;
-            font-size: 0;
-            line-height: 1;
-            cursor: pointer;
-            transition: color 0.3s;
-            display: flex;
-            align-items: center;
-        }
-
-        .nav-icons button:hover { color: var(--accent); }
-
-        .nav-icons .social-link {
-            display: flex;
-            align-items: center;
-            color: var(--text);
-            transition: color 0.3s;
-        }
-        .nav-icons .social-link:hover { color: var(--accent); }
-
-        /* hamburger toggle (mobile) */
-        .nav-toggle {
-            display: none;
-            flex-direction: column;
-            justify-content: center;
-            gap: 5px;
-            width: 40px;
-            height: 40px;
-            background: transparent;
-            border: none;
-            padding: 0;
-            flex-shrink: 0;
-        }
-
-        .nav-toggle span {
-            display: block;
-            width: 22px;
-            height: 1.5px;
-            background: var(--text);
-            transition: transform 0.3s ease, opacity 0.3s ease;
-        }
-
-        .nav-toggle.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
-        .nav-toggle.open span:nth-child(2) { opacity: 0; }
-        .nav-toggle.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
-
-        .nav-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(44,36,32,0.35);
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-            z-index: 98;
-        }
-
-        .nav-overlay.open { opacity: 1; visibility: visible; }
-
-        @media (max-width: 860px) {
-            .nav-toggle { display: flex; }
-
-            .nav-links {
-                position: fixed;
-                top: 0;
-                right: 0;
-                bottom: 0;
-                width: min(78vw, 320px);
-                background: var(--white);
-                padding: 5.5rem 2rem 2.5rem;
-                display: flex;
-                flex-direction: column;
-                transform: translateX(100%);
-                transition: transform 0.35s ease;
-                z-index: 99;
-                overflow-y: auto;
-                box-shadow: -8px 0 30px rgba(0,0,0,0.10);
-            }
-
-            .nav-links.open { transform: translateX(0); }
-
-            .nav-links ul { flex-direction: column; gap: 0; }
-            .nav-links li { border-bottom: 1px solid var(--border); }
-
-            .nav-links a {
-                display: block;
-                padding: 1rem 0.2rem;
-                font-size: 1rem;
-            }
-
-            .nav-container { padding: 1.1rem 1.5rem; }
-            .logo img { height: 46px; }
-        }
-
-
-        /* ========================= */
-        /* HERO */
-        /* ========================= */
+        /* ===================================================================== */
+        /* HERO — the shop's rail, inset; the name crosses its corner            */
+        /* ===================================================================== */
 
         .hero {
             position: relative;
-            width: 100%;
-            height: 92vh;
-            min-height: 560px;
+            height: calc(100svh - var(--nav-h));
+            min-height: 620px;
+            max-height: 1080px;
+            background: var(--ink);
+            color: var(--on-dark);
             overflow: hidden;
         }
 
-        .hero-image {
+        .hero-photo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            bottom: 20px;
+            width: 47%;
+            overflow: hidden;
+            background: var(--fig-deep);
+        }
+
+        .hero-photo img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            object-position: center 30%;
-            transform: scale(1.04);
-            animation: heroReveal 1.8s var(--ease) forwards;
+            object-position: 35% 50%;
         }
 
-        @keyframes heroReveal {
-            from { transform: scale(1.08); opacity: 0.4; }
-            to   { transform: scale(1.0);  opacity: 1; }
-        }
-
-        .hero-overlay {
+        /* a neutral scrim, only where the name lies over the picture */
+        .hero-photo::after {
+            content: "";
             position: absolute;
             inset: 0;
-            background: linear-gradient(
-                to bottom,
-                rgba(44,36,32,0.00) 0%,
-                rgba(44,36,32,0.22) 48%,
-                rgba(44,36,32,0.76) 100%
-            );
-        }
-
-        .hero-content {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 4rem 3rem 4.5rem;
-            max-width: 1400px;
-            margin: 0 auto;
-            animation: heroTextUp 1.6s 0.3s var(--ease) both;
-        }
-
-        @keyframes heroTextUp {
-            from { opacity: 0; transform: translateY(28px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-
-        .hero-eyebrow {
-            display: inline-block;
-            font-size: 0.72rem;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            color: rgba(255,255,255,0.75);
-            margin-bottom: 1rem;
-            border-left: 2px solid var(--mulberry);
-            padding-left: 0.9rem;
-        }
-
-        .hero-title {
-            font-family: var(--serif);
-            font-size: clamp(2.8rem, 6vw, 5.5rem);
-            font-weight: 300;
-            color: var(--white);
-            line-height: 1.08;
-            letter-spacing: -1px;
-            margin-bottom: 1.8rem;
-            max-width: 700px;
-        }
-
-        .hero-title em {
-            font-style: italic;
-            font-weight: 400;
-            color: rgba(255,255,255,0.88);
-        }
-
-        .hero-cta {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.7rem;
-            background: rgba(255,255,255,0.12);
-            border: 1px solid rgba(255,255,255,0.45);
-            color: var(--white);
-            font-size: 0.76rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            padding: 0.9rem 1.8rem;
-            cursor: pointer;
-            transition: background 0.35s ease, border-color 0.35s ease, letter-spacing 0.3s ease;
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
-        }
-
-        .hero-cta:hover {
-            background: rgba(255,255,255,0.22);
-            border-color: rgba(255,255,255,0.8);
-            letter-spacing: 4px;
-        }
-
-        .hero-cta-arrow {
-            transition: transform 0.3s ease;
-        }
-
-        .hero-cta:hover .hero-cta-arrow {
-            transform: translateX(5px);
-        }
-
-        /* scroll indicator */
-        .scroll-hint {
-            position: absolute;
-            bottom: 2.2rem;
-            right: 3rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.5rem;
-            opacity: 0.45;
-            animation: heroTextUp 1.6s 0.8s var(--ease) both;
-        }
-
-        .scroll-hint span {
-            font-size: 0.62rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: var(--white);
-            writing-mode: vertical-rl;
-        }
-
-        .scroll-line {
-            width: 1px;
-            height: 50px;
-            background: linear-gradient(to bottom, var(--white), transparent);
-            animation: scrollPulse 2.2s ease-in-out infinite;
-        }
-
-        @keyframes scrollPulse {
-            0%, 100% { opacity: 0.35; }
-            50%       { opacity: 0.9; }
-        }
-
-        /* brand monogram watermark */
-        .hero-monogram {
-            position: absolute;
-            right: -0.06em;
-            bottom: -0.24em;
-            font-family: var(--serif);
-            font-size: clamp(38vw, 52vw, 88vh);
-            font-style: italic;
-            font-weight: 300;
-            color: var(--white);
-            opacity: 0.055;
-            line-height: 0.75;
-            letter-spacing: -0.04em;
+            background: linear-gradient(to top, rgba(43, 31, 40, 0.55), rgba(43, 31, 40, 0) 38%); /* taste-skill-ignore: scrim over the photo */
             pointer-events: none;
-            user-select: none;
         }
 
-
-        /* ========================= */
-        /* EVENT DESCRIPTION */
-        /* ========================= */
-
-        .event-section {
-            background: var(--white);
-            padding: 6rem 3rem;
-        }
-
-        .event-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1.6fr;
-            gap: 6rem;
-            align-items: start;
-        }
-
-        .event-label-column {
-            padding-top: 0.5rem;
-        }
-
-        .event-month {
-            font-size: 0.7rem;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            color: var(--gold);
-            margin-bottom: 1rem;
-        }
-
-        .event-heading {
-            font-family: var(--serif);
-            font-size: clamp(2rem, 4vw, 3.2rem);
-            font-weight: 400;
-            line-height: 1.15;
-            margin-bottom: 1.5rem;
-        }
-
-        .event-heading em {
-            font-style: italic;
-            color: var(--mulberry);
-        }
-
-        .event-divider {
-            width: 36px;
-            height: 1px;
-            background: var(--mulberry);
-            margin-bottom: 1.5rem;
-        }
-
-        .event-designers {
+        .hero-copy {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 34%;
+            left: calc(47% + 20px);
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        .designer-tag {
-            font-size: 0.75rem;
-            letter-spacing: 2.5px;
-            text-transform: uppercase;
-            color: var(--muted);
-        }
-
-        .event-body-column {}
-
-        .event-body p {
-            font-family: var(--serif);
-            font-size: 1.25rem;
-            font-weight: 300;
-            line-height: 1.75;
-            color: #7A6560;
-        }
-
-        .event-body p + p {
-            margin-top: 1.2rem;
-        }
-
-        .event-body-footer {
-            margin-top: 2.5rem;
-            display: flex;
-            align-items: center;
-            gap: 2rem;
-        }
-
-        .shop-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.6rem;
-            font-size: 0.76rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: var(--text);
-            border-bottom: 1px solid var(--text);
-            padding-bottom: 0.15rem;
-            transition: color 0.25s, border-color 0.25s, gap 0.25s;
-        }
-
-        .shop-link:hover {
-            color: var(--mulberry);
-            border-color: var(--mulberry);
-            gap: 0.9rem;
-        }
-
-        .piece-count {
-            font-size: 0.83rem;
-            color: var(--faint);
-            letter-spacing: 0.5px;
-        }
-
-        .piece-count strong {
-            color: var(--text);
-            font-weight: 500;
-        }
-
-
-        /* ========================= */
-        /* SECTION DIVIDER */
-        /* ========================= */
-
-        .section-divider {
-            display: flex;
-            align-items: center;
-            gap: 2rem;
-            padding: 0 3rem;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding-top: 5rem;
-            padding-bottom: 0;
-        }
-
-        .divider-label {
-            font-size: 0.7rem;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            color: var(--muted);
-            white-space: nowrap;
-        }
-
-        .divider-line {
-            flex: 1;
-            height: 1px;
-            background: var(--border);
-        }
-
-
-        /* ========================= */
-        /* FEATURED ITEMS */
-        /* ========================= */
-
-        .featured-section {
-            padding: 2.5rem 3rem 6rem;
-        }
-
-        .featured-container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .featured-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2.5rem;
-        }
-
-        .feat-card {
-            cursor: pointer;
-        }
-
-        .feat-image-wrap {
-            position: relative;
-            overflow: hidden;
-            background: var(--bg-card);
-            margin-bottom: 1.2rem;
-        }
-
-        .feat-image-wrap img {
-            width: 100%;
-            height: 400px;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .feat-card:hover .feat-image-wrap img {
-            transform: scale(1.04);
-        }
-
-        .feat-overlay-tag {
-            position: absolute;
-            top: 1.5rem;
-            left: 1.5rem;
-            font-size: 0.66rem;
-            letter-spacing: 2.5px;
-            text-transform: uppercase;
-            background: var(--gold-light);
-            color: var(--rose-dark);
-            border: 1px solid rgba(201,153,138,0.40);
-            padding: 0.3rem 0.8rem;
-        }
-
-        .wishlist-hover {
-            position: absolute;
-            top: 1.5rem;
-            right: 1.5rem;
-            width: 36px;
-            height: 36px;
-            background: rgba(255,255,255,0.92);
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            opacity: 0;
-            transition: opacity 0.25s, background 0.25s, color 0.25s;
-            font-size: 0;
-            display: flex;
-            align-items: center;
             justify-content: center;
+            padding: 2rem var(--margin) 0 clamp(2rem, 6vw, 6.5rem);
         }
 
-        .feat-card:hover .wishlist-hover {
-            opacity: 1;
+        .hero-sentence {
+            font-size: var(--step-lead);
+            line-height: 1.3;
+            max-width: 27ch;
+            text-wrap: balance;
         }
 
-        .wishlist-hover:hover {
-            background: var(--mulberry);
-            color: white;
-        }
-
-        .feat-brand {
-            font-size: 0.72rem;
-            letter-spacing: 2.5px;
-            text-transform: uppercase;
-            color: var(--muted);
-            margin-bottom: 0.45rem;
-        }
-
-        .feat-name {
-            font-family: var(--serif);
-            font-size: 1.5rem;
-            font-weight: 400;
-            margin-bottom: 0.4rem;
-            transition: color 0.25s;
-        }
-
-        .feat-card:hover .feat-name {
-            color: var(--mulberry);
-        }
-
-        .feat-meta {
-            font-size: 0.84rem;
-            color: var(--muted);
-            margin-bottom: 0.6rem;
-        }
-
-        .feat-price {
-            font-size: 1rem;
-            font-weight: 500;
-            color: var(--text);
-        }
-
-        .featured-footer {
-            margin-top: 3.5rem;
-            text-align: center;
-        }
-
-        .all-products-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.7rem;
-            border: 1px solid var(--border);
-            background: transparent;
-            color: var(--text);
-            font-size: 0.76rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            padding: 1rem 2.5rem;
-            cursor: pointer;
-            transition: border-color 0.3s, color 0.3s, gap 0.3s, background 0.3s;
-        }
-
-        .all-products-btn:hover {
-            border-color: var(--text);
-            background: var(--text);
-            color: var(--white);
-            gap: 1rem;
-            letter-spacing: 4px;
-        }
-
-
-        /* ========================= */
-        /* BRAND STRIP */
-        /* ========================= */
-
-        .brand-strip {
-            background: var(--white);
-            border-top: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
-            padding: 2rem 3rem;
-            overflow: hidden;
-        }
-
-        .brand-ticker {
+        .hero-actions {
             display: flex;
             align-items: center;
-            gap: 2rem;
-            animation: ticker 26s linear infinite;
-            width: max-content;
+            flex-wrap: wrap;
+            gap: 1rem 1.75rem;
+            margin-top: 2.25rem;
         }
 
-        .brand-ticker:hover { animation-play-state: paused; }
+        .hero-actions .link { color: var(--on-dark); font-weight: 500; padding: 0.75rem 0; }
 
-        @keyframes ticker {
-            from { transform: translateX(0); }
-            to   { transform: translateX(-50%); }
-        }
-
-        .brand-name {
-            font-family: var(--serif);
-            font-size: 1.1rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: var(--faint);
+        .hero-wordmark {
+            position: absolute;
+            right: var(--margin);
+            bottom: 18px;
+            z-index: 2;
+            font-size: clamp(5.5rem, 12.4vw, 15.5rem);
+            line-height: 0.8;
+            letter-spacing: -0.04em;
             white-space: nowrap;
-            transition: color 0.25s;
+            color: var(--on-dark);
+            transform-origin: 100% 100%;
         }
 
-        .brand-name:hover { color: var(--text); }
-
-        .brand-dot {
-            color: var(--faint);
-            opacity: 0.55;
-            font-size: 0.7rem;
-            flex-shrink: 0;
+        @media (prefers-reduced-motion: no-preference) {
+            .hero-photo img { animation: hero-settle 2.4s var(--ease-soft) both; }
+            @keyframes hero-settle { from { scale: 1.07; } to { scale: 1; } }
         }
 
+        /* signature move: the name sinks back a few percent as the first screen leaves */
+        @supports (animation-timeline: scroll()) {
+            @media (prefers-reduced-motion: no-preference) {
+                .hero-wordmark {
+                    animation: wordmark-recede linear both;
+                    animation-timeline: scroll(root);
+                    animation-range: 0px 85vh;
+                }
+                @keyframes wordmark-recede { to { scale: 0.93; opacity: 0.85; } }
 
-        /* ========================= */
-        /* FOOTER */
-        /* ========================= */
-
-        .footer {
-            background-color: var(--white);
-            border-top: 1px solid var(--border);
-        }
-
-        .footer-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 4rem 3rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 2rem;
-        }
-
-        .footer-branding h2 {
-            font-family: var(--serif);
-            font-size: 2rem;
-            margin-bottom: 0.7rem;
-        }
-
-        .footer-branding p { color: var(--muted); font-size: 0.9rem; }
-
-        .footer-links,
-        .footer-socials {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .footer-links a,
-        .footer-socials a {
-            font-size: 0.9rem;
-            color: #7A6560;
-            transition: color 0.3s;
-        }
-
-        .footer-links a:hover,
-        .footer-socials a:hover { color: var(--mulberry); }
-
-        .footer-bottom {
-            border-top: 1px solid var(--border);
-            padding: 1.2rem 3rem;
-            text-align: center;
-        }
-
-        .footer-bottom p {
-            font-size: 0.78rem;
-            color: var(--faint);
-            letter-spacing: 0.5px;
-        }
-
-
-        /* ========================= */
-        /* REVEAL ANIMATION */
-        /* ========================= */
-
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.7s ease, transform 0.7s ease;
-        }
-
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-
-        /* ========================= */
-        /* RESPONSIVE */
-        /* ========================= */
-
-        @media (max-width: 1100px) {
-            .event-container {
-                gap: 3.5rem;
-            }
-            .featured-grid {
-                grid-template-columns: repeat(2, 1fr);
+                .hero-photo img {
+                    animation: hero-settle 2.4s var(--ease-soft) both, hero-drift linear both;
+                    animation-timeline: auto, scroll(root);
+                    animation-range: normal, 0px 100vh;
+                }
+                @keyframes hero-drift { to { translate: 0 5%; } }
             }
         }
 
         @media (max-width: 900px) {
-            .event-container {
-                grid-template-columns: 1fr;
-                gap: 2.5rem;
+            .hero {
+                display: flex;
+                flex-direction: column;
+                height: auto;
+                min-height: 0;
+                max-height: none;
+                padding: 12px 0 3rem;
             }
+            .hero-photo    { order: 1; }
+            .hero-wordmark { order: 2; }
+            .hero-copy     { order: 3; }
+            .hero-photo {
+                position: relative;
+                inset: auto;
+                width: auto;
+                height: 58svh;
+                min-height: 340px;
+                margin: 0 12px;
+            }
+            .hero-wordmark {
+                position: relative;
+                right: auto;
+                bottom: auto;
+                margin: -0.32em var(--margin) 0;
+                font-size: calc((100vw - 2 * var(--margin)) / 4.7);
+                transform-origin: 0 100%;
+            }
+            .hero-copy {
+                position: static;
+                padding: 1.5rem var(--margin) 0;
+            }
+            .hero-actions { margin-top: 1.5rem; }
+        }
 
-            .event-section {
-                padding: 4rem 2rem;
-            }
 
-            .section-divider,
-            .featured-section {
-                padding-left: 2rem;
-                padding-right: 2rem;
-            }
+        /* ===================================================================== */
+        /* NEW ON THE RAIL — with the size picker                                */
+        /* ===================================================================== */
 
-            .hero-content {
-                padding: 3rem 2rem 3.5rem;
-            }
+        .rail-section {
+            padding: var(--section) 0 calc(var(--section) * 0.5);
+        }
 
-            .scroll-hint {
-                display: none;
-            }
+        .rail-head {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            align-items: end;
+            gap: 1.75rem 2rem;
+            padding: 0 var(--margin);
+        }
+
+        .rail-head h2 { font-size: var(--step-head); }
+
+        .rail-arrows { display: flex; gap: 0.5rem; }
+        .rail-arrow {
+            width: 52px;
+            height: 52px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--surface);
+            border: 0;
+            color: var(--ink);
+            transition: background-color var(--t-hover) ease, transform var(--t-press) var(--ease-out), opacity var(--t-hover) ease;
+        }
+        .rail-arrow:hover { background: var(--surface-deep); }
+        .rail-arrow:active { transform: scale(0.94); }
+        .rail-arrow:disabled { opacity: 0.35; cursor: default; transform: none; }
+        @media (hover: none) { .rail-arrows { display: none; } }
+
+        .size-picker {
+            grid-column: 1 / -1;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.75rem 1.25rem;
+        }
+
+        .size-picker-label { font-weight: 500; }
+
+        .size-chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+
+        .chip {
+            min-width: 48px;
+            min-height: 48px;
+            padding: 0 1rem;
+            background: var(--surface);
+            color: var(--ink);
+            border: 0;
+            font-size: 1rem;
+            font-weight: 500;
+            font-variant-numeric: tabular-nums;
+            transition: background-color var(--t-hover) ease, color var(--t-hover) ease, transform var(--t-press) var(--ease-out);
+        }
+        .chip:hover { background: var(--surface-deep); }
+        .chip:active { transform: scale(0.95); }
+        .chip[aria-pressed="true"] { background: var(--ink); color: var(--on-dark); }
+
+        .rail-count {
+            grid-column: 1 / -1;
+            font-size: var(--step-lead);
+            line-height: 1.3;
+            max-width: 40ch;
+            min-height: 1.3em;
+        }
+
+        .rail {
+            display: grid;
+            grid-auto-flow: column;
+            grid-auto-columns: clamp(250px, 25vw, 420px);
+            gap: var(--gutter);
+            margin-top: 2.5rem;
+            padding: 0 var(--margin) 1.25rem;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-padding-inline: var(--margin);
+            scrollbar-width: thin;
+            scrollbar-color: var(--mauve) transparent;
+        }
+        .rail:focus-visible { outline-offset: -2px; }
+
+        .piece {
+            display: block;
+            scroll-snap-align: start;
+            color: var(--ink);
+        }
+
+        .piece-img {
+            display: block;
+            aspect-ratio: 4 / 5;
+            overflow: hidden;
+            background: var(--surface);
+        }
+        .piece-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 700ms var(--ease-out);
+        }
+        .piece:hover .piece-img img { transform: scale(1.04); }
+
+        .piece-name {
+            display: block;
+            margin-top: 1rem;
+            font-family: var(--font-display);
+            font-size: var(--step-lead);
+            line-height: 1.05;
+            letter-spacing: -0.015em;
+            text-decoration: underline;
+            text-decoration-thickness: 1px;
+            text-underline-offset: 0.18em;
+            text-decoration-color: transparent;
+            transition: text-decoration-color var(--t-hover) ease;
+        }
+        .piece:hover .piece-name { text-decoration-color: currentColor; }
+        .piece-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 1rem;
+            margin-top: 0.45rem;
+        }
+        .piece-maker { color: var(--muted); }
+        .piece-price { font-weight: 500; font-variant-numeric: tabular-nums; }
+        .piece-price.is-sale { color: var(--fig); }
+        .piece-price s { margin-left: 0.4rem; font-weight: 400; color: var(--muted); }
+
+        .piece-skeleton .piece-img { background: var(--surface); }
+        .piece-skeleton .bar { display: block; height: 1rem; margin-top: 1rem; width: 60%; background: var(--surface); }
+
+        .rail-empty {
+            grid-column: 1 / -1;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            gap: 1.25rem;
+            min-height: 240px;
+            padding: 2rem;
+            background: var(--surface);
+            width: min(100%, 640px);
+        }
+        .rail-empty p { font-size: var(--step-lead); line-height: 1.3; max-width: 30ch; }
+
+        .rail-foot {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 1rem 2rem;
+            margin-top: 1.5rem;
+            padding: 0 var(--margin);
         }
 
         @media (max-width: 640px) {
-            .hero {
-                height: 75vh;
-            }
+            .rail { grid-auto-columns: 74vw; margin-top: 1.75rem; }
+            .chip { min-width: 46px; min-height: 46px; padding: 0 0.8rem; }
+        }
 
-            .featured-grid {
-                grid-template-columns: 1fr;
-            }
 
-            .feat-image-wrap img {
-                height: 360px;
-            }
+        /* ===================================================================== */
+        /* EVENTS — a fig field: square plate, spare text                        */
+        /* ===================================================================== */
 
-            .footer-container {
-                flex-direction: column;
-                padding: 2.5rem 1.5rem;
-            }
+        .events {
+            background: var(--fig);
+            color: var(--on-dark);
+        }
+        .events[hidden] { display: none; }
 
-            .footer-bottom {
-                padding: 1rem 1.5rem;
-            }
+        .events-plate {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: min(88svh, 960px);
+        }
+
+        .events-photo {
+            display: grid;
+            align-self: center;
+            justify-items: center;
+            margin: 40px;
+        }
+        /* shown whole, since posters carry text; only the active one takes space */
+        .events-photo img {
+            width: 100%;
+            height: auto;
+            max-height: 78svh;
+            object-fit: contain;
+        }
+        .events-photo img:not(.is-active) { display: none; }
+        @media (prefers-reduced-motion: no-preference) {
+            .events-photo img.is-active { animation: events-fade 500ms var(--ease-out) both; }
+            @keyframes events-fade { from { opacity: 0; } to { opacity: 1; } }
+        }
+
+        .events-body {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 3rem;
+            padding: 40px var(--margin) 40px 0;
+        }
+
+        .events-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.25rem 1.75rem;
+        }
+        .events-tabs[hidden] { display: none; }
+
+        .events-tab {
+            min-height: 44px;
+            padding: 0.5rem 0;
+            background: none;
+            border: 0;
+            color: var(--on-dark-soft);
+            text-decoration: underline;
+            text-decoration-thickness: 1px;
+            text-underline-offset: 0.35em;
+            text-decoration-color: transparent;
+            transition: color var(--t-hover) ease, text-decoration-color var(--t-hover) ease;
+        }
+        .events-tab:hover { color: var(--on-dark); }
+        .events-tab[aria-selected="true"] { color: var(--on-dark); text-decoration-color: currentColor; }
+
+        .events-panel[hidden] { display: none; }
+        .events-panel h3 {
+            font-size: var(--step-head);
+            max-width: 16ch;
+        }
+        .events-when {
+            margin-top: 1.25rem;
+            font-size: var(--step-lead);
+            line-height: 1.3;
+            color: var(--on-dark-soft);
+        }
+        .events-text { margin-top: 1.75rem; max-width: 40ch; }
+        .events-text p + p { margin-top: 0.8em; }
+
+        .events-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+        .events-cell {
+            display: flex;
+            align-items: center;
+            min-height: 72px;
+            padding: 0 1.4rem;
+            font-weight: 500;
+            transition: background-color var(--t-hover) ease, color var(--t-hover) ease;
+        }
+        .events-cell:active { transform: scale(0.985); }
+        .events-cell--light { background: var(--on-dark); color: var(--ink); }
+        .events-cell--light:hover { background: var(--blush); }
+        .events-cell--deep { background: var(--fig-deep); color: var(--on-dark); }
+        .events-cell--deep:hover { background: var(--ink); }
+
+        @media (prefers-reduced-motion: no-preference) {
+            .events-panel:not([hidden]) { animation: zk-rise 520ms var(--ease-out) both; }
+        }
+
+        @media (max-width: 900px) {
+            .events-plate { grid-template-columns: 1fr; min-height: 0; }
+            .events-photo { margin: 16px 16px 0; }
+            .events-body { padding: 1.75rem var(--margin) 2.5rem; gap: 2rem; }
+            .events-actions { grid-template-columns: 1fr; }
+            .events-cell { min-height: 60px; }
+        }
+
+
+        /* ===================================================================== */
+        /* STORY — a narrow column beside one frame whose picture changes        */
+        /* ===================================================================== */
+
+        .story {
+            display: grid;
+            grid-template-columns: repeat(12, minmax(0, 1fr));
+            column-gap: var(--gutter);
+            align-items: center;
+            padding: var(--section) var(--margin);
+        }
+
+        .story-text { grid-column: 2 / span 5; }
+        .story-text h2 { font-size: var(--step-head); margin-bottom: 2.25rem; }
+        .story-text .prose p { max-width: 42ch; }
+        .story-first { font-weight: 500; }
+        .story-text .link { display: inline-block; margin-top: 1.75rem; font-weight: 500; padding: 0.4rem 0; }
+
+        .frame {
+            grid-column: 8 / span 4;
+            position: relative;
+        }
+        .frame-window {
+            position: relative;
+            aspect-ratio: 4 / 5;
+            overflow: hidden;
+            background: var(--surface);
+            cursor: pointer;
+        }
+        .frame-window img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 600ms var(--ease-out);
+        }
+        .frame-window img.is-active { opacity: 1; }
+        .frame figcaption {
+            margin-top: 1rem;
+            font-size: var(--step-small);
+            color: var(--muted);
+            min-height: 1.5em;
+        }
+
+        @media (max-width: 900px) {
+            .story { display: block; }
+            .story-text { width: auto; }
+            .frame { margin: 3.5rem auto 0; width: min(78vw, 420px); }
+            .frame figcaption { text-align: center; }
         }
 
     </style>
 </head>
 <body>
 
+    <a class="skip-link" href="#main">Към съдържанието</a>
+
     <!-- NAVBAR -->
     <header class="navbar">
         <div class="nav-container">
-            <div class="logo"><a href="index.html"><img src="logo.jpeg" height="56" alt="Закачалката — reloved store" style="display:block"></a></div>
-            <nav class="nav-links" id="navLinks">
+            <a class="logo" href="index.html" aria-label="Закачалката — начало"><img src="img/logo.jpg" width="701" height="384" alt="Закачалката — reloved store"></a>
+            <nav class="nav-links" id="navLinks" aria-label="Основна навигация">
                 <ul>
-                    <li><a href="index.html" class="active">Начало</a></li>
+                    <li><a href="index.html" aria-current="page">Начало</a></li>
                     <li><a href="store.html">Магазин</a></li>
+                    <li><a href="about.html">За нас</a></li>
                     <li><a href="contact.html">Контакти</a></li>
                 </ul>
+                <div class="nav-drawer-social">
+                    <a href="https://www.instagram.com/zakachalkatarelovedstore/" target="_blank" rel="noopener">Instagram</a>
+                    <a href="https://www.facebook.com/p/%D0%97%D0%B0%D0%BA%D0%B0%D1%87%D0%B0%D0%BB%D0%BA%D0%B0%D1%82%D0%B0-Reloved-Store-100083130402532/" target="_blank" rel="noopener">Facebook</a>
+                </div>
             </nav>
             <div class="nav-icons">
-                <a class="social-link" href="https://www.facebook.com/p/%D0%97%D0%B0%D0%BA%D0%B0%D1%87%D0%B0%D0%BB%D0%BA%D0%B0%D1%82%D0%B0-Reloved-Store-100083130402532/" target="_blank" rel="noopener" aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
-                <a class="social-link" href="https://www.instagram.com/zakachalkatarelovedstore/" target="_blank" rel="noopener" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+                <a class="social-link" href="https://www.instagram.com/zakachalkatarelovedstore/" target="_blank" rel="noopener" aria-label="Instagram"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+                <a class="social-link" href="https://www.facebook.com/p/%D0%97%D0%B0%D0%BA%D0%B0%D1%87%D0%B0%D0%BB%D0%BA%D0%B0%D1%82%D0%B0-Reloved-Store-100083130402532/" target="_blank" rel="noopener" aria-label="Facebook"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
                 <button class="nav-toggle" id="navToggle" aria-label="Отвори меню" aria-expanded="false" aria-controls="navLinks">
                     <span></span><span></span><span></span>
                 </button>
@@ -876,279 +538,426 @@
     <div class="nav-overlay" id="navOverlay"></div>
 
 
-    <!-- ========================= -->
-    <!-- HERO -->
-    <!-- ========================= -->
+    <main id="main">
 
-    <section class="hero" aria-label="Голямо отваряне">
+        <!-- HERO -->
+        <section class="hero on-dark" aria-labelledby="heroTitle">
+            <figure class="hero-photo">
+                <img src="img/shop-rail.jpg" width="900" height="1024" alt="Релсата с дрехи в магазина на Закачалката във Варна" fetchpriority="high" />
+            </figure>
 
-        <img
-            class="hero-image"
-            src="bazar-promo.png"
-            alt="Закачалката — препродадена мода"
-            loading="eager"
-        />
-
-        <div class="hero-overlay"></div>
-
-        <div class="hero-monogram" aria-hidden="true">З</div>
-
-        <div class="hero-content">
-            <p class="hero-eyebrow">Голямо Отваряне</p>
-            <h1 class="hero-title">
-                Закачалката<br>
-                <em>отваря врати</em>
-            </h1>
-            <a href="store.html" class="hero-cta">
-                Разгледай магазина
-                <span class="hero-cta-arrow">→</span>
-            </a>
-        </div>
-
-        <div class="scroll-hint" aria-hidden="true">
-            <div class="scroll-line"></div>
-            <span>Надолу</span>
-        </div>
-
-    </section>
-
-
-    <!-- ========================= -->
-    <!-- EVENT DESCRIPTION -->
-    <!-- ========================= -->
-
-    <section class="event-section">
-        <div class="event-container">
-
-            <div class="event-label-column reveal">
-                <p class="event-month">За нас</p>
-                <h2 class="event-heading">
-                    Вещите, които<br>
-                    <em>заслужават нов живот</em>
-                </h2>
-                <div class="event-divider"></div>
-                <div class="event-designers">
-                    <span class="designer-tag">Дрехи</span>
-                    <span class="designer-tag">Обувки</span>
-                    <span class="designer-tag">Аксесоари</span>
-                    <span class="designer-tag">Чанти</span>
-                    <span class="designer-tag">Бижута</span>
+            <div class="hero-copy">
+                <p class="hero-sentence" data-rise>Дизайнерски дрехи втора ръка във Варна. Всяко парче е едно, в един размер.</p>
+                <div class="hero-actions" data-rise style="--i:1">
+                    <a class="btn btn-primary" href="store.html">Разгледай магазина</a>
+                    <a class="link" href="about.html">Кои сме ние</a>
                 </div>
             </div>
 
-            <div class="event-body-column reveal" style="transition-delay: 0.15s;">
-                <div class="event-body">
-                    <p>
-                        Закачалката е новото място за внимателно подбрана втора ръка мода — дизайнерски дрехи, обувки и аксесоари с история.
-                    </p>
-                    <p>
-                        Всяка вещ е проверена и честно описана. Качество на разумна цена, без компромиси.
-                    </p>
+            <h1 class="hero-wordmark" id="heroTitle">закачалката</h1>
+        </section>
+
+
+        <!-- NEW ON THE RAIL -->
+        <section class="rail-section" aria-labelledby="railTitle">
+            <div class="rail-head">
+                <h2 id="railTitle" data-reveal>Ново на закачалката</h2>
+                <div class="rail-arrows" data-reveal style="--i:1">
+                    <button type="button" class="rail-arrow" id="railPrev" aria-label="Предишни парчета" aria-controls="rail">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+                    </button>
+                    <button type="button" class="rail-arrow" id="railNext" aria-label="Следващи парчета" aria-controls="rail">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+                    </button>
                 </div>
 
-                <div class="event-body-footer">
-                    <a href="store.html" class="shop-link">
-                        Разгледай магазина →
-                    </a>
-                    <p class="piece-count">Поръчка с <strong>наложен платеж</strong></p>
+                <div class="size-picker" id="sizePicker" role="group" aria-labelledby="sizePickerLabel" hidden data-reveal style="--i:1">
+                    <span class="size-picker-label" id="sizePickerLabel">Твоят размер</span>
+                    <div class="size-chips" id="sizeChips"></div>
+                </div>
+
+                <p class="rail-count" id="railCount" aria-live="polite" data-reveal style="--i:2">Всяко парче тук е единствено, в един размер.</p>
+            </div>
+
+            <div class="rail" id="rail" tabindex="0" aria-label="Нови парчета">
+                <div class="piece piece-skeleton" aria-hidden="true"><span class="piece-img"></span><span class="bar"></span></div>
+                <div class="piece piece-skeleton" aria-hidden="true"><span class="piece-img"></span><span class="bar"></span></div>
+                <div class="piece piece-skeleton" aria-hidden="true"><span class="piece-img"></span><span class="bar"></span></div>
+                <div class="piece piece-skeleton" aria-hidden="true"><span class="piece-img"></span><span class="bar"></span></div>
+            </div>
+
+            <div class="rail-foot">
+                <a class="btn" id="railAll" href="store.html">Виж целия магазин</a>
+            </div>
+        </section>
+
+
+        <!-- EVENTS (filled from the admin panel; stays hidden when nothing is published) -->
+        <section class="events on-dark" id="events" aria-labelledby="eventsTitle" hidden>
+            <h2 class="sr-only" id="eventsTitle">Предстоящо в магазина</h2>
+            <div class="events-plate">
+                <div class="events-photo" id="eventsPhoto"></div>
+                <div class="events-body">
+                    <div class="events-tabs" id="eventsTabs" role="tablist" aria-label="Събития"></div>
+                    <div id="eventsPanels"></div>
+                    <div class="events-actions" id="eventsActions"></div>
                 </div>
             </div>
-
-        </div>
-    </section>
+        </section>
 
 
-    <!-- ========================= -->
-    <!-- BRAND TICKER -->
-    <!-- ========================= -->
-
-    <div class="brand-strip" aria-hidden="true">
-        <div class="brand-ticker">
-            <span class="brand-name">Miu Miu</span>
-            <span class="brand-dot" aria-hidden="true">·</span>
-            <span class="brand-name">Burberry</span>
-            <span class="brand-dot" aria-hidden="true">·</span>
-            <span class="brand-name">Dolce &amp; Gabbana</span>
-            <span class="brand-dot" aria-hidden="true">·</span>
-            <span class="brand-name">Armani</span>
-            <span class="brand-dot" aria-hidden="true">·</span>
-            <span class="brand-name">Furla</span>
-            <span class="brand-dot" aria-hidden="true">·</span>
-            <span class="brand-name">Karl Lagerfeld</span>
-            <span class="brand-dot" aria-hidden="true">·</span>
-            <!-- duplicate for seamless loop -->
-            <span class="brand-name">Miu Miu</span>
-            <span class="brand-dot" aria-hidden="true">·</span>
-            <span class="brand-name">Burberry</span>
-            <span class="brand-dot" aria-hidden="true">·</span>
-            <span class="brand-name">Dolce &amp; Gabbana</span>
-            <span class="brand-dot" aria-hidden="true">·</span>
-            <span class="brand-name">Armani</span>
-            <span class="brand-dot" aria-hidden="true">·</span>
-            <span class="brand-name">Furla</span>
-            <span class="brand-dot" aria-hidden="true">·</span>
-            <span class="brand-name">Karl Lagerfeld</span>
-            <span class="brand-dot" aria-hidden="true">·</span>
-        </div>
-    </div>
-
-
-    <!-- ========================= -->
-    <!-- FEATURED ITEMS -->
-    <!-- ========================= -->
-
-    <div class="section-divider reveal">
-        <span class="divider-label">Избрани Парчета</span>
-        <div class="divider-line"></div>
-    </div>
-
-    <section class="featured-section">
-        <div class="featured-container">
-
-            <div class="featured-grid" id="featuredGrid">
-                <!-- populated dynamically with the 3 most recently uploaded products -->
+        <!-- STORY -->
+        <section class="story" aria-labelledby="storyTitle">
+            <div class="story-text">
+                <h2 id="storyTitle" data-reveal>Вещи с втори живот</h2>
+                <div class="prose">
+                    <p class="story-first" data-reveal style="--i:1">Закачалката е място за внимателно подбрана мода втора ръка във Варна: дизайнерски дрехи, обувки, чанти и аксесоари с история.</p>
+                    <p data-reveal style="--i:2">Всяка вещ е проверена и честно описана. Всяко парче съществува в един екземпляр и един размер, и когато някой го вземе, то изчезва от закачалката.</p>
+                    <p data-reveal style="--i:3">През ръцете ни са минавали Miu Miu, Burberry, Dolce &amp; Gabbana, Armani, Furla и Karl Lagerfeld.</p>
+                    <p data-reveal style="--i:4">Поръчвате онлайн с наложен платеж или ни намирате в магазина на ул. „Юрий Венелин“ 4 във Варна.</p>
+                </div>
+                <a class="link" href="about.html" data-reveal style="--i:5">Повече за нас и снимки от магазина</a>
             </div>
 
-            <div class="featured-footer reveal">
-                <a href="store.html" class="all-products-btn">
-                    Всички продукти &nbsp;→
-                </a>
-            </div>
+            <figure class="frame" data-reveal style="--i:2">
+                <div class="frame-window" id="frameWindow" role="button" tabindex="0" aria-label="Следваща снимка">
+                    <img class="is-active" src="img/shop-rail.jpg" width="900" height="1024" alt="Релсата с дрехи в магазина" loading="lazy" data-caption="Релсата в магазина на ул. „Юрий Венелин“" />
+                    <img src="img/shop-table.jpg" width="900" height="1024" alt="Масата с чанти, бижута и обувки до прозореца" loading="lazy" data-caption="Масата до прозореца" />
+                </div>
+                <figcaption id="frameCaption">Релсата в магазина на ул. „Юрий Венелин“</figcaption>
+            </figure>
+        </section>
 
-        </div>
-    </section>
+    </main>
 
 
-    <!-- ========================= -->
     <!-- FOOTER -->
-    <!-- ========================= -->
-
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-branding">
-                <h2>Закачалката</h2>
-                <p>Внимателно избрана препродадена мода.</p>
-            </div>
-            <div class="footer-links">
+    <footer class="footer on-dark">
+        <div class="footer-top">
+            <p class="footer-lead">Внимателно избрана препродадена мода.</p>
+            <nav class="footer-col" aria-label="Страници">
                 <a href="index.html">Начало</a>
                 <a href="store.html">Магазин</a>
+                <a href="about.html">За нас</a>
                 <a href="contact.html">Контакти</a>
+            </nav>
+            <nav class="footer-col" aria-label="Условия">
+                <a href="terms.html">Общи условия</a>
+                <a href="withdrawal.html">Право на отказ</a>
                 <a href="privacy.html">Поверителност</a>
-            </div>
-            <div class="footer-socials">
+                <a href="cookies.html">Бисквитки</a>
+            </nav>
+            <div class="footer-col">
                 <a href="https://www.instagram.com/zakachalkatarelovedstore/" target="_blank" rel="noopener">Instagram</a>
                 <a href="https://www.facebook.com/p/%D0%97%D0%B0%D0%BA%D0%B0%D1%87%D0%B0%D0%BB%D0%BA%D0%B0%D1%82%D0%B0-Reloved-Store-100083130402532/" target="_blank" rel="noopener">Facebook</a>
+                <a href="mailto:zakachalkata@gmail.com">zakachalkata@gmail.com</a>
             </div>
         </div>
+        <p class="footer-identity">
+            ДЗЗД София Велвет, ЕИК 177491919, гр. Варна, ул. „Петър Райчев“ №22.
+            Тел. <a href="tel:+359884161889">+359 88 416 1889</a>, <a href="mailto:zakachalkata@gmail.com">zakachalkata@gmail.com</a>
+        </p>
+        <span class="footer-wordmark" aria-hidden="true">закачалката</span>
         <div class="footer-bottom">
             <p>© 2026 Закачалката. Всички права запазени.</p>
+            <p>Варна</p>
         </div>
     </footer>
 
 
+    <script src="js/config.js"></script>
+    <script src="js/data.js"></script>
     <script>
-        /* ——— Supabase config ——— */
-        const SUPABASE_URL = 'https://ozwydlffpvrcgnhdcjvw.supabase.co';
-        const SUPABASE_KEY = 'sb_publishable_wyBLx6NPlR8uk-jC-qyupQ_FeQzE37l';
+    (function () {
+        "use strict";
 
-        function badgeLabel(b) {
-            return { new: 'Ново', archive: 'Дизайнерско', sold: 'Запазено' }[b] || b;
+        var SIZE_ORDER = ["XS", "S", "M", "L", "XL", "one-size", "35", "36", "37", "38", "39", "40", "41"];
+        var FALLBACK_IMG = "img/shop-rail.jpg";
+        var RAIL_LIMIT = 12;
+        var STORE_KEY = "zk_size";
+
+        function sizeLabel(s) { return s === "one-size" ? "Един размер" : s; }
+        function sizePhrase(s) { return s === "one-size" ? "в универсален размер" : "в размер " + s; }
+
+        function readSize() { try { return localStorage.getItem(STORE_KEY) || ""; } catch (e) { return ""; } }
+        function saveSize(s) { try { s ? localStorage.setItem(STORE_KEY, s) : localStorage.removeItem(STORE_KEY); } catch (e) {} }
+
+        /* ================================================================= */
+        /* NEW ON THE RAIL + "what's hanging in your size"                    */
+        /* ================================================================= */
+
+        var rail      = document.getElementById("rail");
+        var railCount = document.getElementById("railCount");
+        var railAll   = document.getElementById("railAll");
+        var picker    = document.getElementById("sizePicker");
+        var chipsWrap = document.getElementById("sizeChips");
+        var prevBtn   = document.getElementById("railPrev");
+        var nextBtn   = document.getElementById("railNext");
+
+        var products = [];
+        var current  = "";
+
+        function pieceHtml(p) {
+            var imgs = Array.isArray(p.image_urls) ? p.image_urls : [];
+            var img = imgs[0] || FALLBACK_IMG;
+            var hasSale = p.original_price != null && Number(p.original_price) > Number(p.price);
+            var price = hasSale
+                ? '<span class="piece-price is-sale">' + zkPrice(p.price) + "<s>" + zkPrice(p.original_price) + "</s></span>"
+                : '<span class="piece-price">' + zkPrice(p.price) + "</span>";
+            var maker = [p.brand, p.size ? (p.size === "one-size" ? "един размер" : "размер " + p.size) : ""].filter(Boolean).join(", ");
+            return '<a class="piece" href="/p/' + encodeURIComponent(p.id) + '">' +
+                '<span class="piece-img"><img src="' + zkEsc(img) + '" alt="' + zkEsc((p.brand || "") + " " + (p.name || "")) + '" width="800" height="1000" loading="lazy" onerror="this.onerror=null;this.src=\'' + FALLBACK_IMG + '\'"></span>' +
+                '<span class="piece-name">' + zkEsc(p.name || "") + "</span>" +
+                '<span class="piece-meta"><span class="piece-maker">' + zkEsc(maker) + "</span>" + price + "</span>" +
+                "</a>";
         }
 
-        async function loadFeaturedProducts() {
-            const grid = document.getElementById('featuredGrid');
-            if (!grid) return;
-            try {
-                const res = await fetch(
-                    `${SUPABASE_URL}/rest/v1/products?select=*&is_sold=eq.false&order=created_at.desc&limit=3`,
-                    { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` } }
-                );
-                const data = await res.json();
-
-                if (!Array.isArray(data) || data.length === 0) return;
-
-                grid.innerHTML = data.map((p, i) => {
-                    const meta  = [p.size, p.condition].filter(Boolean).join(' &nbsp;·&nbsp; ');
-                    const img   = (p.image_urls && p.image_urls[0]) || 'https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=700&q=80';
-                    const price = parseFloat(p.price) || 0;
-                    return `
-                        <article class="feat-card reveal" style="transition-delay:${(i * 0.1).toFixed(1)}s;" onclick="location.href='product.html?id=${p.id}'">
-                            <div class="feat-image-wrap">
-                                <img
-                                    src="${img}"
-                                    alt="${p.brand || ''} ${p.name || ''}"
-                                    loading="lazy"
-                                    onerror="this.src='https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=700&q=80'"
-                                />
-                                ${p.badge ? `<span class="feat-overlay-tag">${badgeLabel(p.badge)}</span>` : ''}
-                                <button class="wishlist-hover" aria-label="Add to wishlist" onclick="event.stopPropagation()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
-                            </div>
-                            <p class="feat-brand">${p.brand || ''}</p>
-                            <h3 class="feat-name">${p.name || ''}</h3>
-                            <p class="feat-meta">${meta}</p>
-                            <p class="feat-price">€${price.toFixed(2)}</p>
-                        </article>
-                    `;
-                }).join('');
-
-                /* reveal newly injected cards + let the shared IntersectionObserver pick them up */
-                grid.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-            } catch (e) {
-                console.error('Failed to load featured products:', e);
+        function countSentence(n, size) {
+            if (!size) {
+                return n === 1
+                    ? "1 парче е на закачалката сега, единствено по рода си."
+                    : n + " парчета са на закачалката сега, всяко единствено по рода си.";
             }
+            if (n === 0) return "В момента няма парчета " + sizePhrase(size) + ".";
+            return n === 1
+                ? "1 парче " + sizePhrase(size) + " е на закачалката сега."
+                : n + " парчета " + sizePhrase(size) + " са на закачалката сега.";
         }
 
-        /* Dynamic nav height */
-        function setNavHeight() {
-            const nav = document.querySelector('.navbar');
-            if (nav) document.documentElement.style.setProperty('--nav-h', nav.offsetHeight + 'px');
-        }
-        setNavHeight();
-        window.addEventListener('resize', setNavHeight);
+        function renderRail() {
+            var list = current ? products.filter(function (p) { return p.size === current; }) : products;
 
-        /* Scroll-triggered reveal */
-        const revealEls = document.querySelectorAll('.reveal');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    observer.unobserve(entry.target);
+            railCount.textContent = countSentence(list.length, current);
+            railAll.textContent = current ? "Виж всичко " + sizePhrase(current) : "Виж целия магазин";
+            railAll.href = current ? "store.html?size=" + encodeURIComponent(current) : "store.html";
+
+            if (!list.length) {
+                rail.innerHTML =
+                    '<div class="rail-empty"><p>Нищо ' + zkEsc(sizePhrase(current)) + ' в момента.</p>' +
+                    '<button type="button" class="btn btn-soft" id="railReset">Покажи всички размери</button></div>';
+                document.getElementById("railReset").addEventListener("click", function () { selectSize(""); });
+            } else {
+                rail.innerHTML = list.slice(0, RAIL_LIMIT).map(pieceHtml).join("");
+            }
+            rail.scrollLeft = 0;
+            updateArrows();
+        }
+
+        function renderChips() {
+            var present = {};
+            products.forEach(function (p) { if (p.size) present[p.size] = true; });
+            var sizes = SIZE_ORDER.filter(function (s) { return present[s]; });
+            Object.keys(present).forEach(function (s) { if (SIZE_ORDER.indexOf(s) < 0) sizes.push(s); });
+
+            if (sizes.length < 2) { picker.hidden = true; return; }
+
+            if (current && !present[current]) current = "";
+
+            chipsWrap.innerHTML = ['<button type="button" class="chip" data-size="">Всички</button>']
+                .concat(sizes.map(function (s) {
+                    return '<button type="button" class="chip" data-size="' + zkEsc(s) + '">' + zkEsc(sizeLabel(s)) + "</button>";
+                })).join("");
+            chipsWrap.querySelectorAll(".chip").forEach(function (chip) {
+                chip.addEventListener("click", function () { selectSize(chip.dataset.size); });
+            });
+            picker.hidden = false;
+            markChips();
+        }
+
+        function markChips() {
+            chipsWrap.querySelectorAll(".chip").forEach(function (chip) {
+                chip.setAttribute("aria-pressed", chip.dataset.size === current ? "true" : "false");
+            });
+        }
+
+        function selectSize(s) {
+            current = s;
+            saveSize(s);
+            markChips();
+            renderRail();
+        }
+
+        function updateArrows() {
+            if (!prevBtn) return;
+            var max = rail.scrollWidth - rail.clientWidth - 2;
+            prevBtn.disabled = rail.scrollLeft <= 2;
+            nextBtn.disabled = rail.scrollLeft >= max;
+        }
+
+        function step(dir) {
+            var first = rail.querySelector(".piece");
+            var by = first ? (first.getBoundingClientRect().width + parseFloat(getComputedStyle(rail).columnGap || 0)) * 2 : rail.clientWidth * 0.8;
+            rail.scrollBy({ left: dir * by, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+        }
+
+        prevBtn.addEventListener("click", function () { step(-1); });
+        nextBtn.addEventListener("click", function () { step(1); });
+        rail.addEventListener("scroll", updateArrows, { passive: true });
+        window.addEventListener("resize", updateArrows);
+
+        zkRest("products?select=id,brand,name,price,original_price,size,image_urls,created_at&is_sold=eq.false&order=created_at.desc&limit=300")
+            .then(function (data) {
+                products = Array.isArray(data) ? data : [];
+                if (!products.length) {
+                    railCount.textContent = "Новите парчета скоро ще са тук.";
+                    rail.innerHTML = "";
+                    updateArrows();
+                    return;
                 }
+                current = readSize();
+                renderChips();
+                renderRail();
+            })
+            .catch(function (err) {
+                console.error("[home] products:", err);
+                rail.innerHTML = "";
+                railCount.textContent = "Всички парчета са в магазина.";
+                updateArrows();
             });
-        }, { threshold: 0.12 });
 
-        revealEls.forEach(el => observer.observe(el));
 
-        /* ——— mobile nav toggle ——— */
-        (function () {
-            const toggle  = document.getElementById('navToggle');
-            const links   = document.getElementById('navLinks');
-            const overlay = document.getElementById('navOverlay');
-            if (!toggle || !links) return;
+        /* ================================================================= */
+        /* EVENTS                                                             */
+        /* ================================================================= */
 
-            function closeMenu() {
-                toggle.classList.remove('open');
-                links.classList.remove('open');
-                if (overlay) overlay.classList.remove('open');
-                toggle.setAttribute('aria-expanded', 'false');
-                document.body.style.overflow = '';
+        var events = document.getElementById("events");
+        var dateFmt = new Intl.DateTimeFormat("bg-BG", { weekday: "long", day: "numeric", month: "long" });
+        var shortFmt = new Intl.DateTimeFormat("bg-BG", { day: "numeric", month: "long" });
+
+        function parseDate(d) {
+            var parts = String(d).split("-").map(Number);
+            return new Date(parts[0], parts[1] - 1, parts[2]);
+        }
+
+        function whenText(ev) {
+            var bits = [];
+            if (ev.event_date) bits.push(dateFmt.format(parseDate(ev.event_date)));
+            if (ev.time_text) bits.push(ev.time_text);
+            var s = bits.join(", ");
+            return s ? s.charAt(0).toUpperCase() + s.slice(1) : "";
+        }
+
+        function renderEvents(list) {
+            if (!list.length) { events.remove(); return; }
+
+            var photo   = document.getElementById("eventsPhoto");
+            var tabs    = document.getElementById("eventsTabs");
+            var panels  = document.getElementById("eventsPanels");
+            var actions = document.getElementById("eventsActions");
+
+            photo.innerHTML = list.map(function (ev, i) {
+                return '<img src="' + zkEsc(ev.image_url || "img/shop-table.jpg") + '" alt="' + zkEsc(ev.title) + '" loading="lazy"' + (i === 0 ? ' class="is-active"' : "") + ">";
+            }).join("");
+
+            panels.innerHTML = list.map(function (ev, i) {
+                var when = whenText(ev);
+                return '<div class="events-panel" role="tabpanel" id="eventPanel' + i + '" aria-labelledby="eventTab' + i + '" tabindex="0"' + (i ? " hidden" : "") + ">" +
+                    "<h3>" + zkEsc(ev.title) + "</h3>" +
+                    (when ? '<p class="events-when">' + zkEsc(when) + "</p>" : "") +
+                    (ev.body ? '<div class="events-text">' + zkParagraphs(ev.body) + "</div>" : "") +
+                    "</div>";
+            }).join("");
+
+            if (list.length > 1) {
+                tabs.innerHTML = list.map(function (ev, i) {
+                    var label = ev.event_date ? shortFmt.format(parseDate(ev.event_date)) : ev.title;
+                    return '<button type="button" class="events-tab" role="tab" id="eventTab' + i + '" aria-controls="eventPanel' + i + '" aria-selected="' + (i === 0) + '" tabindex="' + (i === 0 ? 0 : -1) + '">' + zkEsc(label) + "</button>";
+                }).join("");
+            } else {
+                tabs.hidden = true;
+                panels.firstChild.removeAttribute("role");
+                panels.firstChild.removeAttribute("tabindex");
             }
-            function openMenu() {
-                toggle.classList.add('open');
-                links.classList.add('open');
-                if (overlay) overlay.classList.add('open');
-                toggle.setAttribute('aria-expanded', 'true');
-                document.body.style.overflow = 'hidden';
+
+            function setActions(ev) {
+                var cells = "";
+                var safeLink = ev.link_url && /^(https?:\/\/|\/|mailto:|tel:)/i.test(ev.link_url);
+                if (safeLink) {
+                    cells += '<a class="events-cell events-cell--light" href="' + zkEsc(ev.link_url) + '"' +
+                        (/^https?:/i.test(ev.link_url) ? ' target="_blank" rel="noopener"' : "") + ">" +
+                        zkEsc(ev.link_label || "Научи повече") + "</a>";
+                }
+                cells += '<a class="events-cell ' + (safeLink ? "events-cell--deep" : "events-cell--light") + '" href="contact.html">Как да ни намерите</a>';
+                actions.innerHTML = cells;
             }
-            toggle.addEventListener('click', () => {
-                links.classList.contains('open') ? closeMenu() : openMenu();
+
+            function activate(i, focus) {
+                var tabBtns = tabs.querySelectorAll(".events-tab");
+                tabBtns.forEach(function (t, j) {
+                    t.setAttribute("aria-selected", j === i ? "true" : "false");
+                    t.tabIndex = j === i ? 0 : -1;
+                });
+                panels.querySelectorAll(".events-panel").forEach(function (p, j) { p.hidden = j !== i; });
+                photo.querySelectorAll("img").forEach(function (img, j) { img.classList.toggle("is-active", j === i); });
+                setActions(list[i]);
+                if (focus && tabBtns[i]) tabBtns[i].focus();
+            }
+
+            tabs.addEventListener("click", function (e) {
+                var t = e.target.closest(".events-tab");
+                if (t) activate(Array.prototype.indexOf.call(tabs.children, t), false);
             });
-            if (overlay) overlay.addEventListener('click', closeMenu);
-            links.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
-            window.addEventListener('resize', () => { if (window.innerWidth > 860) closeMenu(); });
-        })();
+            tabs.addEventListener("keydown", function (e) {
+                var tabBtns = Array.prototype.slice.call(tabs.children);
+                var i = tabBtns.indexOf(document.activeElement);
+                if (i < 0) return;
+                var next = null;
+                if (e.key === "ArrowRight") next = (i + 1) % tabBtns.length;
+                if (e.key === "ArrowLeft")  next = (i - 1 + tabBtns.length) % tabBtns.length;
+                if (e.key === "Home") next = 0;
+                if (e.key === "End")  next = tabBtns.length - 1;
+                if (next !== null) { e.preventDefault(); activate(next, true); }
+            });
 
-        loadFeaturedProducts();
+            setActions(list[0]);
+            events.hidden = false;
+        }
+
+        zkRest("events?select=*&is_published=eq.true&or=(event_date.is.null,event_date.gte." + zkToday() + ")&order=sort_order.asc,created_at.desc&limit=3")
+            .then(function (data) { renderEvents(Array.isArray(data) ? data : []); })
+            .catch(function (err) { console.error("[home] events:", err); events.remove(); });
+
+
+        /* ================================================================= */
+        /* STORY FRAME — one frame, its picture changes                       */
+        /* ================================================================= */
+
+        var frameWin = document.getElementById("frameWindow");
+        var frameCap = document.getElementById("frameCaption");
+        var frameIdx = 0;
+        var frameTimer = null;
+        var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        function showFrame(i) {
+            var imgs = frameWin.querySelectorAll("img");
+            if (!imgs.length) return;
+            frameIdx = (i + imgs.length) % imgs.length;
+            imgs.forEach(function (img, j) { img.classList.toggle("is-active", j === frameIdx); });
+            frameCap.textContent = imgs[frameIdx].dataset.caption || "";
+        }
+        function startFrame() {
+            if (reduce) return;
+            clearInterval(frameTimer);
+            frameTimer = setInterval(function () { showFrame(frameIdx + 1); }, 3000);
+        }
+        function advance() { showFrame(frameIdx + 1); startFrame(); }
+
+        frameWin.addEventListener("click", advance);
+        frameWin.addEventListener("keydown", function (e) {
+            if (e.key === "Enter" || e.key === " ") { e.preventDefault(); advance(); }
+        });
+
+        zkRest("gallery_photos?select=image_url,caption&is_published=eq.true&order=sort_order.asc,created_at.desc&limit=7")
+            .then(function (data) {
+                if (!Array.isArray(data) || data.length < 2) return;
+                frameWin.innerHTML = data.map(function (ph, i) {
+                    return '<img src="' + zkEsc(ph.image_url) + '" alt="' + zkEsc(ph.caption || "Снимка от магазина") + '" loading="lazy" data-caption="' + zkEsc(ph.caption || "") + '"' + (i === 0 ? ' class="is-active"' : "") + ">";
+                }).join("");
+                showFrame(0);
+            })
+            .catch(function (err) { console.error("[home] gallery:", err); })
+            .then(startFrame);
+    })();
     </script>
 
 </body>

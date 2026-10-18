@@ -1,0 +1,16 @@
+# Закачалката — reloved store
+# Продуктовите страници се генерират от базата, затова sitemap-ът е
+# динамичен: /sitemap.xml винаги отразява наличните в момента артикули.
+
+User-agent: *
+Allow: /
+
+# Административният панел и служебните точки не се индексират.
+Disallow: /admin.html
+Disallow: /admin/
+Disallow: /api/
+
+# Дублиращият се клиентски маршрут — каноничният е /p/<id>.
+Disallow: /product.html
+
+Sitemap: https://www.zakachalkata.com/sitemap.xml

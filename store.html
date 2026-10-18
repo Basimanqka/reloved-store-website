@@ -1,1365 +1,522 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bg">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Закачалката — Магазин</title>
+    <!-- META:START -->
+    <title>Магазин — Закачалката</title>
+    <meta name="description" content="Разгледайте наличните артикули в Закачалката: дизайнерски дрехи, обувки и чанти втора употреба, всеки в единствена бройка. Филтри по размер, цвят и категория." />
+    <link rel="canonical" href="https://www.zakachalkata.com/store.html" />
+    <meta name="robots" content="index, follow" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Закачалката" />
+    <meta property="og:locale" content="bg_BG" />
+    <meta property="og:title" content="Магазин — Закачалката" />
+    <meta property="og:description" content="Разгледайте наличните артикули в Закачалката: дизайнерски дрехи, обувки и чанти втора употреба, всеки в единствена бройка. Филтри по размер, цвят и категория." />
+    <meta property="og:url" content="https://www.zakachalkata.com/store.html" />
+    <meta property="og:image" content="https://www.zakachalkata.com/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png" />
+    <link rel="apple-touch-icon" href="favicon-180.png" />
+    <!-- META:END -->
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oranienbaum&family=Onest:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/site.css">
+    <script>document.documentElement.classList.add('js')</script>
+    <script src="js/site.js" defer></script>
+    <script src="js/config.js"></script>
 
     <style>
 
-        /* ========================= */
-        /* TOKENS & RESET            */
-        /* ========================= */
+        /* ===================================================================== */
+        /* STORE HEADER                                                          */
+        /* ===================================================================== */
 
-        *, *::before, *::after {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --bg:          #FAF7F4;
-            --white:       #FFFFFF;
-            --border:      #EDE2D8;
-            --border-soft: #F0E8DF;
-            --text:        #2C2420;
-            --muted:        #8B5E52;
-            --faint:       #C9B4AB;
-            --accent:      #AA5878;
-            --accent-dark: #7A3E56;
-            --gold:        #C9998A;
-            --gold-light:  #F2EBE3;
-            --bg-card:      #F2EBE3;
-            --rose:         #C9998A;
-            --rose-dark:    #8B5E52;
-            --mulberry:     #AA5878;
-            --mulberry-light: #F5E6EC;
-            --serif:       'Cormorant Garamond', serif;
-            --sans:        'Inter', sans-serif;
-            --ease:        0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            --nav-h:       80px;
-        }
-
-        html { scroll-behavior: smooth; }
-
-        body {
-            font-family: var(--sans);
-            background-color: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        img { display: block; }
-        ul  { list-style: none; }
-        a   { text-decoration: none; color: inherit; }
-        button, select, input { font-family: inherit; cursor: pointer; }
-
-
-        /* ========================= */
-        /* NAVBAR                    */
-        /* ========================= */
-
-        .navbar {
-            width: 100%;
-            background-color: var(--white);
-            border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .nav-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 1.4rem 3rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .logo a {
-            display: flex;
-            align-items: center;
-            line-height: 1;
-        }
-
-        .logo img { height: 56px; width: auto; display: block; }
-
-        .nav-links ul { display: flex; gap: 2.5rem; }
-
-        .nav-links a {
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: color 0.3s;
-            position: relative;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            left: 0; bottom: -5px;
-            width: 0; height: 1px;
-            background-color: var(--accent);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover::after,
-        .nav-links a.active::after { width: 100%; }
-        .nav-links a.active { color: var(--accent); }
-
-        .nav-icons { display: flex; align-items: center; gap: 1rem; }
-
-        .nav-icons button {
-            border: none;
-            background: transparent;
-            font-size: 0;
-            line-height: 1;
-            cursor: pointer;
-            transition: color 0.3s;
-            display: flex;
-            align-items: center;
-        }
-
-        .nav-icons button:hover { color: var(--accent); }
-
-        .nav-icons .social-link {
-            display: flex;
-            align-items: center;
-            color: var(--text);
-            transition: color 0.3s;
-        }
-        .nav-icons .social-link:hover { color: var(--accent); }
-
-        /* hamburger toggle (mobile) */
-        .nav-toggle {
-            display: none;
-            flex-direction: column;
-            justify-content: center;
-            gap: 5px;
-            width: 40px;
-            height: 40px;
-            background: transparent;
-            border: none;
-            padding: 0;
-            flex-shrink: 0;
-        }
-
-        .nav-toggle span {
-            display: block;
-            width: 22px;
-            height: 1.5px;
-            background: var(--text);
-            transition: transform 0.3s ease, opacity 0.3s ease;
-        }
-
-        .nav-toggle.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
-        .nav-toggle.open span:nth-child(2) { opacity: 0; }
-        .nav-toggle.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
-
-        .nav-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(44,36,32,0.35);
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-            z-index: 98;
-        }
-
-        .nav-overlay.open { opacity: 1; visibility: visible; }
-
-        @media (max-width: 860px) {
-            .nav-toggle { display: flex; }
-
-            .nav-links {
-                position: fixed;
-                top: 0;
-                right: 0;
-                bottom: 0;
-                width: min(78vw, 320px);
-                background: var(--white);
-                padding: 5.5rem 2rem 2.5rem;
-                display: flex;
-                flex-direction: column;
-                transform: translateX(100%);
-                transition: transform 0.35s ease;
-                z-index: 99;
-                overflow-y: auto;
-                box-shadow: -8px 0 30px rgba(0,0,0,0.10);
-            }
-
-            .nav-links.open { transform: translateX(0); }
-
-            .nav-links ul { flex-direction: column; gap: 0; }
-            .nav-links li { border-bottom: 1px solid var(--border); }
-
-            .nav-links a {
-                display: block;
-                padding: 1rem 0.2rem;
-                font-size: 1rem;
-            }
-        }
-
-
-        /* ========================= */
-        /* PAGE HEADER               */
-        /* ========================= */
-
-        .page-header {
-            background: var(--white);
-            border-bottom: 1px solid var(--border);
-            padding: 3.5rem 3rem 3rem;
-        }
-
-        .page-header-container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .breadcrumb {
-            font-size: 0.8rem;
-            color: var(--muted);
-            margin-bottom: 0.9rem;
-            letter-spacing: 0.3px;
-        }
-
-        .breadcrumb a { transition: color 0.2s; }
-        .breadcrumb a:hover { color: var(--accent); }
-        .breadcrumb sep { margin: 0 0.5rem; opacity: 0.4; }
-
-        .header-row {
+        .store-head {
             display: flex;
             align-items: flex-end;
             justify-content: space-between;
-            gap: 2rem;
+            flex-wrap: wrap;
+            gap: 1.5rem 3rem;
+            padding: clamp(2.5rem, 6vw, 5rem) var(--margin) clamp(1.75rem, 3vw, 2.5rem);
         }
-
-        .header-left {}
-
-        .header-eyebrow {
-            font-size: 0.68rem;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            color: var(--gold);
-            margin-bottom: 0.6rem;
-        }
-
-        .page-header h1 {
-            font-family: var(--serif);
-            font-size: clamp(2.2rem, 4vw, 3.4rem);
-            font-weight: 400;
-            line-height: 1.1;
-        }
-
-        .page-header h1 em {
-            font-style: italic;
-            color: var(--accent);
-        }
-
-        .header-right {
-            text-align: right;
-            flex-shrink: 0;
-        }
-
-        .header-count {
-            font-size: 0.78rem;
-            color: var(--muted);
-            letter-spacing: 0.5px;
-        }
-
-        .header-count strong {
-            font-size: 2rem;
-            font-family: var(--serif);
-            font-weight: 400;
-            color: var(--text);
-            display: block;
-            line-height: 1;
-            margin-bottom: 0.2rem;
-        }
+        .store-head h1 { font-size: var(--step-display); line-height: 0.86; letter-spacing: -0.035em; }
+        .store-sub { margin-top: 1.25rem; font-size: var(--step-lead); line-height: 1.3; max-width: 30ch; }
+        .store-count { font-size: var(--step-lead); line-height: 1.2; text-align: right; }
+        .store-count strong { font-weight: 500; font-variant-numeric: tabular-nums; }
 
 
-        /* ========================= */
-        /* FILTER BAR                */
-        /* ========================= */
+        /* ===================================================================== */
+        /* FILTER BAR — filled cells, no outlines                                */
+        /* ===================================================================== */
 
-        .filter-bar-wrap {
-            background: var(--white);
-            border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: var(--nav-h);
-            z-index: 90;
-        }
+        .filter-bar-wrap { padding: 0 var(--margin); }
 
         .filter-bar {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 3rem;
             display: flex;
-            align-items: stretch;
-            gap: 0;
+            flex-wrap: wrap;
+            gap: 6px;
         }
 
-        .filter-search-row {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0.9rem 3rem;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .filter-search-wrap {
+        .filter-search {
             position: relative;
-            max-width: 480px;
+            flex: 2 1 300px;
+            display: block;
         }
-
-        .filter-search-wrap svg {
+        .filter-search svg {
             position: absolute;
-            left: 0.9rem;
+            left: 1rem;
             top: 50%;
-            transform: translateY(-50%);
-            width: 15px;
-            height: 15px;
+            translate: 0 -50%;
+            width: 18px;
+            height: 18px;
             stroke: var(--muted);
             pointer-events: none;
         }
-
         #searchInput {
             width: 100%;
-            height: 42px;
-            border: 1px solid var(--border);
-            background: var(--bg);
-            padding: 0 2.6rem 0 2.6rem;
-            font-size: 0.85rem;
-            color: var(--text);
-            outline: none;
-            transition: border-color 0.2s ease, background 0.2s ease;
+            height: 52px;
+            padding: 0 3rem 0 2.9rem;
+            border: 0;
+            background: var(--surface);
+            color: var(--ink);
+            font-size: 1rem;
+            transition: background-color var(--t-hover) ease;
         }
-
-        #searchInput:focus {
-            border-color: var(--accent);
-            background: var(--white);
-        }
+        #searchInput::placeholder { color: var(--muted); }
+        #searchInput:hover { background: var(--surface-deep); }
+        #searchInput:focus { outline: 2px solid var(--fig); outline-offset: 0; background: var(--paper); }
 
         #searchClear {
             position: absolute;
-            right: 0.7rem;
+            right: 4px;
             top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            color: var(--muted);
-            cursor: pointer;
-            font-size: 1rem;
-            line-height: 1;
+            translate: 0 -50%;
             display: none;
-            padding: 0.2rem;
+            width: 44px;
+            height: 44px;
+            border: 0;
+            background: none;
+            color: var(--muted);
+            font-size: 1.4rem;
+            line-height: 1;
         }
-
         #searchClear.visible { display: block; }
+        #searchClear:hover { color: var(--ink); }
 
-        /* Each filter cell */
         .filter-cell {
-            flex: 1;
             position: relative;
-            border-right: 1px solid var(--border);
+            flex: 1 1 150px;
         }
-
-        .filter-cell:first-child { border-left: 1px solid var(--border); }
-
         .filter-cell select {
             width: 100%;
             height: 52px;
-            border: none;
-            background: transparent;
-            padding: 0 2.5rem 0 1.2rem;
-            font-size: 0.78rem;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            color: var(--text);
+            padding: 0 2.6rem 0 1rem;
+            border: 0;
+            background: var(--surface);
+            color: var(--ink);
+            font-size: 1rem;
             appearance: none;
             -webkit-appearance: none;
             cursor: pointer;
-            outline: none;
-            transition: background 0.2s ease, color 0.2s ease;
+            transition: background-color var(--t-hover) ease;
         }
-
-        .filter-cell select:hover,
-        .filter-cell select:focus {
-            background: var(--bg);
-            color: var(--accent);
-        }
-
-        /* custom arrow */
+        .filter-cell select:hover { background: var(--surface-deep); }
+        .filter-cell select:focus-visible { outline: 2px solid var(--fig); outline-offset: 0; }
+        .filter-cell select.is-set { background: var(--ink); color: var(--on-dark); }
         .filter-cell::after {
-            content: '';
+            content: "";
             position: absolute;
-            right: 1rem;
+            right: 1.1rem;
             top: 50%;
-            transform: translateY(-50%);
-            width: 6px;
-            height: 6px;
-            border-right: 1px solid var(--muted);
-            border-bottom: 1px solid var(--muted);
+            width: 7px;
+            height: 7px;
+            border-right: 1.5px solid currentColor;
+            border-bottom: 1.5px solid currentColor;
+            color: var(--muted);
             rotate: 45deg;
-            translate: 0 -2px;
+            translate: 0 -70%;
             pointer-events: none;
-            transition: border-color 0.2s;
         }
+        .filter-cell:has(select.is-set)::after { color: var(--on-dark); }
 
-        .filter-cell:hover::after { border-color: var(--accent); }
-
-        /* price range cell */
         .filter-price {
-            flex: 1.3;
+            flex: 1.4 1 240px;
             display: flex;
             align-items: center;
-            gap: 1rem;
-            padding: 0 1.4rem;
-            border-right: 1px solid var(--border);
-        }
-
-        .filter-price::after { display: none; }
-
-        .price-label {
-            font-size: 0.72rem;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            color: var(--muted);
-            white-space: nowrap;
-            flex-shrink: 0;
-        }
-
-        .price-value {
-            font-size: 0.78rem;
-            color: var(--text);
-            white-space: nowrap;
-            flex-shrink: 0;
-            min-width: 60px;
-            text-align: right;
-        }
-
-        input[type="range"] {
-            flex: 1;
-            accent-color: var(--accent);
-            height: 2px;
-            cursor: pointer;
-        }
-
-        /* sort + view toggle */
-        .filter-right {
-            display: flex;
-            align-items: center;
-            gap: 0;
-            margin-left: auto;
-        }
-
-        .sort-cell {
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            padding: 0 1.4rem;
-            border-left: 1px solid var(--border);
+            gap: 0.9rem;
             height: 52px;
+            padding: 0 1rem;
+            background: var(--surface);
         }
+        .price-label { white-space: nowrap; }
+        .price-value { min-width: 4.5em; text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; font-weight: 500; }
+        input[type="range"] { flex: 1; min-width: 80px; accent-color: var(--fig); cursor: pointer; }
 
-        .sort-cell label {
-            font-size: 0.72rem;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            color: var(--muted);
-            white-space: nowrap;
-        }
-
-        .sort-cell select {
-            border: none;
-            background: transparent;
-            font-size: 0.78rem;
-            letter-spacing: 1px;
-            color: var(--text);
-            appearance: none;
-            -webkit-appearance: none;
-            padding-right: 1.2rem;
-            outline: none;
-            cursor: pointer;
-        }
-
-        .view-toggle {
-            display: flex;
-            align-items: center;
-            height: 52px;
-            border-left: 1px solid var(--border);
-        }
-
+        .view-toggle { display: flex; gap: 6px; }
         .view-btn {
-            width: 50px;
+            width: 52px;
             height: 52px;
-            border: none;
-            background: transparent;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: background 0.2s, color 0.2s;
-            color: var(--faint);
-        }
-
-        .view-btn:hover { background: var(--bg); color: var(--text); }
-        .view-btn.active { color: var(--accent-dark); background: rgba(170,88,120,0.15); }
-
-        .view-btn svg {
-            width: 15px;
-            height: 15px;
-            fill: none;
-            stroke: currentColor;
-            stroke-width: 1.5;
-        }
-
-
-        /* ========================= */
-        /* STORE LAYOUT              */
-        /* ========================= */
-
-        .store-layout {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 3rem 6rem;
-            display: grid;
-            grid-template-columns: 220px 1fr;
-            gap: 4rem;
-        }
-
-
-        /* ========================= */
-        /* SIDEBAR                   */
-        /* ========================= */
-
-        .sidebar {
-            padding-top: 3rem;
-            position: sticky;
-            top: calc(var(--nav-h) + 56px);
-            height: fit-content;
-        }
-
-        .sidebar-section {
-            margin-bottom: 3rem;
-        }
-
-        .sidebar-heading {
-            font-size: 0.68rem;
-            letter-spacing: 3.5px;
-            text-transform: uppercase;
+            border: 0;
+            background: var(--surface);
             color: var(--muted);
-            margin-bottom: 1.4rem;
-            padding-bottom: 0.8rem;
-            border-bottom: 1px solid var(--border-soft);
+            transition: background-color var(--t-hover) ease, color var(--t-hover) ease;
         }
+        .view-btn:hover { background: var(--surface-deep); color: var(--ink); }
+        .view-btn.active { background: var(--ink); color: var(--on-dark); }
+        .view-btn svg { width: 16px; height: 16px; fill: currentColor; }
 
-        .category-list {
-            display: flex;
-            flex-direction: column;
-            gap: 0;
-        }
-
-        .category-list li {
-            border-bottom: 1px solid var(--border-soft);
-        }
-
-        .category-list a {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0.65rem 0;
-            font-size: 0.88rem;
-            color: #666;
-            transition: color 0.25s, padding-left 0.25s;
-        }
-
-        .category-list a:hover,
-        .category-list a.active {
-            color: var(--accent);
-            padding-left: 4px;
-        }
-
-        .category-list a.active { font-weight: 500; }
-
-        .cat-count {
-            font-size: 0.72rem;
-            color: var(--faint);
-        }
-
-        /* condition filter */
-        .condition-pills {
-            display: flex;
-            flex-direction: column;
-            gap: 0.6rem;
-        }
-
-        .pill-label {
-            display: flex;
-            align-items: center;
-            gap: 0.7rem;
-            cursor: pointer;
-            font-size: 0.85rem;
-            color: var(--muted);
-            transition: color 0.2s;
-        }
-
-        .pill-label:hover { color: var(--text); }
-
-        .pill-label input[type="checkbox"] {
-            accent-color: var(--accent);
-            width: 14px;
-            height: 14px;
-            flex-shrink: 0;
-        }
-
-        /* sidebar promo */
-        .sidebar-promo {
-            background: var(--gold-light);
-            border: 1px solid rgba(201,153,138,0.40);
-            padding: 1.5rem;
-        }
-
-        .promo-eyebrow {
-            font-size: 0.62rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: var(--rose-dark);
-            margin-bottom: 0.5rem;
-        }
-
-        .promo-text {
-            font-family: var(--serif);
-            font-size: 1.1rem;
-            font-weight: 400;
-            line-height: 1.35;
-            margin-bottom: 1rem;
-            color: var(--text);
-        }
-
-        .promo-link {
-            font-size: 0.7rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: var(--rose-dark);
-            border-bottom: 1px solid rgba(201,153,138,0.50);
-            padding-bottom: 1px;
-            transition: opacity 0.2s;
-        }
-
-        .promo-link:hover { opacity: 0.7; }
-
-
-        /* ========================= */
-        /* STORE CONTENT             */
-        /* ========================= */
-
-        .store-content { padding-top: 3rem; }
-
-
-        /* ========================= */
-        /* ACTIVE FILTERS TAG ROW    */
-        /* ========================= */
-
-        .active-filters {
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            flex-wrap: wrap;
-            margin-bottom: 2rem;
-            min-height: 32px;
-        }
-
-        .filter-tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-            font-size: 0.7rem;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            padding: 0.3rem 0.7rem;
-            border: 1px solid var(--border);
-            background: var(--white);
-            color: var(--text);
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .filter-tag:hover {
-            border-color: var(--mulberry);
-            color: var(--mulberry);
-        }
-
-        .filter-tag .remove {
-            font-size: 0.85rem;
-            line-height: 1;
-            color: var(--faint);
-        }
-
-        .clear-all {
-            font-size: 0.7rem;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            color: var(--muted);
-            background: none;
-            border: none;
-            padding: 0;
-            text-decoration: underline;
-            text-underline-offset: 2px;
-            text-decoration-color: transparent;
-            transition: all 0.2s;
-        }
-
-        .clear-all:hover {
-            color: var(--mulberry);
-            text-decoration-color: var(--mulberry);
-        }
-
-
-        /* ========================= */
-        /* PRODUCTS GRID             */
-        /* ========================= */
-
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 3rem 2.5rem;
-            align-items: start;
-        }
-
-        /* 4-col view */
-        .products-grid.view-4 {
-            grid-template-columns: repeat(4, 1fr);
-            gap: 2.5rem 2rem;
-        }
-
-        /* ========================= */
-        /* PRODUCT CARD              */
-        /* ========================= */
-
-        .product-card {
-            cursor: pointer;
-            opacity: 0;
-            transform: translateY(20px);
-            transition:
-                opacity 0.55s ease,
-                transform 0.55s ease;
-        }
-
-        .product-card.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .product-card:hover { }
-
-        /* image */
-        .card-image-wrap {
-            position: relative;
-            overflow: hidden;
-            background: var(--bg-card);
-            padding: 0.7rem;
-            margin-bottom: 1.1rem;
-        }
-
-        .card-image-wrap img {
-            width: 100%;
-            height: 340px;
-            object-fit: cover;
-            transition: transform 0.55s var(--ease);
-        }
-
-        .view-4 .card-image-wrap img { height: 280px; }
-
-        .product-card:hover .card-image-wrap img {
-            transform: scale(1.04);
-        }
-
-        /* skeleton loader */
-        .card-image-wrap img.loading {
-            background: linear-gradient(90deg, #ede8e2 25%, #e4ddd5 50%, #ede8e2 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.4s infinite;
-        }
-
-        @keyframes shimmer {
-            0%   { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
-
-        /* top-left badge */
-        .card-badge {
-            position: absolute;
-            top: 1.3rem;
-            left: 1.3rem;
-            font-size: 0.62rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            padding: 0.25rem 0.7rem;
-            pointer-events: none;
-        }
-
-        .card-badge.new {
-            background: rgba(170,88,120,0.15);
-            color: var(--accent-dark);
-            border: 1px solid rgba(170,88,120,0.35);
-        }
-
-        .card-badge.archive {
-            background: rgba(44,36,32,0.06);
-            color: var(--muted);
-            border: 1px solid rgba(44,36,32,0.10);
-        }
-
-        .card-badge.sold {
-            background: rgba(170,88,120,0.10);
-            color: var(--mulberry);
-            border: 1px solid rgba(170,88,120,0.25);
-        }
-
-        /* wishlist */
-        .card-wishlist {
-            position: absolute;
-            top: 1.2rem;
-            right: 1.2rem;
-            width: 36px;
-            height: 36px;
-            background: rgba(255,255,255,0.93);
-            border: none;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.95rem;
-            opacity: 0;
-            transition: opacity 0.25s, background 0.25s, color 0.25s;
-        }
-
-        .product-card:hover .card-wishlist { opacity: 1; }
-
-        .card-wishlist:hover {
-            background: var(--mulberry);
-            color: var(--white);
-        }
-
-        /* quick add */
-        .card-quick-add {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 0.8rem;
-            background: rgba(44,36,32,0.88);
-            color: var(--white);
-            border: none;
-            font-size: 0.68rem;
-            letter-spacing: 2.5px;
-            text-transform: uppercase;
-            opacity: 0;
-            transform: translateY(8px);
-            transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
-            backdrop-filter: blur(4px);
-        }
-
-        .product-card:hover .card-quick-add {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .card-quick-add:hover {
-            background: var(--mulberry);
-        }
-
-        /* text info */
-        .card-info { padding: 0 0.2rem; }
-
-        .card-brand {
-            font-size: 0.68rem;
-            letter-spacing: 2.5px;
-            text-transform: uppercase;
-            color: var(--muted);
-            margin-bottom: 0.35rem;
-        }
-
-        .card-name {
-            font-family: var(--serif);
-            font-size: 1.35rem;
-            font-weight: 400;
-            line-height: 1.25;
-            margin-bottom: 0.35rem;
-            transition: color 0.2s;
-        }
-
-        .product-card:hover .card-name { color: var(--mulberry); }
-
-        .card-meta {
-            font-size: 0.8rem;
-            color: var(--faint);
-            margin-bottom: 0.6rem;
-            letter-spacing: 0.3px;
-        }
-
-        .card-price-row {
-            display: flex;
-            align-items: center;
-            gap: 0.7rem;
-        }
-
-        .card-price {
-            font-size: 0.95rem;
-            font-weight: 500;
-            color: var(--text);
-        }
-
-        /* Authentication pill */
-        .auth-pill {
-            font-size: 0.6rem;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            padding: 0.18rem 0.55rem;
-            background: rgba(170,88,120,0.12);
-            color: var(--accent-dark);
-            border: 1px solid rgba(170,88,120,0.30);
-        }
-
-
-        /* ========================= */
-        /* LOAD MORE                 */
-        /* ========================= */
-
-        .load-more-wrap {
-            text-align: center;
-            margin-top: 4rem;
-            padding-top: 3rem;
-            border-top: 1px solid var(--border);
-        }
-
-        .load-more-info {
-            font-size: 0.8rem;
-            color: var(--faint);
-            letter-spacing: 0.5px;
-            margin-bottom: 1.8rem;
-        }
-
-        .load-more-info strong {
-            color: var(--text);
-            font-weight: 500;
-        }
-
-        .progress-bar {
-            width: 260px;
-            height: 1px;
-            background: var(--border);
-            margin: 0 auto 2rem;
-            position: relative;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: var(--accent);
-            width: 40%;
-            transition: width 0.6s var(--ease);
-        }
-
-        .load-more-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.7rem;
-            border: 1px solid var(--border);
-            background: transparent;
-            color: var(--text);
-            font-size: 0.74rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            padding: 1rem 2.4rem;
-            transition: border-color 0.3s, color 0.3s, background 0.3s, gap 0.3s;
-        }
-
-        .load-more-btn:hover {
-            border-color: var(--mulberry);
-            color: var(--mulberry);
-            gap: 1rem;
-        }
-
-
-        /* ========================= */
-        /* FOOTER                    */
-        /* ========================= */
-
-        .footer {
-            background-color: var(--white);
-            border-top: 1px solid var(--border);
-        }
-
-        .footer-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 4rem 3rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 2rem;
-        }
-
-        .footer-branding h2 {
-            font-family: var(--serif);
-            font-size: 2rem;
-            margin-bottom: 0.7rem;
-        }
-
-        .footer-branding p {
-            color: var(--muted);
-            font-size: 0.9rem;
-        }
-
-        .footer-links,
-        .footer-socials {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .footer-links a,
-        .footer-socials a {
-            font-size: 0.9rem;
-            color: #7A6560;
-            transition: color 0.3s;
-        }
-
-        .footer-links a:hover,
-        .footer-socials a:hover { color: var(--mulberry); }
-
-        .footer-bottom {
-            border-top: 1px solid var(--border);
-            padding: 1.2rem 3rem;
-            text-align: center;
-        }
-
-        .footer-bottom p {
-            font-size: 0.78rem;
-            color: var(--faint);
-            letter-spacing: 0.5px;
-        }
-
-
-        /* ========================= */
-        /* MOBILE FILTER DRAWER      */
-        /* ========================= */
-
-        .mobile-filter-bar {
-            display: none;
-            background: var(--white);
-            border-bottom: 1px solid var(--border);
-            padding: 0.9rem 1.5rem;
-            gap: 0.8rem;
-            position: sticky;
-            top: var(--nav-h);
-            z-index: 90;
-        }
-
-        .mobile-filter-btn {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            border: 1px solid var(--border);
-            background: transparent;
-            padding: 0.7rem 1rem;
-            font-size: 0.72rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: var(--text);
-            transition: all 0.2s;
-        }
-
-        .mobile-filter-btn:hover,
-        .mobile-filter-btn.active {
-            border-color: var(--mulberry);
-            color: var(--mulberry);
-        }
-
-        .mobile-filter-btn svg { flex-shrink: 0; }
-
-        .filter-count {
-            display: none;
-            min-width: 18px;
-            height: 18px;
-            padding: 0 5px;
-            border-radius: 9px;
-            background: var(--mulberry);
-            color: #fff;
-            font-size: 0.62rem;
-            line-height: 18px;
-            text-align: center;
-            letter-spacing: 0;
-        }
-        .filter-count.visible { display: inline-block; }
-
-        /* Filter drawer chrome — hidden on desktop, shown inside the mobile drawer */
         .filter-drawer-head,
         .filter-drawer-foot { display: none; }
 
         .filter-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(44,36,32,0.35);
+            z-index: 96;
+            background: rgba(74, 56, 68, 0.4);
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-            z-index: 96;
+            transition: opacity var(--t-ui) ease, visibility var(--t-ui) ease;
         }
         .filter-overlay.open { opacity: 1; visibility: visible; }
 
+        .mobile-filter-bar { display: none; }
 
-        /* ========================= */
-        /* EMPTY STATE               */
-        /* ========================= */
+
+        /* ===================================================================== */
+        /* LAYOUT + SIDEBAR                                                      */
+        /* ===================================================================== */
+
+        .store-layout {
+            display: grid;
+            grid-template-columns: 210px minmax(0, 1fr);
+            gap: clamp(2rem, 4vw, 4rem);
+            padding: 2.5rem var(--margin) var(--section);
+        }
+
+        .sidebar {
+            position: sticky;
+            top: calc(var(--nav-h) + 1.5rem);
+            align-self: start;
+        }
+        .sidebar-heading {
+            font-family: var(--font-text);
+            font-size: 1rem;
+            font-weight: 500;
+            letter-spacing: 0;
+            margin-bottom: 0.75rem;
+        }
+        .category-list a {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: 0.45rem 0;
+            color: var(--muted);
+            transition: color var(--t-hover) ease, translate var(--t-ui) var(--ease-out);
+        }
+        .category-list a:hover { color: var(--ink); translate: 3px 0; }
+        .category-list a.active { color: var(--fig); font-weight: 500; }
+        .cat-count { font-variant-numeric: tabular-nums; }
+
+
+        /* ===================================================================== */
+        /* ACTIVE FILTERS                                                        */
+        /* ===================================================================== */
+
+        .active-filters {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 6px;
+            min-height: 44px;
+            margin-bottom: 1.75rem;
+        }
+        .active-filters:empty { min-height: 0; margin-bottom: 0; }
+
+        .filter-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            min-height: 40px;
+            padding: 0 0.9rem;
+            border: 0;
+            background: var(--blush-soft);
+            color: var(--ink);
+            font-size: 1rem;
+            transition: background-color var(--t-hover) ease;
+        }
+        .filter-tag:hover { background: var(--blush); }
+        .filter-tag .remove { font-size: 1.2rem; line-height: 1; }
+
+        .clear-all {
+            min-height: 40px;
+            padding: 0 0.5rem;
+            border: 0;
+            background: none;
+            color: var(--ink);
+            font-size: 1rem;
+            text-decoration: underline;
+            text-underline-offset: 0.25em;
+        }
+        .clear-all:hover { color: var(--fig); }
+
+
+        /* ===================================================================== */
+        /* PRODUCT GRID + CARD                                                   */
+        /* ===================================================================== */
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: clamp(2.5rem, 4vw, 3.5rem) var(--gutter);
+        }
+        .products-grid.view-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+        .product-card { display: block; color: var(--ink); }
+
+        @media (prefers-reduced-motion: no-preference) {
+            .js .product-card {
+                opacity: 0;
+                transform: translateY(20px);
+                transition: opacity 600ms var(--ease-out), transform 800ms var(--ease-out);
+            }
+            .js .product-card.visible { opacity: 1; transform: none; }
+        }
+
+        .card-image-wrap {
+            position: relative;
+            aspect-ratio: 4 / 5;
+            overflow: hidden;
+            background: var(--surface);
+        }
+        .card-image-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 700ms var(--ease-out);
+        }
+        .product-card:hover .card-image-wrap img { transform: scale(1.04); }
+
+        .card-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            padding: 0.35rem 0.7rem;
+            background: var(--ink);
+            color: var(--on-dark);
+            font-size: var(--step-small);
+            font-weight: 500;
+            pointer-events: none;
+        }
+        .card-badge.archive { background: var(--fig); }
+
+        .card-name {
+            margin-top: 1rem;
+            font-family: var(--font-display);
+            font-size: var(--step-lead);
+            line-height: 1.05;
+            letter-spacing: -0.015em;
+            text-decoration: underline;
+            text-decoration-thickness: 1px;
+            text-underline-offset: 0.18em;
+            text-decoration-color: transparent;
+            transition: text-decoration-color var(--t-hover) ease;
+        }
+        .product-card:hover .card-name { text-decoration-color: currentColor; }
+
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 1rem;
+            margin-top: 0.45rem;
+        }
+        .card-maker { color: var(--muted); }
+        .card-price { font-weight: 500; font-variant-numeric: tabular-nums; white-space: nowrap; }
+        .card-price.is-sale { color: var(--fig); }
+        .card-price s { margin-left: 0.4rem; font-weight: 400; color: var(--muted); }
+        .card-condition { margin-top: 0.15rem; color: var(--muted); }
+
+        .skeleton .card-image-wrap { background: var(--surface); }
+        .skeleton .bar { display: block; height: 1.1rem; margin-top: 1rem; width: 65%; background: var(--surface); }
+
+
+        /* ===================================================================== */
+        /* EMPTY STATE + LOAD MORE                                               */
+        /* ===================================================================== */
 
         .empty-state {
             display: none;
-            text-align: center;
-            padding: 5rem 2rem;
-            grid-column: 1 / -1;
+            padding: 3rem 2rem;
+            background: var(--surface);
+            max-width: 640px;
         }
-
         .empty-state.visible { display: block; }
+        .empty-title { font-size: var(--step-head); }
+        .empty-msg { margin-top: 1rem; max-width: 40ch; }
+        .empty-state .btn { margin-top: 1.75rem; }
 
-        .empty-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1.2rem;
-            opacity: 0.3;
+        .load-more-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.25rem;
+            margin-top: clamp(3rem, 6vw, 5rem);
         }
-
-        .empty-title {
-            font-family: var(--serif);
-            font-size: 1.8rem;
-            font-weight: 400;
-            margin-bottom: 0.6rem;
-        }
-
-        .empty-msg {
-            font-size: 0.88rem;
-            color: var(--muted);
-        }
+        .load-more-info { color: var(--muted); font-variant-numeric: tabular-nums; }
+        .load-more-info strong { color: var(--ink); font-weight: 500; }
+        .progress-bar { width: 240px; height: 3px; background: var(--surface); }
+        .progress-fill { height: 100%; width: 0; background: var(--fig); transition: width 600ms var(--ease-out); }
 
 
-        /* ========================= */
-        /* RESPONSIVE                */
-        /* ========================= */
+        /* ===================================================================== */
+        /* RESPONSIVE                                                            */
+        /* ===================================================================== */
 
         @media (max-width: 1200px) {
-            .products-grid { grid-template-columns: repeat(3, 1fr); }
-            .products-grid.view-4 { grid-template-columns: repeat(3, 1fr); }
+            .products-grid.view-4 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
         }
 
         @media (max-width: 1000px) {
-            .store-layout {
-                grid-template-columns: 1fr;
-                padding: 0 2rem 5rem;
-            }
+            .store-layout { grid-template-columns: 1fr; padding-top: 1.5rem; }
+            .sidebar { display: none; }
+            .products-grid,
+            .products-grid.view-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 
-            .sidebar {
+            .mobile-filter-bar {
+                display: block;
+                position: sticky;
+                top: var(--nav-h);
+                z-index: 90;
+                padding: 8px var(--margin);
+                background: var(--ground);
+            }
+            .mobile-filter-btn {
+                width: 100%;
+                min-height: 52px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.6rem;
+                border: 0;
+                background: var(--ink);
+                color: var(--on-dark);
+                font-size: 1rem;
+                font-weight: 500;
+            }
+            .mobile-filter-btn:active { transform: scale(0.98); }
+            .filter-count {
                 display: none;
+                min-width: 22px;
+                height: 22px;
+                padding: 0 6px;
+                background: var(--coral);
+                color: var(--ink);
+                font-size: var(--step-small);
+                line-height: 22px;
+                text-align: center;
             }
+            .filter-count.visible { display: inline-block; }
 
-            .mobile-filter-bar { display: flex; }
-
-            .store-content { padding-top: 2rem; }
-
-            .products-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 2rem 1.5rem;
-            }
-
-            .products-grid.view-4 {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            /* ——— Filter bar becomes a slide-in drawer ——— */
+            /* the filter bar becomes a drawer */
             .filter-bar-wrap {
                 position: fixed;
-                top: var(--nav-h);
+                top: 0;
                 right: 0;
                 bottom: 0;
-                left: auto;
-                width: min(90vw, 380px);
-                background: var(--white);
-                border-bottom: none;
-                box-shadow: -8px 0 30px rgba(0,0,0,0.12);
-                transform: translateX(100%);
-                transition: transform 0.35s ease;
                 z-index: 97;
+                width: min(92vw, 400px);
+                padding: 0;
                 display: flex;
                 flex-direction: column;
+                background: var(--ground);
+                transform: translateX(100%);
+                transition: transform 360ms var(--ease-out);
                 overflow-y: auto;
             }
-            .filter-bar-wrap.open { transform: translateX(0); }
+            .filter-bar-wrap.open { transform: none; box-shadow: -12px 0 40px rgba(74, 56, 68, 0.18); }
 
             .filter-drawer-head {
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
-                padding: 1.2rem 1.4rem;
-                border-bottom: 1px solid var(--border);
+                padding: 1rem 1rem 1rem 1.25rem;
                 position: sticky;
                 top: 0;
-                background: var(--white);
                 z-index: 2;
+                background: var(--ground);
             }
-            .filter-drawer-title {
-                font-family: var(--serif);
-                font-size: 1.4rem;
-                color: var(--text);
-            }
+            .filter-drawer-title { font-family: var(--font-display); font-size: 2rem; line-height: 1; }
             .filter-drawer-close {
-                background: none;
-                border: none;
-                font-size: 1.8rem;
+                width: 48px;
+                height: 48px;
+                border: 0;
+                background: var(--surface);
+                color: var(--ink);
+                font-size: 1.6rem;
                 line-height: 1;
-                color: var(--muted);
-                cursor: pointer;
-                padding: 0 0.2rem;
             }
 
-            .filter-search-row {
-                padding: 1.2rem 1.4rem;
-                margin: 0;
-                max-width: none;
-            }
-            .filter-search-wrap { max-width: none; }
-
-            .filter-bar {
-                flex-direction: column;
-                align-items: stretch;
-                padding: 0;
-                margin: 0;
-                max-width: none;
-            }
-
-            .filter-cell {
-                flex: none;
-                border: none;
-                border-bottom: 1px solid var(--border);
-            }
-            .filter-cell:first-child { border-left: none; }
-            .filter-cell select {
-                height: 58px;
-                font-size: 0.82rem;
-                padding: 0 2.8rem 0 1.4rem;
-            }
-            .filter-cell::after { right: 1.4rem; }
-
-            .filter-price {
-                flex: none;
-                border-right: none;
-                border-bottom: 1px solid var(--border);
-                padding: 1.1rem 1.4rem;
-            }
-
-            .filter-right {
-                flex-direction: column;
-                align-items: stretch;
-                margin-left: 0;
-            }
-            .sort-cell {
-                border-left: none;
-                border-bottom: 1px solid var(--border);
-                height: 58px;
-                padding: 0 1.4rem;
-                justify-content: space-between;
-            }
+            .filter-bar { flex-direction: column; flex-wrap: nowrap; padding: 0 1.25rem 1.25rem; }
+            .filter-search, .filter-cell, .filter-price { flex: none; }
             .view-toggle { display: none; }
 
             .filter-drawer-foot {
                 display: flex;
-                gap: 0.8rem;
-                padding: 1rem 1.4rem;
-                border-top: 1px solid var(--border);
+                gap: 6px;
+                margin-top: auto;
+                padding: 1rem 1.25rem;
                 position: sticky;
                 bottom: 0;
-                background: var(--white);
-                margin-top: auto;
+                background: var(--ground);
             }
-            .filter-reset {
-                flex: 1;
-                border: 1px solid var(--border);
-                background: transparent;
-                color: var(--text);
-                padding: 0.9rem;
-                font-size: 0.72rem;
-                letter-spacing: 1.5px;
-                text-transform: uppercase;
-                cursor: pointer;
-            }
-            .filter-apply {
-                flex: 2;
-                border: none;
-                background: var(--mulberry);
-                color: #fff;
-                padding: 0.9rem;
-                font-size: 0.72rem;
-                letter-spacing: 1.5px;
-                text-transform: uppercase;
-                cursor: pointer;
-            }
+            .filter-drawer-foot .btn { flex: 1; }
+            .filter-drawer-foot .btn-primary { flex: 2; }
         }
 
-        @media (max-width: 860px) {
-            .nav-container { padding: 1.1rem 1.5rem; }
-            .logo img { height: 46px; }
-        }
-
-        @media (max-width: 768px) {
-            .page-header {
-                padding: 2.5rem 1.5rem 2rem;
-            }
-
-            .header-row { flex-direction: column; align-items: flex-start; }
-            .header-right { text-align: left; }
-        }
-
-        @media (max-width: 500px) {
-            .products-grid {
-                grid-template-columns: 1fr;
-                gap: 2.5rem;
-            }
-
-            .products-grid.view-4 {
-                grid-template-columns: 1fr;
-            }
-
-            .card-image-wrap img { height: 380px; }
-
-            .footer-container { flex-direction: column; padding: 2.5rem 1.5rem; }
-            .footer-bottom { padding: 1rem 1.5rem; }
+        @media (max-width: 640px) {
+            .store-head { flex-direction: column; align-items: flex-start; }
+            .store-count { text-align: left; }
+            .products-grid,
+            .products-grid.view-4 { gap: 2rem 12px; }
+            .card-name { font-size: 1.25rem; }
+            .card-meta { flex-direction: column; gap: 0.15rem; }
         }
 
     </style>
 </head>
 <body>
 
-    <!-- ========================= -->
-    <!-- NAVBAR                    -->
-    <!-- ========================= -->
+    <a class="skip-link" href="#main">Към съдържанието</a>
 
+    <!-- NAVBAR -->
     <header class="navbar">
         <div class="nav-container">
-            <div class="logo"><a href="index.html"><img src="logo.jpeg" height="56" alt="Закачалката — reloved store" style="display:block"></a></div>
-            <nav class="nav-links" id="navLinks">
+            <a class="logo" href="index.html" aria-label="Закачалката — начало"><img src="img/logo.jpg" width="701" height="384" alt="Закачалката — reloved store"></a>
+            <nav class="nav-links" id="navLinks" aria-label="Основна навигация">
                 <ul>
                     <li><a href="index.html">Начало</a></li>
-                    <li><a href="store.html" class="active">Магазин</a></li>
+                    <li><a href="store.html" aria-current="page">Магазин</a></li>
+                    <li><a href="about.html">За нас</a></li>
                     <li><a href="contact.html">Контакти</a></li>
                 </ul>
+                <div class="nav-drawer-social">
+                    <a href="https://www.instagram.com/zakachalkatarelovedstore/" target="_blank" rel="noopener">Instagram</a>
+                    <a href="https://www.facebook.com/p/%D0%97%D0%B0%D0%BA%D0%B0%D1%87%D0%B0%D0%BB%D0%BA%D0%B0%D1%82%D0%B0-Reloved-Store-100083130402532/" target="_blank" rel="noopener">Facebook</a>
+                </div>
             </nav>
             <div class="nav-icons">
-                <a class="social-link" href="https://www.facebook.com/p/%D0%97%D0%B0%D0%BA%D0%B0%D1%87%D0%B0%D0%BB%D0%BA%D0%B0%D1%82%D0%B0-Reloved-Store-100083130402532/" target="_blank" rel="noopener" aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
-                <a class="social-link" href="https://www.instagram.com/zakachalkatarelovedstore/" target="_blank" rel="noopener" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+                <a class="social-link" href="https://www.instagram.com/zakachalkatarelovedstore/" target="_blank" rel="noopener" aria-label="Instagram"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+                <a class="social-link" href="https://www.facebook.com/p/%D0%97%D0%B0%D0%BA%D0%B0%D1%87%D0%B0%D0%BB%D0%BA%D0%B0%D1%82%D0%B0-Reloved-Store-100083130402532/" target="_blank" rel="noopener" aria-label="Facebook"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
                 <button class="nav-toggle" id="navToggle" aria-label="Отвори меню" aria-expanded="false" aria-controls="navLinks">
                     <span></span><span></span><span></span>
                 </button>
@@ -1368,701 +525,591 @@
     </header>
     <div class="nav-overlay" id="navOverlay"></div>
 
+    <main id="main">
 
-    <!-- ========================= -->
-    <!-- PAGE HEADER               -->
-    <!-- ========================= -->
-
-    <section class="page-header">
-        <div class="page-header-container">
-            <p class="breadcrumb">
-                <a href="index.html">Начало</a>
-                <sep>›</sep>
-                Магазин
-            </p>
-            <div class="header-row">
-                <div class="header-left">
-                    <p class="header-eyebrow">Юни 2025 &nbsp;·&nbsp; Нови Постъпления</p>
-                    <h1>All <em>Артикула</em></h1>
-                </div>
-                <div class="header-right">
-                    <strong id="totalCount">36</strong>
-                    <span class="header-count">налични артикула</span>
-                </div>
+        <section class="store-head" aria-labelledby="storeTitle">
+            <div>
+                <h1 id="storeTitle" data-rise>Магазин</h1>
+                <p class="store-sub" data-rise style="--i:1">Всяко парче е в един екземпляр и един размер.</p>
             </div>
-        </div>
-    </section>
+            <p class="store-count" aria-live="polite" data-rise style="--i:2"><strong id="totalCount">…</strong> <span id="totalLabel">налични парчета</span></p>
+        </section>
 
 
-    <!-- ========================= -->
-    <!-- DESKTOP FILTER BAR        -->
-    <!-- ========================= -->
-
-    <div class="filter-bar-wrap" id="filterDrawer">
-        <div class="filter-drawer-head">
-            <span class="filter-drawer-title">Филтри и сортиране</span>
-            <button class="filter-drawer-close" id="filterClose" aria-label="Затвори">&times;</button>
-        </div>
-        <div class="filter-search-row">
-            <div class="filter-search-wrap">
-                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-                <input
-                    type="text"
-                    id="searchInput"
-                    placeholder="Търсене по продукт, марка, таг или описание…"
-                    oninput="applyFilters()"
-                    aria-label="Search products"
-                />
-                <button id="searchClear" onclick="clearSearch()" aria-label="Clear search">×</button>
-            </div>
-        </div>
-        <div class="filter-bar">
-
-            <div class="filter-cell">
-                <select id="filterCat" onchange="applyFilters()" aria-label="Category">
-                    <option value="">Категория</option>
-                    <option value="outerwear">Връхни дрехи</option>
-                    <option value="dresses">Рокли</option>
-                    <option value="tops">Блузи</option>
-                    <option value="shirts">Ризи</option>
-                    <option value="pants">Панталони</option>
-                    <option value="jeans">Дънки</option>
-                    <option value="skirts">Поли</option>
-                    <option value="knitwear">Плетива</option>
-                    <option value="shoes">Обувки</option>
-                    <option value="bags">Чанти</option>
-                    <option value="accessories">Аксесоари</option>
-                </select>
+        <!-- FILTERS (a drawer on small screens) -->
+        <div class="filter-bar-wrap" id="filterDrawer" aria-label="Филтри и подредба">
+            <div class="filter-drawer-head">
+                <span class="filter-drawer-title">Филтри</span>
+                <button type="button" class="filter-drawer-close" id="filterClose" aria-label="Затвори филтрите">&times;</button>
             </div>
 
-            <div class="filter-cell">
-                <select id="filterSize" onchange="applyFilters()" aria-label="Size">
-                    <option value="">Размер</option>
-                    <optgroup label="Дрехи">
-                        <option value="XS">XS</option>
-                        <option value="S">S</option>
-                        <option value="M">M</option>
-                        <option value="L">L</option>
-                        <option value="XL">XL</option>
-                        <option value="one-size">Един размер</option>
-                    </optgroup>
-                    <optgroup label="Обувки">
-                        <option value="35">35</option>
-                        <option value="36">36</option>
-                        <option value="37">37</option>
-                        <option value="38">38</option>
-                        <option value="39">39</option>
-                        <option value="40">40</option>
-                        <option value="41">41</option>
-                    </optgroup>
-                </select>
-            </div>
+            <div class="filter-bar">
+                <label class="filter-search">
+                    <span class="sr-only">Търсене</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    <input type="search" id="searchInput" placeholder="Търси марка или вещ" autocomplete="off" />
+                    <button type="button" id="searchClear" aria-label="Изчисти търсенето">&times;</button>
+                </label>
 
-            <div class="filter-cell">
-                <select id="filterColor" onchange="applyFilters()" aria-label="Colour">
-                    <option value="">Цвят</option>
-                    <option value="black">Черен</option>
-                    <option value="white">Бял</option>
-                    <option value="beige">Бежов</option>
-                    <option value="grey">Сив</option>
-                    <option value="navy">Тъмносин</option>
-                    <option value="blue">Син</option>
-                    <option value="green">Зелен</option>
-                    <option value="yellow">Жълт</option>
-                    <option value="purple">Лилав</option>
-                    <option value="pink">Розов</option>
-                    <option value="red">Червен</option>
-                    <option value="brown">Кафяв</option>
-                    <option value="gold">Златен</option>
-                    <option value="silver">Сребърен</option>
-                    <option value="multicolor">Многоцветен</option>
-                </select>
-            </div>
-
-            <div class="filter-cell">
-                <select id="filterMaterial" onchange="applyFilters()" aria-label="Material">
-                    <option value="">Материал</option>
-                    <option value="genuine-leather">Естествена кожа</option>
-                    <option value="faux-leather">Изкуствена кожа</option>
-                    <option value="cotton">Памук</option>
-                    <option value="viscose">Вискоза</option>
-                    <option value="wool">Вълна</option>
-                    <option value="cashmere">Кашмир</option>
-                    <option value="linen">Лен</option>
-                    <option value="polyester">Полиестер</option>
-                    <option value="silk">Коприна</option>
-                    <option value="lyocell">Лиосел</option>
-                </select>
-            </div>
-
-            <div class="filter-cell">
-                <select id="filterBrand" onchange="applyFilters()" aria-label="Brand">
-                    <option value="">Марка</option>
-                    <option value="Prada">Prada</option>
-                    <option value="Chanel">Chanel</option>
-                    <option value="Dior">Dior</option>
-                    <option value="Miu Miu">Miu Miu</option>
-                    <option value="Celine">Celine</option>
-                    <option value="Saint Laurent">Saint Laurent</option>
-                    <option value="Gucci">Gucci</option>
-                    <option value="Loewe">Loewe</option>
-                    <option value="Givenchy">Givenchy</option>
-                    <option value="Hermès">Hermès</option>
-                </select>
-            </div>
-
-            <div class="filter-price">
-                <span class="price-label">Цена</span>
-                <input
-                    type="range"
-                    id="priceRange"
-                    min="0" max="2000" step="50" value="2000"
-                    oninput="updatePrice(this.value)"
-                    aria-label="Maximum price"
-                />
-                <span class="price-value" id="priceDisplay">Всички</span>
-            </div>
-
-            <div class="filter-right">
-                <div class="sort-cell">
-                    <label for="sortBy">Сортиране</label>
-                    <select id="sortBy" onchange="applyFilters()" aria-label="Sort by">
-                        <option value="newest">Най-нови</option>
-                        <option value="price-asc">Цена ↑</option>
-                        <option value="price-desc">Цена ↓</option>
-                        <option value="brand">Марка А–Я</option>
+                <div class="filter-cell">
+                    <select id="filterCat" aria-label="Категория">
+                        <option value="">Категория</option>
+                        <option value="outerwear">Връхни дрехи</option>
+                        <option value="dresses">Рокли</option>
+                        <option value="tops">Блузи</option>
+                        <option value="shirts">Ризи</option>
+                        <option value="pants">Панталони</option>
+                        <option value="jeans">Дънки</option>
+                        <option value="skirts">Поли</option>
+                        <option value="knitwear">Плетива</option>
+                        <option value="shoes">Обувки</option>
+                        <option value="bags">Чанти</option>
+                        <option value="accessories">Аксесоари</option>
                     </select>
                 </div>
 
-                <div class="view-toggle">
-                    <button class="view-btn active" id="btn3col" onclick="setView(3)" aria-label="3-column grid">
-                        <svg viewBox="0 0 16 16"><rect x="0" y="0" width="4" height="4"/><rect x="6" y="0" width="4" height="4"/><rect x="12" y="0" width="4" height="4"/><rect x="0" y="6" width="4" height="4"/><rect x="6" y="6" width="4" height="4"/><rect x="12" y="6" width="4" height="4"/></svg>
+                <div class="filter-cell">
+                    <select id="filterSize" aria-label="Размер">
+                        <option value="">Размер</option>
+                        <optgroup label="Дрехи">
+                            <option value="XS">XS</option>
+                            <option value="S">S</option>
+                            <option value="M">M</option>
+                            <option value="L">L</option>
+                            <option value="XL">XL</option>
+                            <option value="one-size">Един размер</option>
+                        </optgroup>
+                        <optgroup label="Обувки">
+                            <option value="35">35</option>
+                            <option value="36">36</option>
+                            <option value="37">37</option>
+                            <option value="38">38</option>
+                            <option value="39">39</option>
+                            <option value="40">40</option>
+                            <option value="41">41</option>
+                        </optgroup>
+                    </select>
+                </div>
+
+                <div class="filter-cell">
+                    <select id="filterColor" aria-label="Цвят">
+                        <option value="">Цвят</option>
+                        <option value="black">Черен</option>
+                        <option value="white">Бял</option>
+                        <option value="beige">Бежов</option>
+                        <option value="grey">Сив</option>
+                        <option value="navy">Тъмносин</option>
+                        <option value="blue">Син</option>
+                        <option value="green">Зелен</option>
+                        <option value="yellow">Жълт</option>
+                        <option value="purple">Лилав</option>
+                        <option value="pink">Розов</option>
+                        <option value="red">Червен</option>
+                        <option value="brown">Кафяв</option>
+                        <option value="gold">Златен</option>
+                        <option value="silver">Сребърен</option>
+                        <option value="multicolor">Многоцветен</option>
+                    </select>
+                </div>
+
+                <div class="filter-cell">
+                    <select id="filterMaterial" aria-label="Материал">
+                        <option value="">Материал</option>
+                        <option value="genuine-leather">Естествена кожа</option>
+                        <option value="faux-leather">Изкуствена кожа</option>
+                        <option value="cotton">Памук</option>
+                        <option value="viscose">Вискоза</option>
+                        <option value="wool">Вълна</option>
+                        <option value="cashmere">Кашмир</option>
+                        <option value="linen">Лен</option>
+                        <option value="polyester">Полиестер</option>
+                        <option value="silk">Коприна</option>
+                        <option value="lyocell">Лиосел</option>
+                    </select>
+                </div>
+
+                <div class="filter-cell">
+                    <select id="filterBrand" aria-label="Марка">
+                        <option value="">Марка</option>
+                        <!-- filled from the brands actually in stock -->
+                    </select>
+                </div>
+
+                <div class="filter-cell">
+                    <select id="filterCondition" aria-label="Състояние">
+                        <option value="">Състояние</option>
+                        <option value="Отлично">Отлично</option>
+                        <option value="Много добро">Много добро</option>
+                        <option value="Добро">Добро</option>
+                    </select>
+                </div>
+
+                <div class="filter-price">
+                    <label class="price-label" for="priceRange">Цена до</label>
+                    <input type="range" id="priceRange" min="0" max="2000" step="10" value="2000" />
+                    <span class="price-value" id="priceDisplay">всички</span>
+                </div>
+
+                <div class="filter-cell">
+                    <select id="sortBy" aria-label="Подреди">
+                        <option value="newest">Най-нови първо</option>
+                        <option value="price-asc">Цена: от ниска</option>
+                        <option value="price-desc">Цена: от висока</option>
+                        <option value="brand">Марка: А–Я</option>
+                    </select>
+                </div>
+
+                <div class="view-toggle" role="group" aria-label="Размер на мрежата">
+                    <button type="button" class="view-btn active" id="btn3col" aria-pressed="true" aria-label="Три колони">
+                        <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="0" y="0" width="4" height="4"/><rect x="6" y="0" width="4" height="4"/><rect x="12" y="0" width="4" height="4"/><rect x="0" y="6" width="4" height="4"/><rect x="6" y="6" width="4" height="4"/><rect x="12" y="6" width="4" height="4"/></svg>
                     </button>
-                    <button class="view-btn" id="btn4col" onclick="setView(4)" aria-label="4-column grid">
-                        <svg viewBox="0 0 16 16"><rect x="0" y="0" width="3" height="3"/><rect x="4.3" y="0" width="3" height="3"/><rect x="8.6" y="0" width="3" height="3"/><rect x="13" y="0" width="3" height="3"/><rect x="0" y="4.3" width="3" height="3"/><rect x="4.3" y="4.3" width="3" height="3"/><rect x="8.6" y="4.3" width="3" height="3"/><rect x="13" y="4.3" width="3" height="3"/></svg>
+                    <button type="button" class="view-btn" id="btn4col" aria-pressed="false" aria-label="Четири колони">
+                        <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="0" y="0" width="3" height="3"/><rect x="4.3" y="0" width="3" height="3"/><rect x="8.6" y="0" width="3" height="3"/><rect x="13" y="0" width="3" height="3"/><rect x="0" y="4.3" width="3" height="3"/><rect x="4.3" y="4.3" width="3" height="3"/><rect x="8.6" y="4.3" width="3" height="3"/><rect x="13" y="4.3" width="3" height="3"/></svg>
                     </button>
                 </div>
             </div>
 
+            <div class="filter-drawer-foot">
+                <button type="button" class="btn btn-soft" id="filterReset">Изчисти</button>
+                <button type="button" class="btn btn-primary" id="filterApply">Покажи <span id="applyCount"></span></button>
+            </div>
+        </div>
+        <div class="filter-overlay" id="filterOverlay"></div>
+
+        <div class="mobile-filter-bar">
+            <button type="button" class="mobile-filter-btn" id="openFiltersBtn" aria-controls="filterDrawer" aria-expanded="false">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><line x1="4" y1="6" x2="20" y2="6"/><line x1="7" y1="12" x2="17" y2="12"/><line x1="10" y1="18" x2="14" y2="18"/></svg>
+                Филтри и подредба <span class="filter-count" id="filterCount"></span>
+            </button>
         </div>
 
-        <div class="filter-drawer-foot">
-            <button class="filter-reset" id="filterReset" onclick="clearFilters()">Изчисти</button>
-            <button class="filter-apply" id="filterApply">Покажи резултатите</button>
-        </div>
-    </div>
-    <div class="filter-overlay" id="filterOverlay"></div>
 
+        <div class="store-layout">
 
-    <!-- ========================= -->
-    <!-- MOBILE FILTER BUTTONS     -->
-    <!-- ========================= -->
-
-    <div class="mobile-filter-bar" id="mobileFilterBar">
-        <button class="mobile-filter-btn" id="openFiltersBtn" onclick="openFilters()">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="7" y1="12" x2="17" y2="12"/><line x1="10" y1="18" x2="14" y2="18"/></svg>
-            &nbsp; Филтри <span class="filter-count" id="filterCount"></span>
-        </button>
-        <button class="mobile-filter-btn" onclick="openFilters()">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h13M3 12h9M3 18h5"/><path d="m17 15 3 3 3-3M20 18V9"/></svg>
-            &nbsp; Сортиране
-        </button>
-    </div>
-
-
-    <!-- ========================= -->
-    <!-- STORE LAYOUT              -->
-    <!-- ========================= -->
-
-    <div class="store-layout">
-
-
-        <!-- SIDEBAR -->
-        <aside class="sidebar" aria-label="Filter sidebar">
-
-            <div class="sidebar-section">
-                <p class="sidebar-heading">Категория</p>
+            <aside class="sidebar" aria-label="Категории">
+                <h2 class="sidebar-heading">Категории</h2>
                 <ul class="category-list" id="catList">
-                    <li><a href="#" class="active" data-cat="">Всички <span class="cat-count">0</span></a></li>
-                    <li><a href="#" data-cat="outerwear">Връхни дрехи <span class="cat-count">0</span></a></li>
-                    <li><a href="#" data-cat="dresses">Рокли <span class="cat-count">0</span></a></li>
-                    <li><a href="#" data-cat="tops">Блузи <span class="cat-count">0</span></a></li>
-                    <li><a href="#" data-cat="shirts">Ризи <span class="cat-count">0</span></a></li>
-                    <li><a href="#" data-cat="pants">Панталони <span class="cat-count">0</span></a></li>
-                    <li><a href="#" data-cat="jeans">Дънки <span class="cat-count">0</span></a></li>
-                    <li><a href="#" data-cat="skirts">Поли <span class="cat-count">0</span></a></li>
-                    <li><a href="#" data-cat="knitwear">Плетива <span class="cat-count">0</span></a></li>
-                    <li><a href="#" data-cat="shoes">Обувки <span class="cat-count">0</span></a></li>
-                    <li><a href="#" data-cat="bags">Чанти <span class="cat-count">0</span></a></li>
-                    <li><a href="#" data-cat="accessories">Аксесоари <span class="cat-count">0</span></a></li>
+                    <li><a href="store.html" class="active" data-cat="">Всички <span class="cat-count">0</span></a></li>
+                    <li><a href="store.html?cat=outerwear" data-cat="outerwear">Връхни дрехи <span class="cat-count">0</span></a></li>
+                    <li><a href="store.html?cat=dresses" data-cat="dresses">Рокли <span class="cat-count">0</span></a></li>
+                    <li><a href="store.html?cat=tops" data-cat="tops">Блузи <span class="cat-count">0</span></a></li>
+                    <li><a href="store.html?cat=shirts" data-cat="shirts">Ризи <span class="cat-count">0</span></a></li>
+                    <li><a href="store.html?cat=pants" data-cat="pants">Панталони <span class="cat-count">0</span></a></li>
+                    <li><a href="store.html?cat=jeans" data-cat="jeans">Дънки <span class="cat-count">0</span></a></li>
+                    <li><a href="store.html?cat=skirts" data-cat="skirts">Поли <span class="cat-count">0</span></a></li>
+                    <li><a href="store.html?cat=knitwear" data-cat="knitwear">Плетива <span class="cat-count">0</span></a></li>
+                    <li><a href="store.html?cat=shoes" data-cat="shoes">Обувки <span class="cat-count">0</span></a></li>
+                    <li><a href="store.html?cat=bags" data-cat="bags">Чанти <span class="cat-count">0</span></a></li>
+                    <li><a href="store.html?cat=accessories" data-cat="accessories">Аксесоари <span class="cat-count">0</span></a></li>
                 </ul>
-            </div>
+            </aside>
 
-            <div class="sidebar-section">
-                <p class="sidebar-heading">Състояние</p>
-                <div class="condition-pills">
-                    <label class="pill-label"><input type="checkbox" checked> Отлично</label>
-                    <label class="pill-label"><input type="checkbox" checked> Много добро</label>
-                    <label class="pill-label"><input type="checkbox" checked> Добро</label>
+            <section class="store-content" aria-label="Налични парчета">
+
+                <div class="active-filters" id="activeFilters" aria-live="polite"></div>
+
+                <div class="products-grid" id="productsGrid">
+                    <div class="skeleton" aria-hidden="true"><div class="card-image-wrap"></div><span class="bar"></span></div>
+                    <div class="skeleton" aria-hidden="true"><div class="card-image-wrap"></div><span class="bar"></span></div>
+                    <div class="skeleton" aria-hidden="true"><div class="card-image-wrap"></div><span class="bar"></span></div>
                 </div>
-            </div>
 
-            <div class="sidebar-promo">
-                <p class="promo-eyebrow">Юнска колекция</p>
-                <p class="promo-text">New archival Chanel & Dior pieces just landed.</p>
-                <a href="index.html" class="promo-link">Виж повече →</a>
-            </div>
+                <div class="empty-state" id="emptyState">
+                    <h2 class="empty-title">Нищо не отговаря</h2>
+                    <p class="empty-msg" id="emptyMsg">Няма парчета с тези филтри в момента. Махнете някой от тях или изчистете всички.</p>
+                    <button type="button" class="btn" id="emptyReset">Изчисти филтрите</button>
+                </div>
 
-        </aside>
+                <div class="load-more-wrap" id="loadMoreWrap" hidden>
+                    <p class="load-more-info">Показани <strong id="shownCount">0</strong> от <strong id="totalShown">0</strong></p>
+                    <div class="progress-bar" aria-hidden="true"><div class="progress-fill" id="progressFill"></div></div>
+                    <button type="button" class="btn" id="loadMoreBtn">Покажи още</button>
+                </div>
 
+            </section>
+        </div>
 
-        <!-- MAIN CONTENT -->
-        <section class="store-content" aria-label="Product listing">
-
-            <!-- Active filters -->
-            <div class="active-filters" id="activeFilters" aria-live="polite"></div>
-
-            <!-- Product grid -->
-            <div class="products-grid" id="productsGrid">
-                <!-- Cards injected by JS -->
-            </div>
-
-            <!-- Empty state -->
-            <div class="empty-state" id="emptyState">
-                <div class="empty-icon">◯</div>
-                <h3 class="empty-title">Няма намерени продукти</h3>
-                <p class="empty-msg">Опитайте с различни филтри.</p>
-            </div>
-
-            <!-- Load more -->
-            <div class="load-more-wrap" id="loadMoreWrap">
-                <p class="load-more-info">Показани <strong id="shownCount">12</strong> от <strong id="totalShown">12</strong> артикула</p>
-                <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-                <button class="load-more-btn" id="loadMoreBtn" onclick="loadMore()">
-                    Зареди още &nbsp;→
-                </button>
-            </div>
-
-        </section>
-
-    </div>
+    </main>
 
 
-    <!-- ========================= -->
-    <!-- FOOTER                    -->
-    <!-- ========================= -->
-
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-branding">
-                <h2>Закачалката</h2>
-                <p>Внимателно избрана препродадена мода.</p>
-            </div>
-            <div class="footer-links">
+    <!-- FOOTER -->
+    <footer class="footer on-dark">
+        <div class="footer-top">
+            <p class="footer-lead">Внимателно избрана препродадена мода.</p>
+            <nav class="footer-col" aria-label="Страници">
                 <a href="index.html">Начало</a>
                 <a href="store.html">Магазин</a>
+                <a href="about.html">За нас</a>
                 <a href="contact.html">Контакти</a>
-            </div>
-            <div class="footer-socials">
+            </nav>
+            <nav class="footer-col" aria-label="Условия">
+                <a href="terms.html">Общи условия</a>
+                <a href="withdrawal.html">Право на отказ</a>
+                <a href="privacy.html">Поверителност</a>
+                <a href="cookies.html">Бисквитки</a>
+            </nav>
+            <div class="footer-col">
                 <a href="https://www.instagram.com/zakachalkatarelovedstore/" target="_blank" rel="noopener">Instagram</a>
                 <a href="https://www.facebook.com/p/%D0%97%D0%B0%D0%BA%D0%B0%D1%87%D0%B0%D0%BB%D0%BA%D0%B0%D1%82%D0%B0-Reloved-Store-100083130402532/" target="_blank" rel="noopener">Facebook</a>
+                <a href="mailto:zakachalkata@gmail.com">zakachalkata@gmail.com</a>
             </div>
         </div>
+        <p class="footer-identity">
+            ДЗЗД София Велвет, ЕИК 177491919, гр. Варна, ул. „Петър Райчев“ №22.
+            Тел. <a href="tel:+359884161889">+359 88 416 1889</a>, <a href="mailto:zakachalkata@gmail.com">zakachalkata@gmail.com</a>
+        </p>
+        <span class="footer-wordmark" aria-hidden="true">закачалката</span>
         <div class="footer-bottom">
-            <p>© 2025 Закачалката. Всички права запазени.</p>
+            <p>© 2026 Закачалката. Всички права запазени.</p>
+            <p>Варна</p>
         </div>
     </footer>
 
-
-    <!-- ========================= -->
-    <!-- JAVASCRIPT                -->
-    <!-- ========================= -->
-
+    <script src="js/data.js"></script>
     <script>
+    (function () {
+        "use strict";
 
-        /* ——————————————————————————
-           PRODUCT DATA
-           Replace images with your own paths.
-           Add/remove objects to match your real inventory.
-        —————————————————————————— */
+        var FALLBACK_IMG = "img/shop-rail.jpg";
+        var PAGE_SIZE = 12;
 
+        var CAT_LABELS = {
+            outerwear: "Връхни дрехи", dresses: "Рокли", tops: "Блузи", shirts: "Ризи",
+            pants: "Панталони", jeans: "Дънки", skirts: "Поли", knitwear: "Плетива",
+            shoes: "Обувки", bags: "Чанти", accessories: "Аксесоари"
+        };
+        var COLOR_LABELS = {
+            black: "Черен", white: "Бял", beige: "Бежов", grey: "Сив", navy: "Тъмносин",
+            blue: "Син", green: "Зелен", yellow: "Жълт", purple: "Лилав", pink: "Розов",
+            red: "Червен", brown: "Кафяв", gold: "Златен", silver: "Сребърен", multicolor: "Многоцветен"
+        };
+        var MATERIAL_LABELS = {
+            "genuine-leather": "Естествена кожа", "faux-leather": "Изкуствена кожа",
+            cotton: "Памук", viscose: "Вискоза", wool: "Вълна", cashmere: "Кашмир",
+            linen: "Лен", polyester: "Полиестер", silk: "Коприна", lyocell: "Лиосел"
+        };
+        var BADGES = { "new": "Ново", archive: "Дизайнерско", sold: "Запазено" };
 
+        var $ = function (id) { return document.getElementById(id); };
+        var SELECTS = ["filterCat", "filterSize", "filterColor", "filterMaterial", "filterBrand", "filterCondition"];
 
-        /* ——— Supabase config ——— */
-        const SUPABASE_URL = 'https://ozwydlffpvrcgnhdcjvw.supabase.co';
-        const SUPABASE_KEY = 'sb_publishable_wyBLx6NPlR8uk-jC-qyupQ_FeQzE37l';
+        var PRODUCTS = [];
+        var filtered = [];
+        var visibleCount = PAGE_SIZE;
+        var priceMax = 2000;
 
-        /* pagination state */
-        let PAGE_SIZE      = 9;
-        let visibleCount   = PAGE_SIZE;
-        let filtered       = [];
-        let PRODUCTS       = [];
-        let currentView    = 3;
+        function sizeLabel(s) { return s === "one-size" ? "един размер" : "размер " + s; }
+        function piecesWord(n) { return n === 1 ? "налично парче" : "налични парчета"; }
 
-        async function loadProducts() {
-            try {
-                const res = await fetch(
-                    `${SUPABASE_URL}/rest/v1/products?select=*&is_sold=eq.false&order=created_at.desc`,
-                    { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` } }
-                );
-                const data = await res.json();
-                PRODUCTS = data.map(p => {
-                    const tags = Array.isArray(p.tags) ? p.tags : [];
-                    const description = p.description || '';
-                    return {
-                        id:          p.id,
-                        brand:       p.brand || '',
-                        name:        p.name || '',
-                        meta:        [p.size, p.condition].filter(Boolean).join(' · '),
-                        price:       parseFloat(p.price) || 0,
-                        cat:         p.category || '',
-                        size:        p.size || '',
-                        color:       p.color || '',
-                        material:    p.material || '',
-                        badge:       p.badge || null,
-                        condition:   p.condition || '',
-                        description,
-                        tags,
-                        img:         (p.image_urls && p.image_urls[0]) || 'https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=600&q=60',
-                        // pre-built lowercase blob: name + brand + tags + description
-                        searchBlob:  [p.name, p.brand, ...tags, description].filter(Boolean).join(' ').toLowerCase(),
-                    };
+        /* ---------------------------------------------------------------- */
+        /* load                                                             */
+        /* ---------------------------------------------------------------- */
+
+        function load() {
+            zkRest("products?select=*&is_sold=eq.false&order=created_at.desc")
+                .then(function (data) {
+                    PRODUCTS = (Array.isArray(data) ? data : []).map(function (p) {
+                        var tags = Array.isArray(p.tags) ? p.tags : [];
+                        var imgs = Array.isArray(p.image_urls) ? p.image_urls : [];
+                        var price = Number(p.price) || 0;
+                        var orig = p.original_price != null && Number(p.original_price) > price ? Number(p.original_price) : null;
+                        return {
+                            id: p.id,
+                            brand: p.brand || "",
+                            name: p.name || "",
+                            price: price,
+                            original: orig,
+                            cat: p.category || "",
+                            size: p.size || "",
+                            color: p.color || "",
+                            material: p.material || "",
+                            badge: p.badge || null,
+                            condition: p.condition || "",
+                            img: imgs[0] || FALLBACK_IMG,
+                            searchBlob: [p.name, p.brand].concat(tags, [p.description]).filter(Boolean).join(" ").toLowerCase(),
+                        };
+                    });
+
+                    fillBrands();
+                    setupPrice();
+                    updateCategoryCounts();
+                    readUrl();
+                    applyFilters();
+                })
+                .catch(function (err) {
+                    console.error("[store] products:", err);
+                    $("productsGrid").innerHTML = "";
+                    $("totalCount").textContent = "0";
+                    $("emptyMsg").textContent = "Парчетата не можаха да се заредят. Проверете връзката и презаредете страницата.";
+                    $("emptyReset").hidden = true;
+                    $("emptyState").classList.add("visible");
                 });
-                filtered = [...PRODUCTS];
-                renderCards();
-                updateCategoryCounts();
-            } catch(e) {
-                console.error('Failed to load products:', e);
-            }
         }
 
-        /* ——— render ——— */
+        function fillBrands() {
+            var seen = {};
+            PRODUCTS.forEach(function (p) { if (p.brand) seen[p.brand] = true; });
+            var brands = Object.keys(seen).sort(function (a, b) { return a.localeCompare(b, "bg"); });
+            $("filterBrand").insertAdjacentHTML("beforeend", brands.map(function (b) {
+                return '<option value="' + zkEsc(b) + '">' + zkEsc(b) + "</option>";
+            }).join(""));
+        }
+
+        function setupPrice() {
+            var top = PRODUCTS.reduce(function (m, p) { return Math.max(m, p.price); }, 0);
+            priceMax = Math.max(50, Math.ceil(top / 50) * 50);
+            var range = $("priceRange");
+            range.max = priceMax;
+            range.value = priceMax;
+            updatePrice();
+        }
+
+        /* store.html?size=M&cat=outerwear&q=gucci presets the filters */
+        function readUrl() {
+            var q = new URLSearchParams(location.search);
+            var map = { size: "filterSize", cat: "filterCat", brand: "filterBrand", color: "filterColor" };
+            Object.keys(map).forEach(function (key) {
+                var v = q.get(key);
+                if (!v) return;
+                var sel = $(map[key]);
+                if (Array.prototype.some.call(sel.options, function (o) { return o.value === v; })) sel.value = v;
+            });
+            if (q.get("q")) $("searchInput").value = q.get("q");
+        }
+
+        /* ---------------------------------------------------------------- */
+        /* render                                                           */
+        /* ---------------------------------------------------------------- */
+
+        function cardHtml(p) {
+            var price = p.original
+                ? '<span class="card-price is-sale">' + zkPrice(p.price) + "<s>" + zkPrice(p.original) + "</s></span>"
+                : '<span class="card-price">' + zkPrice(p.price) + "</span>";
+            var maker = [p.brand, p.size ? sizeLabel(p.size) : ""].filter(Boolean).join(", ");
+            return '<a class="product-card" href="/p/' + encodeURIComponent(p.id) + '">' +
+                '<div class="card-image-wrap">' +
+                    '<img src="' + zkEsc(p.img) + '" alt="' + zkEsc(p.brand + " " + p.name) + '" width="800" height="1000" loading="lazy" onerror="this.onerror=null;this.src=\'' + FALLBACK_IMG + '\'">' +
+                    (p.badge && BADGES[p.badge] ? '<span class="card-badge ' + zkEsc(p.badge) + '">' + BADGES[p.badge] + "</span>" : "") +
+                "</div>" +
+                '<h2 class="card-name">' + zkEsc(p.name) + "</h2>" +
+                '<p class="card-meta"><span class="card-maker">' + zkEsc(maker) + "</span>" + price + "</p>" +
+                (p.condition ? '<p class="card-condition">Състояние: ' + zkEsc(p.condition.toLowerCase()) + "</p>" : "") +
+                "</a>";
+        }
 
         function renderCards() {
-            const grid  = document.getElementById('productsGrid');
-            const empty = document.getElementById('emptyState');
-            const slice = filtered.slice(0, visibleCount);
+            var grid = $("productsGrid");
+            var empty = $("emptyState");
+            var more = $("loadMoreWrap");
+            var n = filtered.length;
 
-            grid.innerHTML = '';
+            $("totalCount").textContent = n;
+            $("totalLabel").textContent = piecesWord(n);
+            $("applyCount").textContent = "(" + n + ")";
 
-            if (filtered.length === 0) {
-                empty.classList.add('visible');
-                document.getElementById('loadMoreWrap').style.display = 'none';
-                document.getElementById('totalCount').textContent = '0';
+            if (!n) {
+                var shopEmpty = PRODUCTS.length === 0;
+                empty.querySelector(".empty-title").textContent = shopEmpty ? "Закачалката е празна" : "Нищо не отговаря";
+                $("emptyMsg").textContent = shopEmpty
+                    ? "В момента няма налични парчета. Новите се появяват тук веднага щом ги качим."
+                    : "Няма парчета с тези филтри в момента. Махнете някой от тях или изчистете всички.";
+                $("emptyReset").hidden = shopEmpty;
+                grid.innerHTML = "";
+                empty.classList.add("visible");
+                more.hidden = true;
                 return;
             }
 
-            empty.classList.remove('visible');
-            document.getElementById('loadMoreWrap').style.display = 'block';
-            document.getElementById('totalCount').textContent = filtered.length;
-            document.getElementById('shownCount').textContent  = Math.min(visibleCount, filtered.length);
-            document.getElementById('totalShown').textContent  = filtered.length;
+            empty.classList.remove("visible");
+            var shown = Math.min(visibleCount, n);
+            grid.innerHTML = filtered.slice(0, shown).map(cardHtml).join("");
 
-            const pct = Math.round((Math.min(visibleCount, filtered.length) / filtered.length) * 100);
-            document.getElementById('progressFill').style.width = pct + '%';
-            document.getElementById('loadMoreBtn').style.display =
-                visibleCount >= filtered.length ? 'none' : 'inline-flex';
+            more.hidden = false;
+            $("shownCount").textContent = shown;
+            $("totalShown").textContent = n;
+            $("progressFill").style.width = Math.round(shown / n * 100) + "%";
+            $("loadMoreBtn").hidden = shown >= n;
 
-            slice.forEach((p, i) => {
-                const card = document.createElement('article');
-                card.className = 'product-card';
-                card.style.transitionDelay = (i % PAGE_SIZE * 0.06) + 's';
+            revealCards();
+        }
 
-                card.innerHTML = `
-                    <div class="card-image-wrap">
-                        <img
-                            src="${p.img}"
-                            alt="${p.brand} — ${p.name}"
-                            loading="lazy"
-                            onerror="this.src='https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=600&q=60'"
-                        />
-                        ${p.badge ? `<span class="card-badge ${p.badge}">${badgeLabel(p.badge)}</span>` : ''}
-                        <button class="card-wishlist" aria-label="Add to wishlist" onclick="event.stopPropagation()">♡</button>
-                        <button class="card-quick-add" onclick="event.stopPropagation(); quickAdd(${p.id})">
-                            Виж &amp; Поръчай &nbsp;→
-                        </button>
-                    </div>
-                    <div class="card-info">
-                        <p class="card-brand">${p.brand}</p>
-                        <h2 class="card-name">${p.name}</h2>
-                        <p class="card-meta">${p.meta}</p>
-                        <div class="card-price-row">
-                            <span class="card-price">€${p.price.toFixed(2)}</span>
-                            ${p.condition ? `<span class="auth-pill">${p.condition}</span>` : ''}
-                        </div>
-                    </div>
-                `;
-
-                card.addEventListener('click', () => {
-                    window.location.href = `product.html?id=${p.id}`;
+        var cardIo = "IntersectionObserver" in window
+            ? new IntersectionObserver(function (entries) {
+                entries.forEach(function (e) {
+                    if (e.isIntersecting) { e.target.classList.add("visible"); cardIo.unobserve(e.target); }
                 });
+            }, { threshold: 0.05 })
+            : null;
 
-                grid.appendChild(card);
-
-                /* reveal on next paint */
-                requestAnimationFrame(() => requestAnimationFrame(() => {
-                    card.classList.add('visible');
-                }));
+        function revealCards() {
+            document.querySelectorAll(".product-card:not(.visible)").forEach(function (c, i) {
+                c.style.transitionDelay = (i % 4) * 60 + "ms";
+                if (cardIo) cardIo.observe(c); else c.classList.add("visible");
             });
-
-            /* IntersectionObserver for late-appended cards */
-            observeCards();
         }
 
-        function badgeLabel(b) {
-            return { new: 'Ново', archive: 'Дизайнерско', sold: 'Запазено' }[b] || b;
-        }
-
-        function observeCards() {
-            const obs = new IntersectionObserver((entries) => {
-                entries.forEach(e => {
-                    if (e.isIntersecting) {
-                        e.target.classList.add('visible');
-                        obs.unobserve(e.target);
-                    }
-                });
-            }, { threshold: 0.08 });
-
-            document.querySelectorAll('.product-card:not(.visible)')
-                .forEach(c => obs.observe(c));
-        }
-
-
-        /* ——— filters ——— */
-
-        /* slug → Bulgarian label maps (for active-filter pills) */
-        const CAT_LABELS = {
-            outerwear:'Връхни дрехи', dresses:'Рокли', tops:'Блузи', shirts:'Ризи',
-            pants:'Панталони', jeans:'Дънки', skirts:'Поли', knitwear:'Плетива',
-            shoes:'Обувки', bags:'Чанти', accessories:'Аксесоари'
-        };
-        const COLOR_LABELS = {
-            black:'Черен', white:'Бял', beige:'Бежов', grey:'Сив', navy:'Тъмносин',
-            blue:'Син', green:'Зелен', yellow:'Жълт', purple:'Лилав', pink:'Розов',
-            red:'Червен', brown:'Кафяв', gold:'Златен', silver:'Сребърен', multicolor:'Многоцветен'
-        };
-        const MATERIAL_LABELS = {
-            'genuine-leather':'Естествена кожа', 'faux-leather':'Изкуствена кожа',
-            cotton:'Памук', viscose:'Вискоза', wool:'Вълна', cashmere:'Кашмир',
-            linen:'Лен', polyester:'Полиестер', silk:'Коприна', lyocell:'Лиосел'
-        };
+        /* ---------------------------------------------------------------- */
+        /* filters                                                          */
+        /* ---------------------------------------------------------------- */
 
         function applyFilters() {
-            const cat      = document.getElementById('filterCat').value;
-            const size     = document.getElementById('filterSize').value;
-            const color    = document.getElementById('filterColor').value;
-            const material = document.getElementById('filterMaterial').value;
-            const brand    = document.getElementById('filterBrand').value;
-            const price  = parseInt(document.getElementById('priceRange').value);
-            const sort   = document.getElementById('sortBy').value;
-            const search = document.getElementById('searchInput').value.trim().toLowerCase();
+            var v = {};
+            SELECTS.forEach(function (id) { v[id] = $(id).value; });
+            var price = parseInt($("priceRange").value, 10);
+            var sort = $("sortBy").value;
+            var search = $("searchInput").value.trim().toLowerCase();
 
-            document.getElementById('searchClear').classList.toggle('visible', !!search);
+            $("searchClear").classList.toggle("visible", !!search);
+            SELECTS.forEach(function (id) { $(id).classList.toggle("is-set", !!v[id]); });
 
-            filtered = PRODUCTS.filter(p => {
-                if (cat   && p.cat   !== cat)   return false;
-                if (size  && p.size  !== size)  return false;
-                if (color && p.color !== color) return false;
-                if (material && p.material !== material) return false;
-                if (brand && p.brand !== brand) return false;
-                if (price < 2000 && p.price > price) return false;
+            filtered = PRODUCTS.filter(function (p) {
+                if (v.filterCat && p.cat !== v.filterCat) return false;
+                if (v.filterSize && p.size !== v.filterSize) return false;
+                if (v.filterColor && p.color !== v.filterColor) return false;
+                if (v.filterMaterial && p.material !== v.filterMaterial) return false;
+                if (v.filterBrand && p.brand !== v.filterBrand) return false;
+                if (v.filterCondition && p.condition !== v.filterCondition) return false;
+                if (price < priceMax && p.price > price) return false;
                 if (search) {
-                    // Keyword search across product name, brand, tags, and description.
-                    const terms = search.split(/\s+/).filter(Boolean);
-                    if (!terms.every(term => p.searchBlob.includes(term))) return false;
+                    var terms = search.split(/\s+/).filter(Boolean);
+                    if (!terms.every(function (t) { return p.searchBlob.indexOf(t) >= 0; })) return false;
                 }
                 return true;
             });
 
-            if (sort === 'price-asc')  filtered.sort((a,b) => a.price - b.price);
-            if (sort === 'price-desc') filtered.sort((a,b) => b.price - a.price);
-            if (sort === 'brand')      filtered.sort((a,b) => a.brand.localeCompare(b.brand));
+            if (sort === "price-asc")  filtered.sort(function (a, b) { return a.price - b.price; });
+            if (sort === "price-desc") filtered.sort(function (a, b) { return b.price - a.price; });
+            if (sort === "brand")      filtered.sort(function (a, b) { return a.brand.localeCompare(b.brand, "bg"); });
+
+            document.querySelectorAll("#catList a").forEach(function (a) {
+                a.classList.toggle("active", a.dataset.cat === v.filterCat);
+            });
 
             visibleCount = PAGE_SIZE;
             renderCards();
-            renderTags({ cat, size, color, material, brand, price, search });
+            renderTags(v, price, search);
         }
 
-        function clearSearch() {
-            document.getElementById('searchInput').value = '';
-            applyFilters();
-        }
+        function renderTags(v, price, search) {
+            var box = $("activeFilters");
+            var active = [];
+            if (search) active.push({ label: "„" + search + "“", reset: function () { $("searchInput").value = ""; } });
+            if (v.filterCat) active.push({ label: CAT_LABELS[v.filterCat] || v.filterCat, id: "filterCat" });
+            if (v.filterSize) active.push({ label: v.filterSize === "one-size" ? "Един размер" : "Размер " + v.filterSize, id: "filterSize" });
+            if (v.filterColor) active.push({ label: COLOR_LABELS[v.filterColor] || v.filterColor, id: "filterColor" });
+            if (v.filterMaterial) active.push({ label: MATERIAL_LABELS[v.filterMaterial] || v.filterMaterial, id: "filterMaterial" });
+            if (v.filterBrand) active.push({ label: v.filterBrand, id: "filterBrand" });
+            if (v.filterCondition) active.push({ label: v.filterCondition, id: "filterCondition" });
+            if (price < priceMax) active.push({ label: "До €" + price, reset: function () { $("priceRange").value = priceMax; updatePrice(); } });
 
-        function renderTags({ cat, size, color, material, brand, price, search }) {
-            const container = document.getElementById('activeFilters');
-            container.innerHTML = '';
-            const active = [];
-            if (search)     active.push({ label: `„${search}“`, key: 'searchInput' });
-            if (cat)        active.push({ label: CAT_LABELS[cat] || cat,   key: 'filterCat' });
-            if (size)       active.push({ label: size,  key: 'filterSize' });
-            if (color)      active.push({ label: COLOR_LABELS[color] || color, key: 'filterColor' });
-            if (material)   active.push({ label: MATERIAL_LABELS[material] || material, key: 'filterMaterial' });
-            if (brand)      active.push({ label: brand, key: 'filterBrand' });
-            if (price < 2000) active.push({ label: 'Max €' + price, key: 'priceRange', isPrice: true });
+            var badge = $("filterCount");
+            badge.textContent = active.length;
+            badge.classList.toggle("visible", active.length > 0);
 
-            /* reflect active-filter count on the mobile "Филтри" button */
-            const badge = document.getElementById('filterCount');
-            if (badge) {
-                badge.textContent = active.length;
-                badge.classList.toggle('visible', active.length > 0);
-            }
-
-            active.forEach(({ label, key, isPrice }) => {
-                const tag = document.createElement('button');
-                tag.className = 'filter-tag';
-                tag.innerHTML = `${label} <span class="remove">×</span>`;
-                tag.onclick = () => {
-                    const el = document.getElementById(key);
-                    if (isPrice) { el.value = 2000; updatePrice(2000); }
-                    else         { el.value = ''; }
+            box.innerHTML = "";
+            active.forEach(function (f) {
+                var tag = document.createElement("button");
+                tag.type = "button";
+                tag.className = "filter-tag";
+                tag.setAttribute("aria-label", "Махни филтъра " + f.label);
+                tag.innerHTML = zkEsc(f.label) + ' <span class="remove" aria-hidden="true">&times;</span>';
+                tag.addEventListener("click", function () {
+                    if (f.reset) f.reset(); else $(f.id).value = "";
                     applyFilters();
-                };
-                container.appendChild(tag);
+                });
+                box.appendChild(tag);
             });
 
             if (active.length > 1) {
-                const clear = document.createElement('button');
-                clear.className = 'clear-all';
-                clear.textContent = 'Clear all';
-                clear.onclick = clearFilters;
-                container.appendChild(clear);
+                var clear = document.createElement("button");
+                clear.type = "button";
+                clear.className = "clear-all";
+                clear.textContent = "Изчисти всички";
+                clear.addEventListener("click", clearFilters);
+                box.appendChild(clear);
             }
         }
 
         function clearFilters() {
-            ['filterCat','filterSize','filterColor','filterMaterial','filterBrand'].forEach(id => {
-                document.getElementById(id).value = '';
-            });
-            document.getElementById('searchInput').value = '';
-            document.getElementById('priceRange').value = 2000;
-            updatePrice(2000);
+            SELECTS.forEach(function (id) { $(id).value = ""; });
+            $("searchInput").value = "";
+            $("priceRange").value = priceMax;
+            updatePrice();
             applyFilters();
         }
 
-        function updatePrice(val) {
-            const display = document.getElementById('priceDisplay');
-            display.textContent = parseInt(val) >= 2000 ? 'Всички' : '€' + parseInt(val).toLocaleString();
+        function updatePrice() {
+            var val = parseInt($("priceRange").value, 10);
+            $("priceDisplay").textContent = val >= priceMax ? "всички" : "€" + val;
         }
 
-        /* Fill in real counts on the category sidebar from actual inventory
-           (these used to be hardcoded placeholder numbers). */
         function updateCategoryCounts() {
-            document.querySelectorAll('#catList a').forEach(a => {
-                const cat = a.dataset.cat;
-                const count = cat ? PRODUCTS.filter(p => p.cat === cat).length : PRODUCTS.length;
-                const countEl = a.querySelector('.cat-count');
-                if (countEl) countEl.textContent = count;
+            document.querySelectorAll("#catList a").forEach(function (a) {
+                var cat = a.dataset.cat;
+                var n = cat ? PRODUCTS.filter(function (p) { return p.cat === cat; }).length : PRODUCTS.length;
+                a.querySelector(".cat-count").textContent = n;
+                a.parentElement.hidden = !!cat && n === 0;
             });
         }
 
-        /* sidebar category links */
-        document.getElementById('catList').addEventListener('click', e => {
-            const link = e.target.closest('a');
+        /* ---------------------------------------------------------------- */
+        /* wiring                                                           */
+        /* ---------------------------------------------------------------- */
+
+        SELECTS.concat(["sortBy"]).forEach(function (id) { $(id).addEventListener("change", applyFilters); });
+        $("searchInput").addEventListener("input", applyFilters);
+        $("searchClear").addEventListener("click", function () { $("searchInput").value = ""; applyFilters(); $("searchInput").focus(); });
+        $("priceRange").addEventListener("input", function () { updatePrice(); applyFilters(); });
+        $("emptyReset").addEventListener("click", clearFilters);
+        $("filterReset").addEventListener("click", clearFilters);
+        $("loadMoreBtn").addEventListener("click", function () { visibleCount += PAGE_SIZE; renderCards(); });
+
+        $("catList").addEventListener("click", function (e) {
+            var link = e.target.closest("a");
             if (!link) return;
             e.preventDefault();
-            document.querySelectorAll('#catList a').forEach(a => a.classList.remove('active'));
-            link.classList.add('active');
-            document.getElementById('filterCat').value = link.dataset.cat;
+            $("filterCat").value = link.dataset.cat;
             applyFilters();
         });
 
-
-        /* ——— view toggle ——— */
-
         function setView(cols) {
-            const grid = document.getElementById('productsGrid');
-            grid.classList.toggle('view-4', cols === 4);
-            currentView = cols;
-            document.getElementById('btn3col').classList.toggle('active', cols === 3);
-            document.getElementById('btn4col').classList.toggle('active', cols === 4);
+            $("productsGrid").classList.toggle("view-4", cols === 4);
+            $("btn3col").classList.toggle("active", cols === 3);
+            $("btn4col").classList.toggle("active", cols === 4);
+            $("btn3col").setAttribute("aria-pressed", cols === 3);
+            $("btn4col").setAttribute("aria-pressed", cols === 4);
         }
+        $("btn3col").addEventListener("click", function () { setView(3); });
+        $("btn4col").addEventListener("click", function () { setView(4); });
 
-
-        /* ——— load more ——— */
-
-        function loadMore() {
-            visibleCount += PAGE_SIZE;
-            renderCards();
-        }
-
-
-        /* ——— quick add stub ——— */
-
-        function quickAdd(id) {
-            const p = PRODUCTS.find(x => x.id === id);
-            if (!p) return;
-            /* Replace with your real cart logic */
-            const btn = event.target.closest('.card-quick-add');
-            if (btn) {
-                btn.textContent = 'Виж продукта →';
-                btn.style.background = 'var(--accent)';
-                setTimeout(() => {
-                    btn.textContent = 'Виж & Поръчай →';
-                    btn.style.background = '';
-                }, 1600);
-            }
-        }
-
-
-
-        /* ——— Dynamic nav height for sticky positioning ——— */
-        function setNavHeight() {
-            const nav = document.querySelector('.navbar');
-            if (nav) {
-                document.documentElement.style.setProperty('--nav-h', nav.offsetHeight + 'px');
-            }
-        }
-        setNavHeight();
-        window.addEventListener('resize', setNavHeight);
-
-        /* ——— mobile nav toggle ——— */
-        (function () {
-            const toggle  = document.getElementById('navToggle');
-            const links   = document.getElementById('navLinks');
-            const overlay = document.getElementById('navOverlay');
-            if (!toggle || !links) return;
-
-            function closeMenu() {
-                toggle.classList.remove('open');
-                links.classList.remove('open');
-                if (overlay) overlay.classList.remove('open');
-                toggle.setAttribute('aria-expanded', 'false');
-                document.body.style.overflow = '';
-            }
-            function openMenu() {
-                toggle.classList.add('open');
-                links.classList.add('open');
-                if (overlay) overlay.classList.add('open');
-                toggle.setAttribute('aria-expanded', 'true');
-                document.body.style.overflow = 'hidden';
-            }
-            toggle.addEventListener('click', () => {
-                links.classList.contains('open') ? closeMenu() : openMenu();
-            });
-            if (overlay) overlay.addEventListener('click', closeMenu);
-            links.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
-            window.addEventListener('resize', () => { if (window.innerWidth > 860) closeMenu(); });
-        })();
-
-        /* ——— mobile filter drawer ——— */
+        /* mobile drawer */
+        var drawer = $("filterDrawer");
+        var overlay = $("filterOverlay");
+        var opener = $("openFiltersBtn");
         function openFilters() {
-            document.getElementById('filterDrawer').classList.add('open');
-            document.getElementById('filterOverlay').classList.add('open');
-            document.body.style.overflow = 'hidden';
+            drawer.classList.add("open");
+            overlay.classList.add("open");
+            opener.setAttribute("aria-expanded", "true");
+            document.body.style.overflow = "hidden";
+            setTimeout(function () { $("filterClose").focus(); }, 60);
         }
         function closeFilters() {
-            document.getElementById('filterDrawer').classList.remove('open');
-            document.getElementById('filterOverlay').classList.remove('open');
-            document.body.style.overflow = '';
+            if (!drawer.classList.contains("open")) return;
+            drawer.classList.remove("open");
+            overlay.classList.remove("open");
+            opener.setAttribute("aria-expanded", "false");
+            document.body.style.overflow = "";
+            opener.focus();
         }
-        document.getElementById('filterClose').addEventListener('click', closeFilters);
-        document.getElementById('filterApply').addEventListener('click', closeFilters);
-        document.getElementById('filterOverlay').addEventListener('click', closeFilters);
-        window.addEventListener('resize', () => { if (window.innerWidth > 1000) closeFilters(); });
+        opener.addEventListener("click", openFilters);
+        $("filterClose").addEventListener("click", closeFilters);
+        $("filterApply").addEventListener("click", closeFilters);
+        overlay.addEventListener("click", closeFilters);
+        document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeFilters(); });
+        window.addEventListener("resize", function () { if (window.innerWidth > 1000) closeFilters(); });
 
-        /* ——— init ——— */
-        loadProducts();
-
+        load();
+    })();
     </script>
 
 </body>

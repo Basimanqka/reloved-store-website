@@ -1,272 +1,72 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bg">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- META:START -->
     <title>Закачалката — Продукт</title>
+    <meta name="description" content="Внимателно избрана препродадена дизайнерска мода. Всеки артикул е единствен по рода си." />
+    <link rel="canonical" href="https://www.zakachalkata.com/store.html" />
+    <meta name="robots" content="index, follow" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Закачалката" />
+    <meta property="og:locale" content="bg_BG" />
+    <meta property="og:title" content="Закачалката — Продукт" />
+    <meta property="og:description" content="Внимателно избрана препродадена дизайнерска мода. Всеки артикул е единствен по рода си." />
+    <meta property="og:url" content="https://www.zakachalkata.com/store.html" />
+    <meta property="og:image" content="https://www.zakachalkata.com/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png" />
+    <link rel="apple-touch-icon" href="favicon-180.png" />
+    <!-- META:END -->
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oranienbaum&family=Onest:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/site.css">
+    <script>document.documentElement.classList.add('js')</script>
+    <script src="js/site.js" defer></script>
+    <script src="js/config.js"></script>
+
+    <!-- Cloudflare Turnstile (captcha). Harmless if unused; the widget only
+         appears once TURNSTILE_SITE_KEY is set in the script below. -->
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
     <style>
 
-        /* ========================= */
-        /* RESET & BASE */
-        /* ========================= */
+        /* ===================================================================== */
+        /* BREADCRUMB                                                            */
+        /* ===================================================================== */
 
-        *, *::before, *::after {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --bg:          #FAF7F4;
-            --white:       #FFFFFF;
-            --border:      #EDE2D8;
-            --text:        #2C2420;
-            --muted:        #8B5E52;
-            --accent:      #AA5878;
-            --accent-dark: #7A3E56;
-            --gold:        #C9998A;
-            --gold-light:  #F2EBE3;
-            --bg-card:      #F2EBE3;
-            --rose:         #C9998A;
-            --rose-dark:    #8B5E52;
-            --mulberry:     #AA5878;
-            --mulberry-light: #F5E6EC;
-            --serif:       'Cormorant Garamond', serif;
-            --sans:        'Inter', sans-serif;
-            --transition:  0.3s ease;
-        }
-
-        html { scroll-behavior: smooth; }
-
-        body {
-            font-family: var(--sans);
-            background-color: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-        }
-
-        img { width: 100%; display: block; }
-        ul  { list-style: none; }
-        a   { text-decoration: none; color: inherit; }
-
-        button, select, input, textarea {
-            font-family: inherit;
-        }
-
-
-        /* ========================= */
-        /* NAVBAR */
-        /* ========================= */
-
-        .navbar {
-            width: 100%;
-            background-color: var(--white);
-            border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .nav-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 1.4rem 3rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .logo a {
-            display: flex;
-            align-items: center;
-            line-height: 1;
-        }
-
-        .logo img { height: 56px; width: auto; display: block; }
-
-        .nav-links ul {
-            display: flex;
-            gap: 2.5rem;
-        }
-
-        .nav-links a {
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: var(--transition);
-            position: relative;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: -5px;
-            width: 0;
-            height: 1px;
-            background-color: var(--accent);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover::after { width: 100%; }
-
-        .nav-icons {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .nav-icons button {
-            border: none;
-            background: transparent;
-            font-size: 0;
-            line-height: 1;
-            cursor: pointer;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-        }
-
-        .nav-icons button:hover { color: var(--rose-dark); }
-
-        .nav-icons .social-link {
-            display: flex;
-            align-items: center;
-            color: var(--text);
-            transition: color 0.3s;
-        }
-        .nav-icons .social-link:hover { color: var(--accent); }
-
-        /* hamburger toggle (mobile) */
-        .nav-toggle {
-            display: none;
-            flex-direction: column;
-            justify-content: center;
-            gap: 5px;
-            width: 40px;
-            height: 40px;
-            background: transparent;
-            border: none;
-            padding: 0;
-            flex-shrink: 0;
-        }
-
-        .nav-toggle span {
-            display: block;
-            width: 22px;
-            height: 1.5px;
-            background: var(--text);
-            transition: transform 0.3s ease, opacity 0.3s ease;
-        }
-
-        .nav-toggle.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
-        .nav-toggle.open span:nth-child(2) { opacity: 0; }
-        .nav-toggle.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
-
-        .nav-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(44,36,32,0.35);
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-            z-index: 98;
-        }
-
-        .nav-overlay.open { opacity: 1; visibility: visible; }
-
-        @media (max-width: 860px) {
-            .nav-toggle { display: flex; }
-
-            .nav-links {
-                position: fixed;
-                top: 0;
-                right: 0;
-                bottom: 0;
-                width: min(78vw, 320px);
-                background: var(--white);
-                padding: 5.5rem 2rem 2.5rem;
-                display: flex;
-                flex-direction: column;
-                transform: translateX(100%);
-                transition: transform 0.35s ease;
-                z-index: 99;
-                overflow-y: auto;
-                box-shadow: -8px 0 30px rgba(0,0,0,0.10);
-            }
-
-            .nav-links.open { transform: translateX(0); }
-
-            .nav-links ul { flex-direction: column; gap: 0; }
-            .nav-links li { border-bottom: 1px solid var(--border); }
-
-            .nav-links a {
-                display: block;
-                padding: 1rem 0.2rem;
-                font-size: 1rem;
-            }
-
-            .nav-container { padding: 1.1rem 1.5rem; }
-            .logo img { height: 46px; }
-        }
-
-
-        /* ========================= */
-        /* PAGE HEADER / BREADCRUMB */
-        /* ========================= */
-
-        .page-header {
-            padding: 2.5rem 3rem 1.5rem;
-        }
-
-        .page-header-container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .breadcrumb {
-            font-size: 0.82rem;
+        .crumbs {
+            padding: 1.5rem var(--margin) 1.25rem;
+            font-size: var(--step-small);
             color: var(--muted);
-            letter-spacing: 0.5px;
         }
-
-        .breadcrumb a {
-            transition: color 0.2s;
-        }
-
-        .breadcrumb a:hover {
-            color: var(--mulberry);
-        }
-
-        .breadcrumb span {
-            margin: 0 0.5rem;
-            opacity: 0.5;
-        }
+        .crumbs a { text-decoration: underline; text-underline-offset: 0.2em; text-decoration-color: transparent; transition: color var(--t-hover) ease, text-decoration-color var(--t-hover) ease; }
+        .crumbs a:hover { color: var(--ink); text-decoration-color: currentColor; }
+        .crumbs span[aria-hidden] { margin: 0 0.5rem; }
 
 
-        /* ========================= */
-        /* PRODUCT LAYOUT */
-        /* ========================= */
+        /* ===================================================================== */
+        /* SPLIT STAGE — the pictures stay while the details scroll              */
+        /* ===================================================================== */
 
         .product-layout {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 3rem 6rem;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 5rem;
-            align-items: start;
             position: relative;
+            display: grid;
+            grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+            gap: clamp(2rem, 5vw, 5rem);
+            align-items: start;
             min-height: 60vh;
+            padding: 0 var(--margin) calc(var(--section) * 0.8);
         }
 
-        /* Hide real content until the product data has loaded, so the
-           previous/placeholder listing never flashes on screen. */
+        /* nothing shows until the product has loaded, so no placeholder flashes */
         .product-layout.is-loading .gallery,
         .product-layout.is-loading .product-info { visibility: hidden; }
 
@@ -278,761 +78,338 @@
             justify-content: center;
         }
         .product-layout.is-loading .product-loading { display: flex; }
-
         .product-loading .spinner {
-            width: 34px;
-            height: 34px;
-            border: 2px solid var(--border);
-            border-top-color: var(--accent);
+            width: 36px;
+            height: 36px;
+            border: 2px solid var(--surface-deep);
+            border-top-color: var(--fig);
             border-radius: 50%;
             animation: pl-spin 0.8s linear infinite;
         }
         @keyframes pl-spin { to { transform: rotate(360deg); } }
 
+        .product-missing { grid-column: 1 / -1; padding: 3rem 0; }
+        .product-missing h1 { font-size: var(--step-head); }
+        .product-missing p { margin: 1rem 0 1.75rem; max-width: 40ch; }
 
-        /* ========================= */
-        /* IMAGE GALLERY */
-        /* ========================= */
+
+        /* ---- gallery ---- */
 
         .gallery {
             position: sticky;
-            top: 100px;
+            top: calc(var(--nav-h) + 12px);
+            display: grid;
+            grid-template-columns: 76px minmax(0, 1fr);
+            gap: 12px;
         }
+        .gallery.single { grid-template-columns: minmax(0, 1fr); }
 
         .main-image-wrapper {
-            background-color: var(--bg-card);
+            grid-column: 2;
+            grid-row: 1;
+            aspect-ratio: 4 / 5;
+            max-height: calc(100svh - var(--nav-h) - 36px);
+            width: 100%;
             overflow: hidden;
-            margin-bottom: 1.2rem;
+            background: var(--surface);
         }
-
+        .gallery.single .main-image-wrapper { grid-column: 1; }
         .main-image-wrapper img {
             width: 100%;
-            height: 580px;
+            height: 100%;
             object-fit: cover;
-            transition: transform 0.6s ease;
+            transition: opacity 240ms ease;
         }
-
-        .main-image-wrapper:hover img {
-            transform: scale(1.03);
-        }
+        .main-image-wrapper img.is-swapping { opacity: 0; }
 
         .thumbnails {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 0.8rem;
+            grid-column: 1;
+            grid-row: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-height: calc(100svh - var(--nav-h) - 36px);
+            overflow-y: auto;
+            scrollbar-width: none;
         }
-
+        .thumbnails:empty { display: none; }
         .thumb {
-            background: var(--bg-card);
-            overflow: hidden;
-            cursor: pointer;
-            border: 2px solid transparent;
-            transition: border-color 0.2s ease;
-        }
-
-        .thumb.active {
-            border-color: var(--accent);
-        }
-
-        .thumb img {
+            flex: none;
+            display: block;
             width: 100%;
-            height: 110px;
-            object-fit: cover;
-            transition: transform 0.4s ease;
+            aspect-ratio: 4 / 5;
+            padding: 0;
+            border: 0;
+            background: var(--surface);
+            overflow: hidden;
+            opacity: 0.55;
+            transition: opacity var(--t-hover) ease;
         }
+        .thumb:hover { opacity: 0.85; }
+        .thumb[aria-current="true"] { opacity: 1; }
+        .thumb img { width: 100%; height: 100%; object-fit: cover; }
 
-        .thumb:hover img {
-            transform: scale(1.06);
-        }
 
+        /* ---- info ---- */
 
-        /* ========================= */
-        /* PRODUCT INFO */
-        /* ========================= */
+        .product-info { padding-top: 0.5rem; max-width: 34rem; }
 
-        .product-info {
-            padding-top: 0.5rem;
-        }
-
-        .product-brand-tag {
-            display: inline-block;
-            font-size: 0.72rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: var(--mulberry);
-            border: 1px solid var(--mulberry);
-            padding: 0.3rem 0.9rem;
-            margin-bottom: 1.2rem;
-        }
-
-        .product-name {
-            font-family: var(--serif);
-            font-size: 3rem;
-            font-weight: 400;
-            line-height: 1.15;
-            margin-bottom: 0.5rem;
-            letter-spacing: -0.5px;
-        }
-
-        .product-name em {
-            font-style: italic;
-            color: var(--mulberry);
-        }
-
-        .product-meta-line {
-            font-size: 0.88rem;
-            color: var(--muted);
-            letter-spacing: 0.5px;
-            margin-bottom: 1.8rem;
-        }
+        .product-name { font-size: var(--step-head); }
+        .product-maker { margin-top: 0.75rem; font-size: var(--step-lead); line-height: 1.3; }
 
         .product-price-block {
             display: flex;
             flex-wrap: wrap;
             align-items: baseline;
-            gap: 1rem;
-            margin-bottom: 0.5rem;
+            gap: 0.4rem 1rem;
+            margin-top: 2rem;
         }
-
         .price-current {
-            font-family: var(--serif);
-            font-size: 2.4rem;
-            font-weight: 500;
-            color: var(--text);
-            letter-spacing: -0.5px;
-        }
-
-        .price-original {
-            font-size: 1.2rem;
-            color: var(--muted);
-            text-decoration: line-through;
-        }
-
-        .price-bgn-row {
-            margin-bottom: 2.5rem;
-            padding-bottom: 2rem;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .price-bgn {
-            font-size: 0.85rem;
-            color: var(--muted);
-            letter-spacing: 0.3px;
-        }
-
-        .price-badge {
-            font-size: 0.75rem;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            background-color: var(--gold-light);
-            color: var(--gold);
-            padding: 0.3rem 0.8rem;
-            border: 1px solid rgba(201,153,138,0.35);
-        }
-
-
-        /* ========================= */
-        /* DESCRIPTION */
-        /* ========================= */
-
-        .product-description {
-            margin-bottom: 2.5rem;
-            padding-bottom: 2.5rem;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .product-description p {
-            font-size: 0.93rem;
-            color: #7A6560;
-            line-height: 1.85;
-        }
-
-        .product-description p + p {
-            margin-top: 0.9rem;
-        }
-
-
-        /* ========================= */
-        /* ACCORDION / DROPDOWNS */
-        /* ========================= */
-
-        .accordion {
-            margin-bottom: 2.5rem;
-        }
-
-        .accordion-item {
-            border-bottom: 1px solid var(--border);
-        }
-
-        .accordion-trigger {
-            width: 100%;
-            background: none;
-            border: none;
-            padding: 1.1rem 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            text-align: left;
-        }
-
-        .accordion-trigger-label {
-            font-size: 0.8rem;
-            letter-spacing: 2.5px;
-            text-transform: uppercase;
-            color: var(--text);
-        }
-
-        .accordion-icon {
-            width: 20px;
-            height: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.3s ease;
-            color: var(--muted);
-        }
-
-        .accordion-icon::before {
-            content: '+';
-            font-size: 1.2rem;
-            font-weight: 300;
+            font-family: var(--font-display);
+            font-size: var(--step-head);
             line-height: 1;
+            font-variant-numeric: tabular-nums;
         }
+        .price-current.is-sale { color: var(--fig); }
+        .price-original { font-size: var(--step-lead); color: var(--muted); text-decoration: line-through; }
+        .price-bgn { margin-top: 0.5rem; color: var(--muted); }
 
-        .accordion-item.open .accordion-icon {
-            transform: rotate(45deg);
+        .buy-block { margin-top: 2rem; }
+        .buy-btn { width: 100%; min-height: 3.5rem; font-size: 1.0625rem; }
+        .buy-note { margin-top: 0.9rem; color: var(--muted); }
+        .buy-note a { color: var(--ink); text-decoration: underline; text-underline-offset: 0.2em; }
+        .buy-note a:hover { color: var(--fig); }
+
+        .product-description { margin-top: 2.75rem; }
+        .product-description p { max-width: 60ch; text-wrap: pretty; }
+        .product-description p + p { margin-top: 0.9em; }
+
+        .details {
+            display: grid;
+            grid-template-columns: max-content 1fr;
+            gap: 0.55rem 1.75rem;
+            margin-top: 2.5rem;
+            padding: 1.5rem 1.75rem;
+            background: var(--surface);
         }
+        .details dt { color: var(--muted); }
+        .details dd { font-weight: 500; }
 
-        .accordion-body {
-            overflow: hidden;
-            max-height: 0;
-            transition: max-height 0.4s ease;
-        }
-
-        .accordion-item.open .accordion-body {
-            max-height: 200px;
-        }
-
-        .accordion-content {
-            padding: 0.2rem 0 1.5rem;
-        }
-
-        .tag-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
+        .tag-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 1.25rem; }
         .tag {
-            font-size: 0.75rem;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            padding: 0.35rem 0.9rem;
-            border: 1px solid var(--border);
-            color: var(--muted);
-            background: var(--white);
-            transition: all 0.2s ease;
-            cursor: default;
-        }
-
-        .tag:hover {
-            border-color: var(--mulberry);
-            color: var(--mulberry);
-        }
-
-        .detail-row {
-            display: flex;
-            justify-content: space-between;
+            display: inline-flex;
             align-items: center;
-            font-size: 0.9rem;
-            padding: 0.4rem 0;
+            min-height: 40px;
+            padding: 0 0.9rem;
+            background: var(--blush-soft);
+            color: var(--ink);
+            transition: background-color var(--t-hover) ease;
         }
-
-        .detail-row .detail-label {
-            color: var(--muted);
-            font-size: 0.83rem;
-        }
-
-        .detail-row .detail-value {
-            font-weight: 500;
-            color: var(--text);
-        }
+        .tag:hover { background: var(--blush); }
 
 
-        /* ========================= */
-        /* BUY NOW BUTTON */
-        /* ========================= */
 
-        .buy-btn {
-            width: 100%;
-            padding: 1.2rem 2rem;
-            background-color: var(--text);
-            color: var(--white);
-            border: none;
-            font-size: 0.82rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: background-color 0.3s ease, letter-spacing 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.7rem;
-        }
-
-        .buy-btn:hover {
-            background-color: var(--mulberry);
-            letter-spacing: 4px;
-        }
-
-        .buy-btn-arrow {
-            font-size: 1rem;
-            transition: transform 0.3s ease;
-        }
-
-        .buy-btn:hover .buy-btn-arrow {
-            transform: translateX(4px);
-        }
-
-        .wishlist-line {
-            margin-top: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-        }
-
-        .wishlist-link {
-            background: none;
-            border: none;
-            font-size: 0.8rem;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            color: var(--muted);
-            cursor: pointer;
-            text-decoration: underline;
-            text-decoration-color: transparent;
-            text-underline-offset: 3px;
-            transition: all 0.2s ease;
-        }
-
-        .wishlist-link:hover {
-            color: var(--mulberry);
-            text-decoration-color: var(--mulberry);
-        }
-
-
-        /* ========================= */
-        /* MODAL OVERLAY */
-        /* ========================= */
+        /* ===================================================================== */
+        /* ORDER DIALOG                                                          */
+        /* ===================================================================== */
 
         .modal-overlay {
             position: fixed;
             inset: 0;
-            background-color: rgba(70, 66, 69, 0.45);
             z-index: 1000;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 2rem;
+            padding: 1.5rem;
+            background: rgba(74, 56, 68, 0.5);
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.35s ease, visibility 0.35s ease;
-            backdrop-filter: blur(3px);
-            -webkit-backdrop-filter: blur(3px);
+            transition: opacity 300ms ease, visibility 300ms ease;
         }
-
-        .modal-overlay.open {
-            opacity: 1;
-            visibility: visible;
-        }
+        .modal-overlay.open { opacity: 1; visibility: visible; }
 
         .modal {
-            background: var(--white);
-            width: 100%;
-            max-width: 520px;
-            max-height: 90vh;
-            overflow-y: auto;
-            padding: 3rem;
             position: relative;
-            transform: translateY(24px);
-            transition: transform 0.35s ease;
+            width: 100%;
+            max-width: 560px;
+            max-height: calc(100svh - 3rem);
+            overflow-y: auto;
+            padding: clamp(1.5rem, 4vw, 2.75rem);
+            background: var(--ground);
+            box-shadow: 0 24px 80px rgba(43, 31, 40, 0.3);
+            transform: translateY(20px);
+            transition: transform 360ms var(--ease-out);
         }
-
-        .modal-overlay.open .modal {
-            transform: translateY(0);
-        }
+        .modal-overlay.open .modal { transform: none; }
 
         .modal-close {
             position: absolute;
-            top: 1.5rem;
-            right: 1.5rem;
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 1.4rem;
-            color: var(--muted);
-            transition: color 0.2s ease, transform 0.2s ease;
+            top: 0.75rem;
+            right: 0.75rem;
+            width: 48px;
+            height: 48px;
+            border: 0;
+            background: var(--surface);
+            color: var(--ink);
+            font-size: 1.6rem;
             line-height: 1;
+            transition: background-color var(--t-hover) ease;
         }
+        .modal-close:hover { background: var(--surface-deep); }
 
-        .modal-close:hover {
-            color: var(--text);
-            transform: rotate(90deg);
-        }
-
-        .modal-eyebrow {
-            font-size: 0.72rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: var(--mulberry);
-            margin-bottom: 0.6rem;
-        }
-
-        .modal-title {
-            font-family: var(--serif);
-            font-size: 2rem;
-            font-weight: 400;
-            line-height: 1.2;
-            margin-bottom: 0.4rem;
-        }
-
-        .modal-subtitle {
-            font-size: 0.85rem;
-            color: var(--muted);
-            margin-bottom: 2rem;
-            padding-bottom: 2rem;
-            border-bottom: 1px solid var(--border);
-        }
+        .modal-title { font-size: clamp(2rem, 1.5rem + 2vw, 2.75rem); padding-right: 3rem; }
+        .modal-subtitle { margin-top: 0.75rem; color: var(--muted); max-width: 40ch; }
 
         .modal-product-summary {
             display: flex;
             align-items: center;
             gap: 1rem;
-            background: var(--bg);
-            padding: 1rem;
-            margin-bottom: 2rem;
+            margin: 1.75rem 0;
+            padding: 0.75rem;
+            background: var(--surface);
         }
+        .modal-product-img { width: 64px; height: 80px; object-fit: cover; flex-shrink: 0; }
+        .modal-product-name { font-weight: 500; }
+        .modal-product-price { color: var(--muted); }
 
-        .modal-product-img {
-            width: 64px;
-            height: 80px;
-            object-fit: cover;
-            flex-shrink: 0;
-        }
-
-        .modal-product-name {
-            font-family: var(--serif);
-            font-size: 1.15rem;
-            font-weight: 500;
-            margin-bottom: 0.2rem;
-        }
-
-        .modal-product-price {
-            font-size: 0.88rem;
-            color: var(--muted);
-        }
-
-        .form-group {
-            margin-bottom: 1.4rem;
-        }
-
-        .form-label {
-            display: block;
-            font-size: 0.73rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: var(--muted);
-            margin-bottom: 0.55rem;
-        }
-
+        .form-group { margin-bottom: 1.1rem; }
+        .form-label { display: block; margin-bottom: 0.4rem; font-weight: 500; }
+        .form-label .opt { font-weight: 400; color: var(--muted); }
         .form-input,
         .form-textarea {
             width: 100%;
-            border: 1px solid var(--border);
-            background: var(--white);
-            padding: 0.85rem 1rem;
-            font-size: 0.9rem;
-            color: var(--text);
-            outline: none;
-            transition: border-color 0.2s ease;
+            min-height: 3rem;
+            padding: 0.75rem 0.9rem;
+            border: 1px solid var(--line);
+            background: var(--paper);
+            color: var(--ink);
+            font-size: 1rem;
             appearance: none;
+            transition: border-color var(--t-hover) ease;
         }
-
         .form-input:focus,
-        .form-textarea:focus {
-            border-color: var(--accent);
-        }
+        .form-textarea:focus { outline: 2px solid var(--fig); outline-offset: 0; border-color: var(--fig); }
+        .form-input.has-error { border-color: var(--danger); }
+        .form-textarea { resize: vertical; min-height: 88px; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0 1rem; }
 
-        .form-textarea {
-            resize: vertical;
-            min-height: 88px;
-        }
-        .gdpr-group {
-            margin-bottom: 1.4rem;
-        }
+        .gdpr-group { margin: 1.25rem 0; }
+        .gdpr-label { display: flex; align-items: flex-start; gap: 0.75rem; cursor: pointer; }
+        .gdpr-checkbox { width: 20px; height: 20px; flex-shrink: 0; margin-top: 2px; accent-color: var(--fig); cursor: pointer; }
+        .gdpr-checkbox.error { outline: 2px solid var(--danger); outline-offset: 2px; }
+        .gdpr-label a { text-decoration: underline; text-underline-offset: 0.2em; }
+        .gdpr-label a:hover { color: var(--fig); }
 
-        .gdpr-label {
-            display: flex;
-            align-items: flex-start;
-            gap: 0.7rem;
-            cursor: pointer;
-            font-size: 0.8rem;
-            color: var(--muted);
-            line-height: 1.5;
-        }
+        .order-error { margin: 0 0 1rem; padding: 0.75rem 1rem; background: var(--danger-soft); color: var(--danger); }
 
-        .gdpr-checkbox {
-            width: 15px;
-            height: 15px;
-            flex-shrink: 0;
-            margin-top: 2px;
-            accent-color: var(--accent);
-            cursor: pointer;
-        }
+        .confirm-btn { width: 100%; min-height: 3.5rem; }
 
-        .gdpr-label a {
-            color: var(--accent-dark);
-            text-decoration: underline;
-            text-decoration-color: rgba(91,168,160,0.4);
-            text-underline-offset: 2px;
-        }
-
-        .gdpr-label a:hover {
-            text-decoration-color: var(--accent-dark);
-        }
-
-        .gdpr-checkbox.error {
-            outline: 2px solid #c0392b;
-            outline-offset: 1px;
-        }
+        .modal-confirm-state { display: none; padding: 1rem 0 0.5rem; }
+        .modal-confirm-state.visible { display: block; }
+        .modal-form-state.hidden { display: none; }
+        .confirm-title { font-size: clamp(2rem, 1.5rem + 2vw, 2.75rem); padding-right: 3rem; }
+        .confirm-msg { margin: 1rem 0 2rem; max-width: 40ch; }
 
 
+        /* ===================================================================== */
+        /* MORE ON THE RAIL                                                      */
+        /* ===================================================================== */
 
-        .form-row {
+        .more { padding: 0 0 var(--section); }
+        .more h2 { font-size: var(--step-head); padding: 0 var(--margin); }
+        .more-rail {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
+            grid-auto-flow: column;
+            grid-auto-columns: clamp(220px, 21vw, 340px);
+            gap: var(--gutter);
+            margin-top: 2rem;
+            padding: 0 var(--margin) 1rem;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-padding-inline: var(--margin);
+            scrollbar-width: thin;
+            scrollbar-color: var(--mauve) transparent;
         }
-
-        .confirm-btn {
-            width: 100%;
-            padding: 1.15rem 2rem;
-            background-color: var(--text);
-            color: var(--white);
-            border: none;
-            font-size: 0.78rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            margin-top: 0.5rem;
-        }
-
-        .confirm-btn:hover {
-            background-color: var(--mulberry);
-        }
-
-
-        /* ========================= */
-        /* ORDER CONFIRMATION STATE */
-        /* ========================= */
-
-        .modal-confirm-state {
-            display: none;
-            text-align: center;
-            padding: 1rem 0;
-        }
-
-        .modal-confirm-state.visible {
+        .piece { display: block; scroll-snap-align: start; color: var(--ink); }
+        .piece-img { display: block; aspect-ratio: 4 / 5; overflow: hidden; background: var(--surface); }
+        .piece-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 700ms var(--ease-out); }
+        .piece:hover .piece-img img { transform: scale(1.04); }
+        .piece-name {
             display: block;
+            margin-top: 1rem;
+            font-family: var(--font-display);
+            font-size: var(--step-lead);
+            line-height: 1.05;
+            text-decoration: underline;
+            text-decoration-thickness: 1px;
+            text-underline-offset: 0.18em;
+            text-decoration-color: transparent;
+            transition: text-decoration-color var(--t-hover) ease;
         }
-
-        .modal-form-state.hidden {
-            display: none;
-        }
-
-        .confirm-icon {
-            width: 64px;
-            height: 64px;
-            border-radius: 50%;
-            background-color: var(--gold-light);
-            border: 1px solid rgba(201,153,138,0.40);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1.8rem;
-            font-size: 1.6rem;
-        }
-
-        .confirm-title {
-            font-family: var(--serif);
-            font-size: 2rem;
-            font-weight: 400;
-            margin-bottom: 0.8rem;
-        }
-
-        .confirm-msg {
-            font-size: 0.9rem;
-            color: var(--muted);
-            line-height: 1.7;
-            max-width: 340px;
-            margin: 0 auto 2rem;
-        }
-
-        .back-btn {
-            display: inline-block;
-            font-size: 0.75rem;
-            letter-spacing: 2.5px;
-            text-transform: uppercase;
-            color: var(--muted);
-            border: 1px solid var(--border);
-            padding: 0.8rem 1.8rem;
-            cursor: pointer;
-            background: none;
-            transition: all 0.2s ease;
-        }
-
-        .back-btn:hover {
-            border-color: var(--accent);
-            color: var(--accent);
-        }
+        .piece:hover .piece-name { text-decoration-color: currentColor; }
+        .piece-meta { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; margin-top: 0.45rem; }
+        .piece-maker { color: var(--muted); }
+        .piece-price { font-weight: 500; font-variant-numeric: tabular-nums; white-space: nowrap; }
+        .piece-price.is-sale { color: var(--fig); }
+        .piece-price s { margin-left: 0.4rem; font-weight: 400; color: var(--muted); }
+        @media (max-width: 640px) { .more-rail { grid-auto-columns: 70vw; } }
 
 
-        /* ========================= */
-        /* FOOTER */
-        /* ========================= */
-
-        .footer {
-            background-color: var(--white);
-            border-top: 1px solid var(--border);
-        }
-
-        .footer-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 4rem 3rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 2rem;
-        }
-
-        .footer-branding h2 {
-            font-family: var(--serif);
-            font-size: 2rem;
-            margin-bottom: 0.7rem;
-        }
-
-        .footer-branding p { color: var(--muted); }
-
-        .footer-links,
-        .footer-socials {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .footer-links a,
-        .footer-socials a {
-            font-size: 0.9rem;
-            color: #7A6560;
-            transition: var(--transition);
-        }
-
-        .footer-links a:hover,
-        .footer-socials a:hover { color: var(--mulberry); }
-
-
-        /* ========================= */
-        /* RESPONSIVE */
-        /* ========================= */
-
-        @media (max-width: 1100px) {
-            .product-layout {
-                gap: 3rem;
-            }
-        }
+        /* ===================================================================== */
+        /* RESPONSIVE                                                            */
+        /* ===================================================================== */
 
         @media (max-width: 900px) {
-            .product-layout {
-                grid-template-columns: 1fr;
-                padding: 0 2rem 5rem;
-                gap: 2.5rem;
-            }
-
+            .product-layout { grid-template-columns: 1fr; }
             .gallery {
                 position: static;
+                grid-template-columns: 1fr;
             }
-
-            .main-image-wrapper img {
-                height: 420px;
+            .main-image-wrapper { grid-column: 1; max-height: none; }
+            .thumbnails {
+                grid-column: 1;
+                grid-row: 2;
+                flex-direction: row;
+                max-height: none;
+                overflow-x: auto;
             }
-
-            .page-header {
-                padding: 2rem 2rem 1rem;
-            }
+            .thumb { width: 64px; }
+            .product-info { max-width: none; }
         }
 
         @media (max-width: 600px) {
-            .product-name {
-                font-size: 2.2rem;
-            }
-
-            .price-current {
-                font-size: 1.9rem;
-            }
-
-            .modal {
-                padding: 2rem 1.5rem;
-            }
-
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-
-            .thumbnails {
-                grid-template-columns: repeat(4, 1fr);
-                gap: 0.5rem;
-            }
-
-            .thumb img {
-                height: 80px;
-            }
-
-            .footer-container {
-                flex-direction: column;
-                padding: 2.5rem 1.5rem;
-            }
+            .form-row { grid-template-columns: 1fr; }
+            .modal-overlay { padding: 0; align-items: flex-end; }
+            .modal { max-height: 94svh; }
+            .details { grid-template-columns: 1fr; gap: 0.1rem; }
+            .details dd + dt { margin-top: 0.6rem; }
         }
-
-        /* Scrollbar (modal) */
-        .modal::-webkit-scrollbar { width: 4px; }
-        .modal::-webkit-scrollbar-track { background: transparent; }
-        .modal::-webkit-scrollbar-thumb { background: var(--border); }
 
     </style>
 </head>
 <body>
 
-    <!-- ========================= -->
-    <!-- NAVBAR -->
-    <!-- ========================= -->
+    <a class="skip-link" href="#main">Към съдържанието</a>
 
+    <!-- NAVBAR -->
     <header class="navbar">
         <div class="nav-container">
-            <div class="logo"><a href="index.html"><img src="logo.jpeg" height="56" alt="Закачалката — reloved store" style="display:block"></a></div>
-            <nav class="nav-links" id="navLinks">
+            <a class="logo" href="index.html" aria-label="Закачалката — начало"><img src="img/logo.jpg" width="701" height="384" alt="Закачалката — reloved store"></a>
+            <nav class="nav-links" id="navLinks" aria-label="Основна навигация">
                 <ul>
                     <li><a href="index.html">Начало</a></li>
                     <li><a href="store.html">Магазин</a></li>
+                    <li><a href="about.html">За нас</a></li>
                     <li><a href="contact.html">Контакти</a></li>
                 </ul>
+                <div class="nav-drawer-social">
+                    <a href="https://www.instagram.com/zakachalkatarelovedstore/" target="_blank" rel="noopener">Instagram</a>
+                    <a href="https://www.facebook.com/p/%D0%97%D0%B0%D0%BA%D0%B0%D1%87%D0%B0%D0%BB%D0%BA%D0%B0%D1%82%D0%B0-Reloved-Store-100083130402532/" target="_blank" rel="noopener">Facebook</a>
+                </div>
             </nav>
             <div class="nav-icons">
-                <a class="social-link" href="https://www.facebook.com/p/%D0%97%D0%B0%D0%BA%D0%B0%D1%87%D0%B0%D0%BB%D0%BA%D0%B0%D1%82%D0%B0-Reloved-Store-100083130402532/" target="_blank" rel="noopener" aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
-                <a class="social-link" href="https://www.instagram.com/zakachalkatarelovedstore/" target="_blank" rel="noopener" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+                <a class="social-link" href="https://www.instagram.com/zakachalkatarelovedstore/" target="_blank" rel="noopener" aria-label="Instagram"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+                <a class="social-link" href="https://www.facebook.com/p/%D0%97%D0%B0%D0%BA%D0%B0%D1%87%D0%B0%D0%BB%D0%BA%D0%B0%D1%82%D0%B0-Reloved-Store-100083130402532/" target="_blank" rel="noopener" aria-label="Facebook"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
                 <button class="nav-toggle" id="navToggle" aria-label="Отвори меню" aria-expanded="false" aria-controls="navLinks">
                     <span></span><span></span><span></span>
                 </button>
@@ -1041,308 +418,165 @@
     </header>
     <div class="nav-overlay" id="navOverlay"></div>
 
+    <nav class="crumbs" aria-label="Път">
+        <a href="index.html">Начало</a><span aria-hidden="true">/</span><a href="store.html">Магазин</a><span aria-hidden="true">/</span><span id="crumbName"></span>
+    </nav>
 
-    <!-- ========================= -->
-    <!-- BREADCRUMB -->
-    <!-- ========================= -->
+    <main id="main" class="product-layout is-loading">
 
-    <section class="page-header">
-        <div class="page-header-container">
-            <p class="breadcrumb">
-                <a href="#">Начало</a>
-                <span>›</span>
-                <a href="store.html">Магазин</a>
-                <span>›</span>
-                Вълнено Сако
-            </p>
-        </div>
-    </section>
+        <div class="product-loading" role="status"><div class="spinner"></div><span class="sr-only">Зареждане…</span></div>
 
-
-    <!-- ========================= -->
-    <!-- PRODUCT LAYOUT -->
-    <!-- ========================= -->
-
-    <main class="product-layout is-loading">
-
-        <div class="product-loading"><div class="spinner"></div></div>
-
-
-        <!-- ========================= -->
-        <!-- GALLERY -->
-        <!-- ========================= -->
-
-        <div class="gallery">
-
+        <div class="gallery" id="gallery" data-rise>
             <div class="main-image-wrapper">
-                <img id="mainImage" src="" alt="" />
+                <img id="mainImage" src="" alt="" width="800" height="1000" />
             </div>
-
-            <div class="thumbnails"></div>
-
+            <div class="thumbnails" id="thumbnails" aria-label="Снимки на парчето"></div>
         </div>
-
-
-        <!-- ========================= -->
-        <!-- PRODUCT INFO -->
-        <!-- ========================= -->
 
         <div class="product-info">
 
-            <span class="product-brand-tag">Prada</span>
+            <h1 class="product-name" id="productName" data-rise></h1>
+            <p class="product-maker" id="productMaker" data-rise style="--i:1"></p>
 
-            <h1 class="product-name">
-                Вълнено<br><em>Сако</em>
-            </h1>
-
-            <p class="product-meta-line">Размер M &nbsp;·&nbsp; Есен / Зима &nbsp;·&nbsp; Отлично Състояние</p>
-
-            <div class="product-price-block">
-                <span class="price-current">€122.71</span>
-                <span class="price-original" style="display:none"></span>
-                <span class="price-badge">Проверен</span>
+            <div class="product-price-block" data-rise style="--i:2">
+                <span class="price-current" id="priceCurrent"></span>
+                <span class="price-original" id="priceOriginal" hidden></span>
             </div>
-            <div class="price-bgn-row">
-                <span class="price-bgn">≈ 240.00 лв</span>
+            <p class="price-bgn" id="priceBgn" data-rise style="--i:2"></p>
+
+            <div class="buy-block" data-rise style="--i:3">
+                <button type="button" class="btn btn-primary buy-btn" id="buyBtn">Поръчай с наложен платеж</button>
+                <p class="buy-note">Плащате при доставка. Имате 14 дни да се откажете, вижте <a href="withdrawal.html">правото на отказ</a>.</p>
             </div>
 
-            <div class="product-description">
-                <p>
-                    Изключително парче от гардероба на предишния собственик — структурирано вълнено сако в антрацитно сиво с двуреден силует, връхни ревери и характерни копчета. Класика, която не се влияе от тенденциите.
-                </p>
-                <p>
-                    Произхождащо от частна колекция и носено не повече от два пъти, то запазва nts in exceptional condition with all original hardware intact. The lining bears Prada's classic logo weave, and the internal pocket seams remain crisp and unfrayed. A rare find for the discerning collector.
-                </p>
-            </div>
+            <div class="product-description" id="productDescription" data-reveal></div>
 
+            <div class="tag-list" id="productTags" data-reveal></div>
 
-            <!-- ACCORDION -->
-
-            <div class="accordion">
-
-                <div class="accordion-item open">
-                    <button class="accordion-trigger" onclick="toggleAccordion(this)" aria-expanded="true">
-                        <span class="accordion-trigger-label">Размер</span>
-                        <span class="accordion-icon"></span>
-                    </button>
-                    <div class="accordion-body">
-                        <div class="accordion-content">
-                            <div class="detail-row">
-                                <span class="detail-label">Дизайнерски размер</span>
-                                <span class="detail-value">IT 42 (EU M)</span>
-                            </div>
-                            <div class="detail-row">
-                                <span class="detail-label">Гърди</span>
-                                <span class="detail-value">96 cm / 37.8"</span>
-                            </div>
-                            <div class="detail-row">
-                                <span class="detail-label">Рамо</span>
-                                <span class="detail-value">43 cm / 16.9"</span>
-                            </div>
-                            <div class="detail-row">
-                                <span class="detail-label">Дължина</span>
-                                <span class="detail-value">72 cm / 28.3"</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="accordion-item">
-                    <button class="accordion-trigger" onclick="toggleAccordion(this)" aria-expanded="false">
-                        <span class="accordion-trigger-label">Цвят и Материал</span>
-                        <span class="accordion-icon"></span>
-                    </button>
-                    <div class="accordion-body">
-                        <div class="accordion-content">
-                            <div class="detail-row">
-                                <span class="detail-label">Цвят</span>
-                                <span class="detail-value">Антрацитно Сиво</span>
-                            </div>
-                            <div class="detail-row">
-                                <span class="detail-label">Материя</span>
-                                <span class="detail-value">80% Вълна, 20% Кашмир</span>
-                            </div>
-                            <div class="detail-row">
-                                <span class="detail-label">Хастар</span>
-                                <span class="detail-value">100% Коприна</span>
-                            </div>
-                            <div class="detail-row">
-                                <span class="detail-label">Грижа</span>
-                                <span class="detail-value">Само химическо чистене</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="accordion-item">
-                    <button class="accordion-trigger" onclick="toggleAccordion(this)" aria-expanded="false">
-                        <span class="accordion-trigger-label">Стилови Тагове</span>
-                        <span class="accordion-icon"></span>
-                    </button>
-                    <div class="accordion-body">
-                        <div class="accordion-content">
-                            <div class="tag-list">
-                                <span class="tag">Официален</span>
-                                <span class="tag">Винтидж</span>
-                                <span class="tag">Статусен Стил</span>
-                                <span class="tag">Архивен</span>
-                                <span class="tag">Есен / Зима</span>
-                                <span class="tag">Инвестиционен Артикул</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="accordion-item">
-                    <button class="accordion-trigger" onclick="toggleAccordion(this)" aria-expanded="false">
-                        <span class="accordion-trigger-label">Автентичност и Състояние</span>
-                        <span class="accordion-icon"></span>
-                    </button>
-                    <div class="accordion-body">
-                        <div class="accordion-content">
-                            <div class="detail-row">
-                                <span class="detail-label">Състояние</span>
-                                <span class="detail-value">Отлично (9 / 10)</span>
-                            </div>
-                            <div class="detail-row">
-                                <span class="detail-label">Автентичност</span>
-                                <span class="detail-value">Проверен от нас</span>
-                            </div>
-                            <div class="detail-row">
-                                <span class="detail-label">Оригинални тагове</span>
-                                <span class="detail-value">Налични</span>
-                            </div>
-                            <div class="detail-row">
-                                <span class="detail-label">Торбичка</span>
-                                <span class="detail-value">Включена</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-
-            <!-- BUY NOW -->
-
-            <button class="buy-btn" onclick="openModal()">
-                Поръчай сега
-                <span class="buy-btn-arrow">→</span>
-            </button>
+            <dl class="details" id="productDetails" data-reveal></dl>
 
         </div>
 
     </main>
 
 
-    <!-- ========================= -->
-    <!-- FOOTER -->
-    <!-- ========================= -->
+    <!-- MORE PIECES (same size first) -->
+    <section class="more" id="moreSection" aria-labelledby="moreTitle" hidden>
+        <h2 id="moreTitle" data-reveal>Още на закачалката</h2>
+        <div class="more-rail" id="moreRail" tabindex="0" aria-labelledby="moreTitle"></div>
+    </section>
 
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-branding">
-                <h2>Закачалката</h2>
-                <p>Внимателно избрана препродадена мода.</p>
-            </div>
-            <div class="footer-links">
-                <a href="#">Начало</a>
+
+    <!-- FOOTER -->
+    <footer class="footer on-dark">
+        <div class="footer-top">
+            <p class="footer-lead">Внимателно избрана препродадена мода.</p>
+            <nav class="footer-col" aria-label="Страници">
+                <a href="index.html">Начало</a>
                 <a href="store.html">Магазин</a>
-                <a href="#">Контакти</a>
-            </div>
-            <div class="footer-socials">
+                <a href="about.html">За нас</a>
+                <a href="contact.html">Контакти</a>
+            </nav>
+            <nav class="footer-col" aria-label="Условия">
+                <a href="terms.html">Общи условия</a>
+                <a href="withdrawal.html">Право на отказ</a>
+                <a href="privacy.html">Поверителност</a>
+                <a href="cookies.html">Бисквитки</a>
+            </nav>
+            <div class="footer-col">
                 <a href="https://www.instagram.com/zakachalkatarelovedstore/" target="_blank" rel="noopener">Instagram</a>
                 <a href="https://www.facebook.com/p/%D0%97%D0%B0%D0%BA%D0%B0%D1%87%D0%B0%D0%BB%D0%BA%D0%B0%D1%82%D0%B0-Reloved-Store-100083130402532/" target="_blank" rel="noopener">Facebook</a>
+                <a href="mailto:zakachalkata@gmail.com">zakachalkata@gmail.com</a>
             </div>
+        </div>
+        <p class="footer-identity">
+            ДЗЗД София Велвет, ЕИК 177491919, гр. Варна, ул. „Петър Райчев“ №22.
+            Тел. <a href="tel:+359884161889">+359 88 416 1889</a>, <a href="mailto:zakachalkata@gmail.com">zakachalkata@gmail.com</a>
+        </p>
+        <span class="footer-wordmark" aria-hidden="true">закачалката</span>
+        <div class="footer-bottom">
+            <p>© 2026 Закачалката. Всички права запазени.</p>
+            <p>Варна</p>
         </div>
     </footer>
 
 
-    <!-- ========================= -->
-    <!-- BUY NOW MODAL -->
-    <!-- ========================= -->
+    <!-- ORDER DIALOG -->
+    <div class="modal-overlay" id="modalOverlay">
 
-    <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
 
-        <div class="modal">
+            <button type="button" class="modal-close" id="modalClose" aria-label="Затвори">&times;</button>
 
-            <button class="modal-close" onclick="closeModal()" aria-label="Close">&times;</button>
-
-            <!-- FORM STATE -->
             <div class="modal-form-state" id="formState">
 
-                <p class="modal-eyebrow">Завърши поръчката</p>
-                <h2 class="modal-title" id="modalTitle">Само няколко детайла</h2>
-                <p class="modal-subtitle">Ще запазим артикула за 24 часа, докато потвърдим поръчката ви.</p>
+                <h2 class="modal-title" id="modalTitle">Къде да го изпратим?</h2>
+                <p class="modal-subtitle">Запазваме парчето за 24 часа, докато потвърдим поръчката. Плащате при доставка.</p>
 
                 <div class="modal-product-summary">
-                    <img class="modal-product-img" src="" alt="" />
+                    <img class="modal-product-img" id="modalImg" src="" alt="" width="64" height="80" />
                     <div>
-                        <p class="modal-product-name">Prada — Вълнено Сако</p>
-                        <p class="modal-product-price">Размер IT 42 &nbsp;·&nbsp; Антрацитно Сиво &nbsp;·&nbsp; €122.71</p>
+                        <p class="modal-product-name" id="modalName"></p>
+                        <p class="modal-product-price" id="modalPrice"></p>
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label class="form-label" for="fullName">Пълно Име</label>
-                    <input class="form-input" type="text" id="fullName" placeholder="Вашето пълно име" autocomplete="name" />
-                </div>
-
-                <div class="form-row">
+                <form id="orderForm" novalidate>
                     <div class="form-group">
-                        <label class="form-label" for="email">Имейл адрес</label>
-                        <input class="form-input" type="email" id="email" placeholder="you@email.com" autocomplete="email" />
+                        <label class="form-label" for="fullName">Име и фамилия</label>
+                        <input class="form-input" type="text" id="fullName" autocomplete="name" required />
                     </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="email">Имейл</label>
+                            <input class="form-input" type="email" id="email" placeholder="you@email.com" autocomplete="email" required />
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="mobile">Телефон</label>
+                            <input class="form-input" type="tel" id="mobile" placeholder="+359 88 000 0000" autocomplete="tel" required />
+                        </div>
+                    </div>
+
                     <div class="form-group">
-                        <label class="form-label" for="mobile">Телефонен номер</label>
-                        <input class="form-input" type="tel" id="mobile" placeholder="+359 88 000 0000" autocomplete="tel" />
+                        <label class="form-label" for="street">Улица и номер</label>
+                        <input class="form-input" type="text" id="street" autocomplete="street-address" required />
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <label class="form-label" for="street">Улица и номер</label>
-                    <input class="form-input" type="text" id="street" placeholder="Улица и номер" autocomplete="street-address" />
-                </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="city">Град</label>
+                            <input class="form-input" type="text" id="city" autocomplete="address-level2" required />
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="postcode">Пощенски код</label>
+                            <input class="form-input" type="text" id="postcode" inputmode="numeric" autocomplete="postal-code" required />
+                        </div>
+                    </div>
 
-                <div class="form-row">
                     <div class="form-group">
-                        <label class="form-label" for="city">Град</label>
-                        <input class="form-input" type="text" id="city" placeholder="Град" autocomplete="address-level2" />
+                        <label class="form-label" for="notes">Бележка <span class="opt">(по желание)</span></label>
+                        <textarea class="form-textarea" id="notes" placeholder="Инструкции за доставка или въпрос"></textarea>
                     </div>
-                    <div class="form-group">
-                        <label class="form-label" for="postcode">Пощенски код</label>
-                        <input class="form-input" type="text" id="postcode" placeholder="Пощенски код" autocomplete="postal-code" />
+
+                    <div class="gdpr-group">
+                        <label class="gdpr-label">
+                            <input type="checkbox" id="gdprConsent" class="gdpr-checkbox" />
+                            <span>Съгласен/а съм личните ми данни да бъдат използвани за обработка на тази поръчка. <a href="privacy.html" target="_blank" rel="noopener">Политика за поверителност</a></span>
+                        </label>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <label class="form-label" for="notes">Допълнителни бележки (по избор)</label>
-                    <textarea class="form-textarea" id="notes" placeholder="Инструкции за доставка или въпроси…"></textarea>
-                </div>
-
-                <div class="form-group gdpr-group">
-                    <label class="gdpr-label">
-                        <input type="checkbox" id="gdprConsent" class="gdpr-checkbox" />
-                        <span>Съгласен/а съм личните ми данни да бъдат използвани за обработка на тази поръчка. <a href="privacy.html" target="_blank">Политика за поверителност</a></span>
-                    </label>
-                </div>
-                <button class="confirm-btn" onclick="submitOrder()">Потвърди поръчката</button>
+                    <div id="turnstileWidget" style="margin-bottom:1rem;"></div>
+                    <p class="order-error" id="orderError" role="alert" hidden></p>
+                    <button type="submit" class="btn btn-primary confirm-btn" id="confirmBtn">Потвърди поръчката</button>
+                </form>
 
             </div>
 
-            <!-- CONFIRMATION STATE -->
             <div class="modal-confirm-state" id="confirmState">
-
-                <div class="confirm-icon">✓</div>
-
                 <h2 class="confirm-title">Поръчката е приета</h2>
-
-                <p class="confirm-msg">
-                    Благодарим ви — получихме вашата поръчка. Ще се свържем с вас скоро на посочения имейл или телефон, за да уточним доставката и плащането при получаване.
-                </p>
-
-                <button class="back-btn" onclick="closeModal()">← Обратно към магазина</button>
-
+                <p class="confirm-msg">Благодарим ви. Ще се свържем с вас скоро на посочения имейл или телефон, за да уточним доставката и плащането при получаване.</p>
+                <a class="btn" href="store.html">Обратно към магазина</a>
             </div>
 
         </div>
@@ -1350,343 +584,328 @@
     </div>
 
 
-    <!-- ========================= -->
-    <!-- JAVASCRIPT -->
-    <!-- ========================= -->
-
+    <script src="js/data.js"></script>
     <script>
+    (function () {
+        "use strict";
 
-        /* ——— mobile nav toggle ——— */
-        (function () {
-            const toggle  = document.getElementById('navToggle');
-            const links   = document.getElementById('navLinks');
-            const overlay = document.getElementById('navOverlay');
-            if (!toggle || !links) return;
+        /* Paste your Cloudflare Turnstile SITE key here to turn on the captcha
+           on the order form. Leave empty to keep it off. The matching SECRET
+           key goes in Vercel as TURNSTILE_SECRET_KEY. */
+        var TURNSTILE_SITE_KEY = "";
 
-            function closeMenu() {
-                toggle.classList.remove('open');
-                links.classList.remove('open');
-                if (overlay) overlay.classList.remove('open');
-                toggle.setAttribute('aria-expanded', 'false');
-                document.body.style.overflow = '';
-            }
-            function openMenu() {
-                toggle.classList.add('open');
-                links.classList.add('open');
-                if (overlay) overlay.classList.add('open');
-                toggle.setAttribute('aria-expanded', 'true');
-                document.body.style.overflow = 'hidden';
-            }
-            toggle.addEventListener('click', () => {
-                links.classList.contains('open') ? closeMenu() : openMenu();
-            });
-            if (overlay) overlay.addEventListener('click', closeMenu);
-            links.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
-            window.addEventListener('resize', () => { if (window.innerWidth > 860) closeMenu(); });
-        })();
+        /* EUR is the master currency site-wide; BGN is derived using the fixed,
+           legally pegged rate (1 EUR = 1.95583 BGN) and shown on this page only. */
+        var BGN_PER_EUR = 1.95583;
+        var FALLBACK_IMG = "img/shop-rail.jpg";
 
-        /* ——— Config ——— */
-        const SUPABASE_URL = 'https://ozwydlffpvrcgnhdcjvw.supabase.co';
-        const SUPABASE_KEY = 'sb_publishable_wyBLx6NPlR8uk-jC-qyupQ_FeQzE37l';
-
-        let currentProduct = null;
-
-        /* ——— Currency: EUR is the master currency site-wide; BGN is
-           derived using the fixed, legally-pegged rate (1 EUR = 1.95583 BGN)
-           and shown alongside on this page only. ——— */
-        const BGN_PER_EUR = 1.95583;
-        function formatEur(amount) {
-            return `€${Number(amount).toFixed(2)}`;
-        }
-        function formatBgn(amountInEur) {
-            return `${(Number(amountInEur) * BGN_PER_EUR).toFixed(2)} лв`;
-        }
-
-        /* ——— Load product from URL param ——— */
-        async function loadProduct() {
-            const id = new URLSearchParams(window.location.search).get('id');
-            if (!id) { showError('Продуктът не е намерен.'); return; }
-
-            try {
-                const res = await fetch(
-                    `${SUPABASE_URL}/rest/v1/products?id=eq.${id}&select=*`,
-                    { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` } }
-                );
-                const data = await res.json();
-                if (!data || data.length === 0) { showError('Продуктът не е намерен.'); return; }
-                currentProduct = data[0];
-                renderProduct(currentProduct);
-            } catch(e) {
-                showError('Грешка при зареждане на продукта.');
-            }
-        }
-
-        const COLOR_LABELS = {
-            black:'Черен', white:'Бял', beige:'Бежов', grey:'Сив', navy:'Тъмносин',
-            blue:'Син', green:'Зелен', yellow:'Жълт', purple:'Лилав', pink:'Розов',
-            red:'Червен', brown:'Кафяв', gold:'Златен', silver:'Сребърен', multicolor:'Многоцветен'
+        var CAT_LABELS = {
+            outerwear: "Връхни дрехи", dresses: "Рокли", tops: "Блузи", shirts: "Ризи",
+            pants: "Панталони", jeans: "Дънки", skirts: "Поли", knitwear: "Плетива",
+            shoes: "Обувки", bags: "Чанти", accessories: "Аксесоари"
         };
-        const MATERIAL_LABELS = {
-            'genuine-leather':'Естествена кожа', 'faux-leather':'Изкуствена кожа',
-            cotton:'Памук', viscose:'Вискоза', wool:'Вълна', cashmere:'Кашмир',
-            linen:'Лен', polyester:'Полиестер', silk:'Коприна', lyocell:'Лиосел'
+        var COLOR_LABELS = {
+            black: "Черен", white: "Бял", beige: "Бежов", grey: "Сив", navy: "Тъмносин",
+            blue: "Син", green: "Зелен", yellow: "Жълт", purple: "Лилав", pink: "Розов",
+            red: "Червен", brown: "Кафяв", gold: "Златен", silver: "Сребърен", multicolor: "Многоцветен"
         };
+        var MATERIAL_LABELS = {
+            "genuine-leather": "Естествена кожа", "faux-leather": "Изкуствена кожа",
+            cotton: "Памук", viscose: "Вискоза", wool: "Вълна", cashmere: "Кашмир",
+            linen: "Лен", polyester: "Полиестер", silk: "Коприна", lyocell: "Лиосел"
+        };
+
+        var $ = function (id) { return document.getElementById(id); };
+        var layout = $("main");
+        var currentProduct = null;
+        var turnstileWidgetId = null;
+
+        function formatEur(n) { return "€" + Number(n).toFixed(2); }
+        function formatBgn(eur) { return (Number(eur) * BGN_PER_EUR).toFixed(2) + " лв"; }
+        function sizeText(s) { return s === "one-size" ? "Един размер" : s; }
+
+        /* ---------------------------------------------------------------- */
+        /* load + render                                                    */
+        /* ---------------------------------------------------------------- */
+
+        function loadProduct() {
+            var id = new URLSearchParams(location.search).get("id") || window.__PRODUCT_ID__ || null;
+            if (!id) { showMissing(); return; }
+
+            zkRest("products?id=eq." + encodeURIComponent(id) + "&select=*")
+                .then(function (data) {
+                    if (!Array.isArray(data) || !data.length) { showMissing(); return; }
+                    currentProduct = data[0];
+                    renderProduct(currentProduct);
+                })
+                .catch(function (err) {
+                    console.error("[product]", err);
+                    showMissing("Парчето не можа да се зареди. Проверете връзката и презаредете страницата.");
+                });
+        }
 
         function renderProduct(p) {
-            /* Page title */
-            document.title = `${p.brand || ''} ${p.name} — Закачалката`;
+            document.title = (p.brand ? p.brand + " " : "") + p.name + " — Закачалката";
+            $("crumbName").textContent = p.name || "";
 
-            /* Breadcrumb */
-            document.querySelector('.breadcrumb').innerHTML = `
-                <a href="index.html">Начало</a><span>›</span>
-                <a href="store.html">Магазин</a><span>›</span>
-                ${p.name}
-            `;
+            /* gallery */
+            var images = Array.isArray(p.image_urls) && p.image_urls.length ? p.image_urls : [FALLBACK_IMG];
+            var alt = ((p.brand || "") + " " + (p.name || "")).trim();
+            var main = $("mainImage");
+            main.src = images[0];
+            main.alt = alt;
+            main.onerror = function () { main.onerror = null; main.src = FALLBACK_IMG; };
 
-            /* Gallery */
-            const images = (p.image_urls && p.image_urls.length > 0)
-                ? p.image_urls
-                : ['https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=900&q=60'];
-
-            const mainImg = document.getElementById('mainImage');
-            mainImg.src = images[0];
-            mainImg.alt = `${p.brand} ${p.name}`;
-
-            const thumbsEl = document.querySelector('.thumbnails');
-            thumbsEl.innerHTML = images.map((url, i) => `
-                <div class="thumb ${i === 0 ? 'active' : ''}" onclick="switchImage(this, '${url}', '${p.name}')">
-                    <img src="${url}" alt="${p.name} ${i+1}" />
-                </div>
-            `).join('');
-
-            /* Brand tag */
-            document.querySelector('.product-brand-tag').textContent = p.brand || '';
-
-            /* Name */
-            const nameParts = (p.name || '').split(' ');
-            const first = nameParts.slice(0, -1).join(' ');
-            const last  = nameParts.slice(-1)[0] || '';
-            document.querySelector('.product-name').innerHTML = first
-                ? `${first}<br><em>${last}</em>`
-                : `<em>${last}</em>`;
-
-            /* Meta line */
-            document.querySelector('.product-meta-line').textContent =
-                [p.size, p.category, p.condition].filter(Boolean).join(' · ');
-
-            /* Price — EUR is the master currency; BGN shown alongside at the
-               fixed peg rate (1 EUR = 1.95583 BGN) since this is a BG store. */
-            const priceEur = parseFloat(p.price) || 0;
-            document.querySelector('.price-current').textContent = formatEur(priceEur);
-            document.querySelector('.price-bgn').textContent = `≈ ${formatBgn(priceEur)}`;
-
-            const origEl = document.querySelector('.price-original');
-            if (origEl) {
-                if (p.original_price && p.original_price > p.price) {
-                    origEl.textContent = formatEur(parseFloat(p.original_price));
-                    origEl.style.display = '';
-                } else {
-                    origEl.style.display = 'none';
-                }
+            if (images.length > 1) {
+                $("thumbnails").innerHTML = images.map(function (url, i) {
+                    return '<button type="button" class="thumb" data-index="' + i + '" aria-label="Снимка ' + (i + 1) + '"' + (i === 0 ? ' aria-current="true"' : "") + ">" +
+                        '<img src="' + zkEsc(url) + '" alt="" loading="lazy"></button>';
+                }).join("");
+                $("thumbnails").addEventListener("click", function (e) {
+                    var t = e.target.closest(".thumb");
+                    if (!t) return;
+                    switchImage(images[Number(t.dataset.index)], alt);
+                    $("thumbnails").querySelectorAll(".thumb").forEach(function (b) { b.removeAttribute("aria-current"); });
+                    t.setAttribute("aria-current", "true");
+                });
+            } else {
+                $("gallery").classList.add("single");
             }
 
-            /* Description */
-            document.querySelector('.product-description').innerHTML =
-                p.description ? `<p>${p.description}</p>` : '';
+            /* name + maker */
+            $("productName").textContent = p.name || "";
+            $("productMaker").textContent = [p.brand, p.size ? (p.size === "one-size" ? "един размер" : "размер " + p.size) : ""].filter(Boolean).join(", ");
 
-            /* Accordion — size */
-            document.querySelector('.accordion .accordion-item:nth-child(1) .accordion-content').innerHTML = `
-                <div class="detail-row"><span class="detail-label">Размер</span><span class="detail-value">${p.size || '—'}</span></div>
-            `;
+            /* price */
+            var price = parseFloat(p.price) || 0;
+            var hasSale = p.original_price != null && Number(p.original_price) > price;
+            $("priceCurrent").textContent = formatEur(price);
+            $("priceCurrent").classList.toggle("is-sale", hasSale);
+            $("priceOriginal").hidden = !hasSale;
+            if (hasSale) $("priceOriginal").textContent = formatEur(p.original_price);
+            $("priceBgn").textContent = "≈ " + formatBgn(price) + ", справочно";
 
-            /* Accordion — color & material */
-            document.querySelector('.accordion .accordion-item:nth-child(2) .accordion-content').innerHTML = `
-                <div class="detail-row"><span class="detail-label">Цвят</span><span class="detail-value">${p.color ? (COLOR_LABELS[p.color] || p.color) : '—'}</span></div>
-                <div class="detail-row"><span class="detail-label">Материал</span><span class="detail-value">${p.material ? (MATERIAL_LABELS[p.material] || p.material) : '—'}</span></div>
-            `;
+            /* description */
+            $("productDescription").innerHTML = zkParagraphs(p.description);
 
-            /* Accordion — tags */
-            const tags = p.tags || [];
-            document.querySelector('.accordion .accordion-item:nth-child(3) .accordion-content').innerHTML =
-                tags.length > 0
-                    ? `<div class="tag-list">${tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>`
-                    : '<p style="color:var(--muted);font-size:0.9rem">Няма добавени тагове</p>';
+            /* details */
+            var rows = [
+                ["Размер", p.size ? sizeText(p.size) : ""],
+                ["Състояние", p.condition],
+                ["Категория", CAT_LABELS[p.category] || ""],
+                ["Цвят", p.color ? (COLOR_LABELS[p.color] || p.color) : ""],
+                ["Материал", p.material ? (MATERIAL_LABELS[p.material] || p.material) : ""],
+            ].filter(function (r) { return r[1]; });
+            $("productDetails").innerHTML = rows.map(function (r) {
+                return "<dt>" + r[0] + "</dt><dd>" + zkEsc(r[1]) + "</dd>";
+            }).join("");
+            $("productDetails").hidden = !rows.length;
 
-            /* Accordion — condition */
-            document.querySelector('.accordion .accordion-item:nth-child(4) .accordion-content').innerHTML = `
-                <div class="detail-row"><span class="detail-label">Състояние</span><span class="detail-value">${p.condition || '—'}</span></div>
-            `;
+            /* tags link to a store search */
+            var tags = Array.isArray(p.tags) ? p.tags : [];
+            $("productTags").innerHTML = tags.map(function (t) {
+                return '<a class="tag" href="store.html?q=' + encodeURIComponent(t) + '">' + zkEsc(t) + "</a>";
+            }).join("");
+            $("productTags").hidden = !tags.length;
 
-            /* Modal product name + price */
-            const modalName = document.querySelector('.modal-product-name');
-            if (modalName) modalName.textContent = `${p.brand} ${p.name}`;
-            const modalPrice = document.querySelector('.modal-product-price');
-            if (modalPrice) {
-                modalPrice.textContent = [p.size, (p.color ? (COLOR_LABELS[p.color] || p.color) : ''), formatEur(priceEur)].filter(Boolean).join(' · ');
-            }
-            const modalImg = document.querySelector('.modal-product-img');
-            if (modalImg) { modalImg.src = images[0]; modalImg.alt = `${p.brand} ${p.name}`; }
+            /* order dialog summary */
+            $("modalName").textContent = alt;
+            $("modalPrice").textContent = [p.size ? sizeText(p.size) : "", formatEur(price)].filter(Boolean).join(", ");
+            $("modalImg").src = images[0];
+            $("modalImg").alt = alt;
 
-            /* Sold state */
+            /* sold */
             if (p.is_sold) {
-                const buyBtn = document.querySelector('.buy-btn');
-                if (buyBtn) { buyBtn.textContent = 'Запазено'; buyBtn.disabled = true; buyBtn.style.opacity = '0.5'; }
+                var buy = $("buyBtn");
+                buy.textContent = "Това парче вече е продадено";
+                buy.disabled = true;
             }
 
-            /* Reveal the now-populated content */
-            document.querySelector('.product-layout').classList.remove('is-loading');
+            layout.classList.remove("is-loading");
+            loadMore(p);
         }
 
-        function showError(msg) {
-            document.querySelector('.product-layout').innerHTML =
-                `<p style="padding:4rem;font-size:1.2rem;color:var(--muted)">${msg}</p>`;
+        /* more pieces: the same size first, since every piece comes in one size */
+        function loadMore(p) {
+            zkRest("products?select=id,brand,name,price,original_price,size,image_urls,created_at&is_sold=eq.false&id=neq." + encodeURIComponent(p.id) + "&order=created_at.desc&limit=40")
+                .then(function (data) {
+                    var list = (Array.isArray(data) ? data : []).filter(function (x) { return x.id !== p.id; });
+                    if (!list.length) return;
+                    var same = p.size ? list.filter(function (x) { return x.size === p.size; }) : [];
+                    var rest = list.filter(function (x) { return same.indexOf(x) < 0; });
+                    var pick = same.concat(rest).slice(0, 8);
+                    $("moreTitle").textContent = same.length >= 2 ? "Още " + (p.size === "one-size" ? "в универсален размер" : "в размер " + p.size) : "Още на закачалката";
+                    $("moreRail").innerHTML = pick.map(function (x) {
+                        var imgs = Array.isArray(x.image_urls) ? x.image_urls : [];
+                        var sale = x.original_price != null && Number(x.original_price) > Number(x.price);
+                        var price = sale
+                            ? '<span class="piece-price is-sale">' + formatEur(x.price) + "<s>" + formatEur(x.original_price) + "</s></span>"
+                            : '<span class="piece-price">' + formatEur(x.price) + "</span>";
+                        var maker = [x.brand, x.size ? (x.size === "one-size" ? "един размер" : "размер " + x.size) : ""].filter(Boolean).join(", ");
+                        return '<a class="piece" data-reveal style="--i:' + (pick.indexOf(x) % 4) + '" href="/p/' + encodeURIComponent(x.id) + '">' +
+                            '<span class="piece-img"><img src="' + zkEsc(imgs[0] || FALLBACK_IMG) + '" alt="' + zkEsc((x.brand || "") + " " + (x.name || "")) + '" width="800" height="1000" loading="lazy"></span>' +
+                            '<span class="piece-name">' + zkEsc(x.name || "") + "</span>" +
+                            '<span class="piece-meta"><span class="piece-maker">' + zkEsc(maker) + "</span>" + price + "</span></a>";
+                    }).join("");
+                    $("moreSection").hidden = false;
+                    if (window.zkObserveReveals) window.zkObserveReveals($("moreSection"));
+                })
+                .catch(function (err) { console.error("[product] more:", err); });
         }
 
-
-        /* ------ Gallery ------ */
-        function switchImage(thumb, src, alt) {
-            const main = document.getElementById('mainImage');
-            main.style.opacity = '0';
-            main.style.transform = 'scale(0.98)';
-            main.style.transition = 'opacity 0.25s ease, transform 0.25s ease';
-            setTimeout(() => {
-                main.src = src; main.alt = alt;
-                main.style.opacity = '1'; main.style.transform = 'scale(1)';
-            }, 220);
-            document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
-            thumb.classList.add('active');
+        function showMissing(msg) {
+            $("crumbName").textContent = "Няма го";
+            layout.classList.remove("is-loading");
+            layout.innerHTML =
+                '<div class="product-missing">' +
+                "<h1>Това парче не е тук</h1>" +
+                "<p>" + zkEsc(msg || "Може вече да е продадено. Всяко парче при нас е в един екземпляр.") + "</p>" +
+                '<a class="btn" href="store.html">Разгледай наличните</a>' +
+                "</div>";
         }
 
-
-        /* ------ Accordion ------ */
-        function toggleAccordion(trigger) {
-            const item = trigger.closest('.accordion-item');
-            const isOpen = item.classList.contains('open');
-            document.querySelectorAll('.accordion-item').forEach(i => {
-                i.classList.remove('open');
-                i.querySelector('.accordion-trigger').setAttribute('aria-expanded', 'false');
-            });
-            if (!isOpen) { item.classList.add('open'); trigger.setAttribute('aria-expanded', 'true'); }
+        function switchImage(src, alt) {
+            var main = $("mainImage");
+            if (main.getAttribute("src") === src) return;
+            main.classList.add("is-swapping");
+            setTimeout(function () {
+                main.src = src;
+                main.alt = alt;
+                main.classList.remove("is-swapping");
+            }, 200);
         }
 
+        /* ---------------------------------------------------------------- */
+        /* order dialog                                                     */
+        /* ---------------------------------------------------------------- */
 
-        /* ------ Modal ------ */
-        const overlay    = document.getElementById('modalOverlay');
-        const formState  = document.getElementById('formState');
-        const confirmState = document.getElementById('confirmState');
+        var overlay = $("modalOverlay");
+        var formState = $("formState");
+        var confirmState = $("confirmState");
+        var lastFocus = null;
+
+        function renderTurnstile() {
+            if (!TURNSTILE_SITE_KEY || !window.turnstile || turnstileWidgetId !== null) return;
+            try { turnstileWidgetId = window.turnstile.render("#turnstileWidget", { sitekey: TURNSTILE_SITE_KEY }); }
+            catch (e) { /* already rendered / not ready yet */ }
+        }
 
         function openModal() {
-            overlay.classList.add('open');
-            document.body.style.overflow = 'hidden';
+            if (!currentProduct || currentProduct.is_sold) return;
+            lastFocus = document.activeElement;
+            overlay.classList.add("open");
+            document.body.style.overflow = "hidden";
+            renderTurnstile();
+            setTimeout(function () { $("fullName").focus(); }, 80);
         }
 
         function closeModal() {
-            overlay.classList.remove('open');
-            document.body.style.overflow = '';
-            setTimeout(() => {
-                formState.classList.remove('hidden');
-                confirmState.classList.remove('visible');
-                clearForm();
-            }, 400);
+            if (!overlay.classList.contains("open")) return;
+            overlay.classList.remove("open");
+            document.body.style.overflow = "";
+            if (lastFocus) lastFocus.focus();
+            setTimeout(function () {
+                formState.classList.remove("hidden");
+                confirmState.classList.remove("visible");
+            }, 360);
         }
 
-        async function submitOrder() {
-            const requiredFields = ['fullName', 'email', 'mobile', 'street', 'city', 'postcode'];
-            const empty = requiredFields.filter(id => !document.getElementById(id).value.trim());
+        function showOrderError(msg) { var el = $("orderError"); el.textContent = msg; el.hidden = false; }
+        function hideOrderError() { $("orderError").hidden = true; }
 
-            const gdpr = document.getElementById('gdprConsent');
+        $("orderForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+            submitOrder();
+        });
+
+        function submitOrder() {
+            var required = ["fullName", "email", "mobile", "street", "city", "postcode"];
+            var missing = required.filter(function (id) { return !$(id).value.trim(); });
+            missing.forEach(function (id) {
+                var el = $(id);
+                el.classList.add("has-error");
+                el.setAttribute("aria-invalid", "true");
+                el.addEventListener("input", function () { el.classList.remove("has-error"); el.removeAttribute("aria-invalid"); }, { once: true });
+            });
+
+            var gdpr = $("gdprConsent");
             if (!gdpr.checked) {
-                gdpr.classList.add('error');
-                gdpr.addEventListener('change', () => gdpr.classList.remove('error'), { once: true });
-                empty.push('gdprConsent');
+                gdpr.classList.add("error");
+                gdpr.addEventListener("change", function () { gdpr.classList.remove("error"); }, { once: true });
             }
 
-            if (empty.filter(id => id !== 'gdprConsent').length) {
-                empty.filter(id => id !== 'gdprConsent').forEach(id => {
-                    const el = document.getElementById(id);
-                    el.style.borderColor = '#c0392b';
-                    el.addEventListener('input', () => el.style.borderColor = '', { once: true });
-                });
+            if (missing.length || !gdpr.checked) {
+                showOrderError(missing.length
+                    ? "Попълнете отбелязаните полета" + (gdpr.checked ? "." : " и потвърдете съгласието.")
+                    : "Потвърдете съгласието за обработка на данните.");
+                if (missing.length) $(missing[0]).focus();
+                return;
             }
-            if (empty.length) return;
 
-            const btn = document.querySelector('.confirm-btn');
-            const originalBtnText = btn.textContent;
-            btn.textContent = 'Изпращане…';
+            var turnstileToken = "";
+            if (TURNSTILE_SITE_KEY && window.turnstile && turnstileWidgetId !== null) {
+                turnstileToken = window.turnstile.getResponse(turnstileWidgetId) || "";
+                if (!turnstileToken) { showOrderError("Моля, попълнете проверката за сигурност по-горе."); return; }
+            }
+
+            var btn = $("confirmBtn");
+            btn.textContent = "Изпращане…";
             btn.disabled = true;
             hideOrderError();
 
-            const orderData = {
-                productId: currentProduct?.id || null,
-                fullName:  document.getElementById('fullName').value.trim(),
-                email:     document.getElementById('email').value.trim(),
-                mobile:    document.getElementById('mobile').value.trim(),
-                street:    document.getElementById('street').value.trim(),
-                city:      document.getElementById('city').value.trim(),
-                postcode:  document.getElementById('postcode').value.trim(),
-                notes:     document.getElementById('notes').value.trim(),
+            var orderData = {
+                productId: currentProduct ? currentProduct.id : null,
+                fullName:  $("fullName").value.trim(),
+                email:     $("email").value.trim(),
+                mobile:    $("mobile").value.trim(),
+                street:    $("street").value.trim(),
+                city:      $("city").value.trim(),
+                postcode:  $("postcode").value.trim(),
+                notes:     $("notes").value.trim(),
                 consent:   gdpr.checked,
+                turnstileToken: turnstileToken,
             };
 
-            try {
-                /* Single call: the serverless function re-validates
-                   everything, saves the order in Supabase, marks the product
-                   as sold, and emails the shop owner via Resend. */
-                const res = await fetch('/api/create-order', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(orderData)
+            /* One call: the serverless function re-validates everything, saves
+               the order in Supabase, marks the product as sold and emails the
+               shop owner via Resend. */
+            fetch("/api/create-order", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(orderData),
+            })
+                .then(function (res) {
+                    return res.json().catch(function () { return {}; }).then(function (result) {
+                        if (!res.ok || !result.success) throw new Error(result.error || "Възникна грешка при изпращането на поръчката.");
+                    });
+                })
+                .then(function () {
+                    formState.classList.add("hidden");
+                    confirmState.classList.add("visible");
+                    overlay.querySelector(".modal").scrollTop = 0;
+                    currentProduct.is_sold = true;
+                    $("buyBtn").textContent = "Поръчано";
+                    $("buyBtn").disabled = true;
+                    $("orderForm").reset();
+                })
+                .catch(function (err) {
+                    console.error("Order error:", err);
+                    showOrderError(err.message || "Възникна грешка. Моля, опитайте отново.");
+                    if (TURNSTILE_SITE_KEY && window.turnstile && turnstileWidgetId !== null) window.turnstile.reset(turnstileWidgetId);
+                })
+                .then(function () {
+                    btn.textContent = "Потвърди поръчката";
+                    btn.disabled = false;
                 });
-                const result = await res.json().catch(() => ({}));
-
-                if (!res.ok || !result.success) {
-                    throw new Error(result.error || 'Възникна грешка при изпращането на поръчката.');
-                }
-
-                formState.classList.add('hidden');
-                confirmState.classList.add('visible');
-                overlay.querySelector('.modal').scrollTop = 0;
-            } catch (e) {
-                console.error('Order error:', e);
-                showOrderError(e.message || 'Възникна грешка. Моля, опитайте отново.');
-                btn.textContent = originalBtnText;
-                btn.disabled = false;
-            }
         }
 
-        function showOrderError(msg) {
-            let el = document.getElementById('orderError');
-            if (!el) {
-                el = document.createElement('p');
-                el.id = 'orderError';
-                el.style.cssText = 'color:#c0392b;font-size:0.9rem;margin:-0.5rem 0 1rem;';
-                document.querySelector('.confirm-btn').insertAdjacentElement('beforebegin', el);
-            }
-            el.textContent = msg;
-        }
+        $("buyBtn").addEventListener("click", openModal);
+        $("modalClose").addEventListener("click", closeModal);
+        overlay.addEventListener("click", function (e) { if (e.target === overlay) closeModal(); });
+        document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeModal(); });
 
-        function hideOrderError() {
-            const el = document.getElementById('orderError');
-            if (el) el.remove();
-        }
-
-        function clearForm() {
-            ['fullName','email','mobile','street','city','postcode','notes'].forEach(id => {
-                const el = document.getElementById(id);
-                if (el) { el.value = ''; el.style.borderColor = ''; }
-            });
-            const btn = document.querySelector('.confirm-btn');
-            if (btn) { btn.textContent = 'Потвърди поръчката'; btn.disabled = false; }
-        }
-
-        overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
-        document.addEventListener('keydown', e => {
-            if (e.key === 'Escape' && overlay.classList.contains('open')) closeModal();
-        });
-
-        /* ——— Init ——— */
         loadProduct();
-
+    })();
     </script>
 
 </body>

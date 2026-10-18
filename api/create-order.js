@@ -71,6 +71,33 @@ module.exports = async function handler(req, res) {
 
     const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 
+    // ---- abuse protection: captcha + per-IP rate limit ---------------------
+    const ip = getClientIp(req);
+
+    // Cloudflare Turnstile. Only enforced once TURNSTILE_SECRET_KEY is set in
+    // Vercel — until then this is skipped so nothing breaks.
+    if (process.env.TURNSTILE_SECRET_KEY) {
+        const ok = await verifyTurnstile(process.env.TURNSTILE_SECRET_KEY, body.turnstileToken, ip);
+        if (!ok) {
+            return res.status(400).json({ success: false, error: "Проверката за сигурност не бе успешна. Опитайте отново." });
+        }
+    }
+
+    // Max 5 orders per IP per 10 minutes. Fails open (logs, allows) if the
+    // check itself errors, so a rate-limit glitch never blocks real orders.
+    try {
+        const { data: allowed, error: rlError } = await supabase.rpc("check_rate_limit", {
+            p_key: `order:${ip}`, p_max: 5, p_window_seconds: 600,
+        });
+        if (rlError) {
+            console.error("[create-order] rate limit check error (allowing):", rlError);
+        } else if (allowed === false) {
+            return res.status(429).json({ success: false, error: "Твърде много поръчки от тази връзка. Изчакайте няколко минути и опитайте отново." });
+        }
+    } catch (err) {
+        console.error("[create-order] rate limit exception (allowing):", err);
+    }
+
     // ---- look up the authoritative product (never trust client price) ----
     const { data: product, error: productError } = await supabase
         .from("products")
@@ -214,4 +241,30 @@ function escapeHtml(str) {
         .replace(/>/g, "&gt;")
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#039;");
+}
+
+function getClientIp(req) {
+    const xff = req.headers["x-forwarded-for"];
+    if (xff) return String(xff).split(",")[0].trim();
+    return req.headers["x-real-ip"] || req.socket?.remoteAddress || "unknown";
+}
+
+async function verifyTurnstile(secret, token, remoteip) {
+    if (!token) return false;
+    try {
+        const params = new URLSearchParams();
+        params.append("secret", secret);
+        params.append("response", token);
+        if (remoteip && remoteip !== "unknown") params.append("remoteip", remoteip);
+        const resp = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: params.toString(),
+        });
+        const data = await resp.json();
+        return !!data.success;
+    } catch (err) {
+        console.error("[turnstile] verify error:", err);
+        return false;
+    }
 }

@@ -4,19 +4,23 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Закачалката — Админ</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <meta name="robots" content="noindex, nofollow" />
+    <link href="https://fonts.googleapis.com/css2?family=Oranienbaum&family=Onest:wght@400;500;600&display=swap" rel="stylesheet">
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
     <script src="js/config.js"></script>
     <script src="js/supabase-client.js"></script>
+    <script src="js/compress-image.js"></script>
 
     <style>
         *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
         :root {
-            --bg: #FAF7F4; --white: #FFFFFF; --border: #EDE2D8;
-            --text: #2C2420; --muted: #8B5E52; --faint: #C9B4AB;
-            --accent: #AA5878; --accent-dark: #7A3E56; --accent-soft: #F5E6EC; --teal: #89CECA;
-            --serif: 'Cormorant Garamond', serif; --sans: 'Inter', sans-serif;
+            /* same fig + thyme palette as the public site (css/site.css) */
+            --bg: #FAF4F0; --white: #FFFBF8; --border: #E3D2B4;
+            --text: #4A3844; --muted: #6B5E68; --faint: #7B6E78;
+            --accent: #783C44; --accent-dark: #5E2D35; --accent-soft: #F9DDD0; --teal: #3F6B58;
+            --surface: #F6EBCD; --blush: #F5C1AC; --danger: #A3343A;
+            --serif: 'Oranienbaum', serif; --sans: 'Onest', system-ui, sans-serif;
         }
         body { font-family: var(--sans); background: var(--bg); color: var(--text); min-height: 100vh; }
         a { text-decoration: none; color: inherit; }
@@ -56,8 +60,8 @@
             letter-spacing: 0.3px;
         }
         .login-error {
-            background: #FBEAEA;
-            color: #B23A3A;
+            background: #F8E0DC;
+            color: var(--danger);
             font-size: 0.85rem;
             padding: 0.7rem 0.9rem;
             border-radius: 6px;
@@ -121,7 +125,7 @@
             top: 0;
             z-index: 10;
         }
-        .topbar h1 { font-family: var(--serif); font-size: 1.5rem; font-weight: 500; }
+        .topbar h1 { font-family: var(--serif); font-size: 1.6rem; font-weight: 400; }
         .topbar-right { display: flex; align-items: center; gap: 1rem; font-size: 0.85rem; color: var(--muted); }
 
         .btn {
@@ -136,8 +140,8 @@
         .btn:hover { border-color: var(--accent); color: var(--accent); }
         .btn-primary { background: var(--accent); color: white; border-color: var(--accent); box-shadow: 0 2px 8px rgba(170,88,120,0.25); }
         .btn-primary:hover { background: var(--accent-dark); border-color: var(--accent-dark); opacity: 1; color: white; }
-        .btn-danger { color: #B23A3A; }
-        .btn-danger:hover { border-color: #B23A3A; color: #B23A3A; }
+        .btn-danger { color: var(--danger); }
+        .btn-danger:hover { border-color: var(--danger); color: var(--danger); }
         .btn-small { padding: 0.35rem 0.7rem; font-size: 0.78rem; }
 
         .container { max-width: 1300px; margin: 0 auto; padding: 2rem; }
@@ -170,7 +174,7 @@
             justify-content: space-between;
             margin-bottom: 1.2rem;
         }
-        .panel-header h2 { font-family: var(--serif); font-size: 1.3rem; font-weight: 500; }
+        .panel-header h2 { font-family: var(--serif); font-size: 1.6rem; font-weight: 400; }
 
         table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
         th { text-align: left; padding: 0.6rem 0.7rem; border-bottom: 2px solid var(--border); color: var(--muted); font-weight: 500; }
@@ -179,7 +183,9 @@
         .thumb-sm { width: 46px; height: 46px; object-fit: cover; border-radius: 6px; background: var(--bg); }
         .price-old { text-decoration: line-through; color: var(--faint); font-size: 0.8rem; margin-left: 0.3rem; }
         .status-pill { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 99px; font-size: 0.75rem; }
-        .status-available { background: rgba(137,206,202,0.15); color: #4C8B86; }
+        .status-available { background: rgba(63,107,88,0.12); color: var(--teal); }
+        .status-hidden { background: rgba(74,56,68,0.08); color: var(--muted); }
+        .status-past { background: var(--accent-soft); color: var(--accent-dark); }
         .status-sold { background: rgba(44,36,32,0.08); color: var(--muted); }
         .row-actions { display: flex; gap: 0.4rem; flex-wrap: wrap; }
 
@@ -265,7 +271,7 @@
             transition: opacity 0.15s, background 0.15s;
         }
         .img-tile:hover .img-remove { opacity: 1; }
-        .img-tile .img-remove:hover { background: #B23A3A; }
+        .img-tile .img-remove:hover { background: var(--danger); }
         .img-tile .img-main-badge {
             position: absolute;
             bottom: 0; left: 0; right: 0;
@@ -300,7 +306,7 @@
             z-index: 999;
         }
         .toast.show { opacity: 1; transform: translateY(0); }
-        .toast.error { background: #B23A3A; }
+        .toast.error { background: var(--danger); }
 
         /* image reorder arrows (shown on touch, since drag-drop doesn't work there) */
         .img-move {
@@ -319,6 +325,67 @@
         .img-move.left  { left: 4px; }
         .img-move.right { right: 4px; }
         .img-move:active { background: var(--accent); }
+
+        /* ===== EVENTS + GALLERY ===== */
+        .panel-note {
+            margin: -0.4rem 0 1.2rem;
+            padding: 0.8rem 1rem;
+            background: var(--surface);
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: var(--text);
+            line-height: 1.5;
+        }
+        .single-image {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-top: 0.9rem;
+        }
+        .single-image:empty { display: none; }
+        .single-image img {
+            width: 160px;
+            max-height: 200px;
+            object-fit: contain;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: var(--bg);
+        }
+        .order-btns { display: inline-flex; gap: 0.25rem; }
+        .order-btns .btn { min-width: 34px; padding-left: 0.5rem; padding-right: 0.5rem; }
+        .event-when { color: var(--muted); font-size: 0.8rem; }
+
+        .gallery-admin {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1rem;
+            margin-top: 1.2rem;
+        }
+        .gallery-admin:empty { display: none; }
+        .g-card {
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: var(--white);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .g-card.is-hidden img { opacity: 0.45; }
+        .g-card img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; background: var(--bg); }
+        .g-body { padding: 0.75rem; display: flex; flex-direction: column; gap: 0.6rem; flex: 1; }
+        .g-body input[type="text"] {
+            width: 100%;
+            padding: 0.55rem 0.7rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 0.88rem;
+        }
+        .g-body input[type="text"]:focus { outline: none; border-color: var(--accent); }
+        .g-row { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; flex-wrap: wrap; }
+        .g-row label { display: flex; align-items: center; gap: 0.45rem; font-size: 0.85rem; cursor: pointer; }
+        .g-row input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--accent); }
+        .upload-progress { font-size: 0.85rem; color: var(--muted); margin-top: 0.7rem; }
+        .upload-progress:empty { display: none; }
 
         /* ===== RESPONSIVE / MOBILE ===== */
         @media (max-width: 720px) {
@@ -339,9 +406,9 @@
             .topbar-right { font-size: 0.75rem; gap: 0.7rem; }
             #userEmail { max-width: 42vw; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
-            /* tabs share the width */
-            .tabs { gap: 0.4rem; }
-            .tab-btn { flex: 1; text-align: center; padding: 0.7rem 0.4rem; }
+            /* four tabs become a 2×2 grid of equal buttons */
+            .tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem; }
+            .tab-btn { text-align: center; padding: 0.75rem 0.4rem; }
 
             .panel { padding: 1.1rem; border-radius: 10px; }
             .panel-header { flex-wrap: wrap; gap: 0.6rem; }
@@ -358,12 +425,12 @@
             .checkbox-field { padding-top: 0; }
 
             /* ---- tables collapse into stacked cards ---- */
-            #productsTableWrap thead, #ordersTableWrap thead { display: none; }
-            #productsTableWrap table, #ordersTableWrap table,
-            #productsTableWrap tbody, #ordersTableWrap tbody,
-            #productsTableWrap tr, #ordersTableWrap tr,
-            #productsTableWrap td, #ordersTableWrap td { display: block; width: 100%; }
-            #productsTableWrap tr, #ordersTableWrap tr {
+            #productsTableWrap thead, #ordersTableWrap thead, #eventsTableWrap thead { display: none; }
+            #productsTableWrap table, #ordersTableWrap table, #eventsTableWrap table,
+            #productsTableWrap tbody, #ordersTableWrap tbody, #eventsTableWrap tbody,
+            #productsTableWrap tr, #ordersTableWrap tr, #eventsTableWrap tr,
+            #productsTableWrap td, #ordersTableWrap td, #eventsTableWrap td { display: block; width: 100%; }
+            #productsTableWrap tr, #ordersTableWrap tr, #eventsTableWrap tr {
                 border: 1px solid var(--border);
                 border-radius: 10px;
                 margin-bottom: 0.85rem;
@@ -371,7 +438,7 @@
                 background: var(--white);
                 box-shadow: 0 1px 6px rgba(44,36,32,0.04);
             }
-            #productsTableWrap td, #ordersTableWrap td {
+            #productsTableWrap td, #ordersTableWrap td, #eventsTableWrap td {
                 border: none;
                 border-bottom: 1px solid var(--border);
                 padding: 0.6rem 0;
@@ -382,11 +449,13 @@
                 text-align: right;
             }
             #productsTableWrap tr td:last-child,
-            #ordersTableWrap tr td:last-child { border-bottom: none; }
+            #ordersTableWrap tr td:last-child,
+            #eventsTableWrap tr td:last-child { border-bottom: none; }
             /* keep separators inside the very last card too */
             #productsTableWrap tr:last-child td:not(:last-child),
-            #ordersTableWrap tr:last-child td:not(:last-child) { border-bottom: 1px solid var(--border); }
-            #productsTableWrap td::before, #ordersTableWrap td::before {
+            #ordersTableWrap tr:last-child td:not(:last-child),
+            #eventsTableWrap tr:last-child td:not(:last-child) { border-bottom: 1px solid var(--border); }
+            #productsTableWrap td::before, #ordersTableWrap td::before, #eventsTableWrap td::before {
                 content: attr(data-label);
                 font-size: 0.68rem;
                 text-transform: uppercase;
@@ -396,13 +465,13 @@
                 text-align: left;
                 flex: 0 0 auto;
             }
-            #productsTableWrap td:empty, #ordersTableWrap td:empty { display: none; }
+            #productsTableWrap td:empty, #ordersTableWrap td:empty, #eventsTableWrap td:empty { display: none; }
             td.cell-img { justify-content: center; }
             td.cell-img::before { display: none; }
             td.cell-img .thumb-sm { width: 96px; height: 96px; }
             .row-actions { flex: 1; flex-wrap: nowrap; }
             .row-actions .btn { flex: 1; text-align: center; }
-            #productsTableWrap td select, #ordersTableWrap td select { max-width: 62%; font-size: 16px; padding: 0.5rem; }
+            #productsTableWrap td select, #ordersTableWrap td select, #eventsTableWrap td select { max-width: 62%; font-size: 16px; padding: 0.5rem; }
 
             /* toast spans the width so it never runs off-screen */
             .toast { left: 1rem; right: 1rem; bottom: 1rem; text-align: center; }
@@ -458,6 +527,8 @@
             <div class="tabs">
                 <button class="tab-btn active" id="tabProductsBtn" onclick="switchTab('products')">Продукти</button>
                 <button class="tab-btn" id="tabOrdersBtn" onclick="switchTab('orders')">Поръчки</button>
+                <button class="tab-btn" id="tabEventsBtn" onclick="switchTab('events')">Събития</button>
+                <button class="tab-btn" id="tabGalleryBtn" onclick="switchTab('gallery')">Галерия</button>
             </div>
 
             <!-- PRODUCTS TAB -->
@@ -605,6 +676,95 @@
                 <div class="panel">
                     <div class="panel-header"><h2>Поръчки</h2></div>
                     <div id="ordersTableWrap"><p class="loading-msg">Зареждане...</p></div>
+                </div>
+            </div>
+
+            <!-- EVENTS TAB (the announcements block on the home page) -->
+            <div id="eventsTab" style="display:none;">
+
+                <div class="panel" id="eventFormPanel" style="display:none;">
+                    <div class="panel-header">
+                        <h2 id="eventFormTitle">Ново събитие</h2>
+                        <button class="btn btn-small" type="button" onclick="closeEventForm()">Затвори</button>
+                    </div>
+
+                    <form id="eventForm">
+                        <div class="form-grid">
+                            <div class="field full"><label for="ev_title">Заглавие *</label><input type="text" id="ev_title" required maxlength="120" placeholder="напр. Летен базар" /></div>
+
+                            <div class="field full">
+                                <label for="ev_body">Текст</label>
+                                <textarea id="ev_body" rows="5" placeholder="Какво, кога и защо да дойдат. Празен ред = нов абзац."></textarea>
+                            </div>
+
+                            <div class="field">
+                                <label for="ev_date">Дата</label>
+                                <input type="date" id="ev_date" />
+                                <p class="field-hint">По желание. Ако има дата, публикацията се скрива сама на следващия ден.</p>
+                            </div>
+                            <div class="field">
+                                <label for="ev_time">Час</label>
+                                <input type="text" id="ev_time" placeholder="напр. 11:00–19:00" />
+                            </div>
+
+                            <div class="field">
+                                <label for="ev_link_label">Текст на бутона</label>
+                                <input type="text" id="ev_link_label" placeholder="напр. Виж в Instagram" />
+                            </div>
+                            <div class="field">
+                                <label for="ev_link_url">Линк на бутона</label>
+                                <input type="url" id="ev_link_url" placeholder="https://..." />
+                                <p class="field-hint">По желание. Без линк се показва само „Как да ни намерите“.</p>
+                            </div>
+
+                            <div class="field full">
+                                <label>Снимка или плакат</label>
+                                <div class="dropzone" id="evDropzone">
+                                    <input type="file" id="ev_image" accept="image/*" hidden />
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                                    <p class="dropzone-title">Плъзнете снимка тук или <span>изберете файл</span></p>
+                                    <p class="dropzone-hint">Показва се цялата, без изрязване, така че пасват и плакати с текст.</p>
+                                </div>
+                                <div class="single-image" id="evImagePreview"></div>
+                            </div>
+
+                            <div class="checkbox-field">
+                                <input type="checkbox" id="ev_published" checked />
+                                <label for="ev_published">Публикувано на сайта</label>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary" id="saveEventBtn">Запази събитието</button>
+                            <button type="button" class="btn" onclick="closeEventForm()">Отказ</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-header">
+                        <h2>Събития и новини</h2>
+                        <button class="btn btn-primary" type="button" onclick="openEventForm()">+ Ново събитие</button>
+                    </div>
+                    <p class="panel-note">Началната страница показва първите 3 публикувани събития в този ред. Подредете ги със стрелките. Ако няма публикувани, блокът изчезва от сайта.</p>
+                    <div id="eventsTableWrap"><p class="loading-msg">Зареждане...</p></div>
+                </div>
+            </div>
+
+            <!-- GALLERY TAB (photos for the About page) -->
+            <div id="galleryTab" style="display:none;">
+                <div class="panel">
+                    <div class="panel-header"><h2>Галерия „За нас“</h2></div>
+                    <p class="panel-note">Снимките се показват на страницата „За нас“ в този ред, а първите 7 се сменят и в рамката на началната страница. Подписът под снимката служи и като описание за незрящи посетители.</p>
+                    <div class="dropzone" id="galDropzone">
+                        <input type="file" id="gal_images" accept="image/*" multiple hidden />
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                        <p class="dropzone-title">Плъзнете снимки тук или <span>изберете файлове</span></p>
+                        <p class="dropzone-hint">Качват се веднага. После добавете подпис към всяка.</p>
+                    </div>
+                    <p class="upload-progress" id="galProgress" aria-live="polite"></p>
+                    <div class="gallery-admin" id="galleryAdmin"></div>
+                    <p class="loading-msg" id="galleryEmpty" style="display:none;">Все още няма снимки. Качете първите отгоре.</p>
                 </div>
             </div>
 
@@ -771,12 +931,19 @@
 
         /* ===== TABS ===== */
 
+        const TABS = {
+            products: { panel: 'productsTab', btn: 'tabProductsBtn', load: null },
+            orders:   { panel: 'ordersTab',   btn: 'tabOrdersBtn',   load: () => loadOrders() },
+            events:   { panel: 'eventsTab',   btn: 'tabEventsBtn',   load: () => loadEvents() },
+            gallery:  { panel: 'galleryTab',  btn: 'tabGalleryBtn',  load: () => loadGallery() },
+        };
+
         function switchTab(tab) {
-            document.getElementById('productsTab').style.display = tab === 'products' ? 'block' : 'none';
-            document.getElementById('ordersTab').style.display   = tab === 'orders'   ? 'block' : 'none';
-            document.getElementById('tabProductsBtn').classList.toggle('active', tab === 'products');
-            document.getElementById('tabOrdersBtn').classList.toggle('active', tab === 'orders');
-            if (tab === 'orders') loadOrders();
+            Object.keys(TABS).forEach(key => {
+                document.getElementById(TABS[key].panel).style.display = key === tab ? 'block' : 'none';
+                document.getElementById(TABS[key].btn).classList.toggle('active', key === tab);
+            });
+            if (TABS[tab].load) TABS[tab].load();
         }
 
         /* ===== TOAST ===== */
@@ -922,7 +1089,7 @@
                 const finalUrls = [];
                 for (const item of imageItems) {
                     if (item.type === 'url') finalUrls.push(item.url);
-                    else finalUrls.push(await uploadOneImage(productId, item.file));
+                    else finalUrls.push((await uploadImage(BUCKET, productId, item.file)).url);
                 }
                 const { error: imgErr } = await window.db
                     .from('products')
@@ -942,14 +1109,31 @@
             }
         });
 
-        async function uploadOneImage(productId, file) {
+        /* Upload one picture to a storage bucket and return { url, path }.
+           Used for product photos (folder = product id) and for the events
+           and gallery pictures in the site-media bucket. */
+        async function uploadImage(bucket, folder, original) {
+            // Shrink to ~1600px before upload — full-size phone photos blew the
+            // Supabase Free plan egress quota. See js/compress-image.js.
+            const file     = window.compressImage ? await window.compressImage(original) : original;
             const safeName = file.name.replace(/[^a-zA-Z0-9.\-_]/g, '_');
             const token    = Math.random().toString(36).slice(2, 7);
-            const path     = productId + '/' + Date.now() + '-' + token + '-' + safeName;
-            const { error } = await window.db.storage.from(BUCKET).upload(path, file, { upsert: false });
+            const path     = folder + '/' + Date.now() + '-' + token + '-' + safeName;
+            // Paths are unique per upload, so a year-long cache is safe and lets the
+            // Supabase CDN serve repeat views instead of counting them again.
+            const { error } = await window.db.storage.from(bucket).upload(path, file, {
+                upsert: false, cacheControl: "31536000", contentType: file.type,
+            });
             if (error) throw error;
-            const { data } = window.db.storage.from(BUCKET).getPublicUrl(path);
-            return data.publicUrl;
+            const { data } = window.db.storage.from(bucket).getPublicUrl(path);
+            return { url: data.publicUrl, path };
+        }
+
+        /* Best effort: a file left behind costs a little storage, never a broken page. */
+        async function removeStored(bucket, path) {
+            if (!path) return;
+            const { error } = await window.db.storage.from(bucket).remove([path]);
+            if (error) console.warn('[admin] could not remove', path, error.message);
         }
 
         async function deleteProduct(id) {
@@ -978,8 +1162,8 @@
                 const date = new Date(o.created_at).toLocaleString('bg-BG');
                 return '<tr>' +
                     '<td data-label="Дата" style="white-space:nowrap;">' + date + '</td>' +
-                    '<td data-label="Продукт">' + escHtml((snap.brand || '') + ' ' + (snap.name || '')) + '</td>' +
-                    '<td data-label="Клиент"><span>' + escHtml(o.full_name || '') + '<br><span style="color:var(--muted)">' + escHtml(o.email || '') + '</span></span></td>' +
+                    '<td data-label="Продукт">' + escHtml(o.product_name || ((snap.brand || '') + ' ' + (snap.name || '')).trim()) + '</td>' +
+                    '<td data-label="Клиент"><span>' + escHtml(o.full_name || '') + '<br><span style="color:var(--muted)">' + escHtml(o.email || '') + (o.mobile ? '<br>' + escHtml(o.mobile) : '') + '</span></span></td>' +
                     '<td data-label="Адрес">' + escHtml((o.street || '') + ', ' + (o.city || '') + ' ' + (o.postcode || '')) + '</td>' +
                     '<td data-label="Бележки">' + escHtml(o.notes || '') + '</td>' +
                     '<td data-label="Статус"><select onchange="updateOrderStatus(\'' + o.id + '\', this.value)">' +
@@ -1002,6 +1186,349 @@
             if (error) { toast('Грешка: ' + error.message, true); return; }
             toast('Статусът е обновен.');
         }
+
+        /* ===== EVENTS (home-page announcements) ===== */
+
+        const MEDIA_BUCKET = 'site-media';
+        let allEvents       = [];
+        let editingEventId  = null;
+        let eventImage      = null;   // { type:'url', url, path } | { type:'file', file, url } | null
+
+        function todayIso() {
+            const d = new Date();
+            return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+        }
+
+        function formatEventDate(iso) {
+            if (!iso) return '';
+            const [y, m, d] = iso.split('-').map(Number);
+            return new Date(y, m - 1, d).toLocaleDateString('bg-BG', { weekday: 'short', day: 'numeric', month: 'long', year: 'numeric' });
+        }
+
+        async function loadEvents() {
+            const wrap = document.getElementById('eventsTableWrap');
+            const { data, error } = await window.db.from('events').select('*')
+                .order('sort_order', { ascending: true }).order('created_at', { ascending: false });
+            if (error) { wrap.innerHTML = '<p class="empty-msg">Грешка: ' + escHtml(error.message) + '</p>'; return; }
+            allEvents = data || [];
+            renderEventsTable();
+        }
+
+        function eventStatus(ev) {
+            if (!ev.is_published) return ['Скрито', 'status-hidden'];
+            if (ev.event_date && ev.event_date < todayIso()) return ['Отминало', 'status-past'];
+            return ['Публикувано', 'status-available'];
+        }
+
+        function renderEventsTable() {
+            const wrap = document.getElementById('eventsTableWrap');
+            if (!allEvents.length) {
+                wrap.innerHTML = '<p class="empty-msg">Няма събития. Натиснете „+ Ново събитие“, за да добавите първото.</p>';
+                return;
+            }
+            const rows = allEvents.map((ev, i) => {
+                const [label, cls] = eventStatus(ev);
+                const when = [formatEventDate(ev.event_date), ev.time_text].filter(Boolean).join(', ');
+                return '<tr>' +
+                    '<td class="cell-img" data-label="Снимка">' + (ev.image_url ? '<img class="thumb-sm" src="' + escHtml(ev.image_url) + '" alt="" />' : '') + '</td>' +
+                    '<td data-label="Събитие"><span><strong>' + escHtml(ev.title) + '</strong>' + (when ? '<br><span class="event-when">' + escHtml(when) + '</span>' : '') + '</span></td>' +
+                    '<td data-label="Статус"><span class="status-pill ' + cls + '">' + label + '</span></td>' +
+                    '<td data-label="Ред"><span class="order-btns">' +
+                        '<button class="btn btn-small" type="button" aria-label="По-нагоре" onclick="moveEvent(' + i + ', -1)"' + (i === 0 ? ' disabled' : '') + '>↑</button>' +
+                        '<button class="btn btn-small" type="button" aria-label="По-надолу" onclick="moveEvent(' + i + ', 1)"' + (i === allEvents.length - 1 ? ' disabled' : '') + '>↓</button>' +
+                    '</span></td>' +
+                    '<td data-label="Действия"><div class="row-actions">' +
+                        '<button class="btn btn-small" type="button" onclick="openEventForm(\'' + ev.id + '\')">Редактирай</button>' +
+                        '<button class="btn btn-small btn-danger" type="button" onclick="deleteEvent(\'' + ev.id + '\')">Изтрий</button>' +
+                    '</div></td>' +
+                    '</tr>';
+            }).join('');
+            wrap.innerHTML =
+                '<table><thead><tr><th></th><th>Събитие</th><th>Статус</th><th>Ред</th><th>Действия</th></tr></thead>' +
+                '<tbody>' + rows + '</tbody></table>';
+        }
+
+        /* order is saved as 0..n-1 after every move, so the list never drifts */
+        async function moveEvent(index, dir) {
+            const j = index + dir;
+            if (j < 0 || j >= allEvents.length) return;
+            const [moved] = allEvents.splice(index, 1);
+            allEvents.splice(j, 0, moved);
+            renderEventsTable();
+            const results = await Promise.all(allEvents.map((ev, i) =>
+                ev.sort_order === i ? null : window.db.from('events').update({ sort_order: i }).eq('id', ev.id)
+            ));
+            const failed = results.find(r => r && r.error);
+            if (failed) { toast('Грешка: ' + failed.error.message, true); loadEvents(); return; }
+            allEvents.forEach((ev, i) => { ev.sort_order = i; });
+            toast('Редът е запазен.');
+        }
+
+        function renderEventImage() {
+            const box = document.getElementById('evImagePreview');
+            if (!eventImage) { box.innerHTML = ''; return; }
+            box.innerHTML = '<img src="' + escHtml(eventImage.url) + '" alt="" />' +
+                '<button type="button" class="btn btn-small btn-danger" id="evImageRemove">Премахни снимката</button>';
+            document.getElementById('evImageRemove').addEventListener('click', () => {
+                if (eventImage && eventImage.type === 'file') URL.revokeObjectURL(eventImage.url);
+                eventImage = null;
+                renderEventImage();
+            });
+        }
+
+        function setEventFile(file) {
+            if (!file || !file.type.startsWith('image/')) return;
+            if (eventImage && eventImage.type === 'file') URL.revokeObjectURL(eventImage.url);
+            eventImage = { type: 'file', file, url: URL.createObjectURL(file) };
+            renderEventImage();
+        }
+
+        function openEventForm(id) {
+            editingEventId = id || null;
+            const form = document.getElementById('eventForm');
+            form.reset();
+            document.getElementById('eventFormTitle').textContent = id ? 'Редактирай събитие' : 'Ново събитие';
+            document.getElementById('ev_published').checked = true;
+            eventImage = null;
+
+            if (id) {
+                const ev = allEvents.find(x => x.id === id);
+                if (ev) {
+                    document.getElementById('ev_title').value      = ev.title || '';
+                    document.getElementById('ev_body').value       = ev.body || '';
+                    document.getElementById('ev_date').value       = ev.event_date || '';
+                    document.getElementById('ev_time').value       = ev.time_text || '';
+                    document.getElementById('ev_link_label').value = ev.link_label || '';
+                    document.getElementById('ev_link_url').value   = ev.link_url || '';
+                    document.getElementById('ev_published').checked = !!ev.is_published;
+                    if (ev.image_url) eventImage = { type: 'url', url: ev.image_url, path: ev.image_path || null };
+                }
+            }
+            renderEventImage();
+            const panel = document.getElementById('eventFormPanel');
+            panel.style.display = 'block';
+            panel.scrollIntoView({ behavior: 'smooth' });
+            document.getElementById('ev_title').focus({ preventScroll: true });
+        }
+
+        function closeEventForm() {
+            document.getElementById('eventFormPanel').style.display = 'none';
+            editingEventId = null;
+        }
+
+        document.getElementById('eventForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('saveEventBtn');
+            const linkUrl = document.getElementById('ev_link_url').value.trim();
+            if (linkUrl && !/^(https?:\/\/|\/|mailto:|tel:)/i.test(linkUrl)) {
+                toast('Линкът трябва да започва с https:// (или да е адрес от сайта, напр. /store.html).', true);
+                return;
+            }
+            btn.disabled = true;
+            btn.textContent = 'Запазване...';
+
+            try {
+                const existing = editingEventId ? allEvents.find(x => x.id === editingEventId) : null;
+                const oldPath  = existing ? existing.image_path : null;
+
+                let image_url  = eventImage ? eventImage.url : null;
+                let image_path = eventImage && eventImage.type === 'url' ? eventImage.path : null;
+                if (eventImage && eventImage.type === 'file') {
+                    const up = await uploadImage(MEDIA_BUCKET, 'events', eventImage.file);
+                    image_url = up.url;
+                    image_path = up.path;
+                }
+
+                const payload = {
+                    title:        document.getElementById('ev_title').value.trim(),
+                    body:         document.getElementById('ev_body').value.trim() || null,
+                    event_date:   document.getElementById('ev_date').value || null,
+                    time_text:    document.getElementById('ev_time').value.trim() || null,
+                    link_label:   document.getElementById('ev_link_label').value.trim() || null,
+                    link_url:     linkUrl || null,
+                    is_published: document.getElementById('ev_published').checked,
+                    image_url,
+                    image_path,
+                };
+
+                if (editingEventId) {
+                    const { error } = await window.db.from('events').update(payload).eq('id', editingEventId);
+                    if (error) throw error;
+                } else {
+                    payload.sort_order = allEvents.length ? Math.max(...allEvents.map(x => x.sort_order || 0)) + 1 : 0;
+                    const { error } = await window.db.from('events').insert(payload);
+                    if (error) throw error;
+                }
+
+                if (oldPath && oldPath !== image_path) await removeStored(MEDIA_BUCKET, oldPath);
+
+                toast(editingEventId ? 'Събитието е обновено.' : 'Събитието е добавено.');
+                closeEventForm();
+                await loadEvents();
+            } catch (err) {
+                console.error(err);
+                toast('Грешка: ' + err.message, true);
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Запази събитието';
+            }
+        });
+
+        async function deleteEvent(id) {
+            const ev = allEvents.find(x => x.id === id);
+            if (!ev || !confirm('Да изтрия ли „' + ev.title + '“? Снимката също ще бъде изтрита.')) return;
+            const { error } = await window.db.from('events').delete().eq('id', id);
+            if (error) { toast('Грешка: ' + error.message, true); return; }
+            await removeStored(MEDIA_BUCKET, ev.image_path);
+            toast('Събитието е изтрито.');
+            await loadEvents();
+        }
+
+        (function () {
+            const dz = document.getElementById('evDropzone');
+            const input = document.getElementById('ev_image');
+            dz.addEventListener('click', () => input.click());
+            input.addEventListener('change', (e) => { setEventFile(e.target.files[0]); input.value = ''; });
+            ['dragenter', 'dragover'].forEach(ev => dz.addEventListener(ev, (e) => { e.preventDefault(); dz.classList.add('dragover'); }));
+            dz.addEventListener('dragleave', (e) => { if (!dz.contains(e.relatedTarget)) dz.classList.remove('dragover'); });
+            dz.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dz.classList.remove('dragover');
+                if (e.dataTransfer && e.dataTransfer.files) setEventFile(e.dataTransfer.files[0]);
+            });
+        })();
+
+
+        /* ===== GALLERY (About page) ===== */
+
+        let allPhotos = [];
+
+        async function loadGallery() {
+            const { data, error } = await window.db.from('gallery_photos').select('*')
+                .order('sort_order', { ascending: true }).order('created_at', { ascending: false });
+            if (error) { toast('Грешка: ' + error.message, true); return; }
+            allPhotos = data || [];
+            renderGallery();
+        }
+
+        function renderGallery() {
+            const wrap = document.getElementById('galleryAdmin');
+            document.getElementById('galleryEmpty').style.display = allPhotos.length ? 'none' : 'block';
+            wrap.innerHTML = allPhotos.map((ph, i) =>
+                '<div class="g-card' + (ph.is_published ? '' : ' is-hidden') + '" data-id="' + ph.id + '">' +
+                    '<img src="' + escHtml(ph.image_url) + '" alt="" loading="lazy" />' +
+                    '<div class="g-body">' +
+                        '<input type="text" class="g-caption" maxlength="140" placeholder="Подпис, напр. Релсата с летните рокли" value="' + escHtml(ph.caption || '') + '" aria-label="Подпис на снимката" />' +
+                        '<div class="g-row">' +
+                            '<label><input type="checkbox" class="g-published"' + (ph.is_published ? ' checked' : '') + ' /> На сайта</label>' +
+                            '<span class="order-btns">' +
+                                '<button type="button" class="btn btn-small g-move" data-dir="-1" aria-label="По-напред"' + (i === 0 ? ' disabled' : '') + '>←</button>' +
+                                '<button type="button" class="btn btn-small g-move" data-dir="1" aria-label="По-назад"' + (i === allPhotos.length - 1 ? ' disabled' : '') + '>→</button>' +
+                            '</span>' +
+                        '</div>' +
+                        '<button type="button" class="btn btn-small btn-danger g-delete">Изтрий</button>' +
+                    '</div>' +
+                '</div>'
+            ).join('');
+        }
+
+        async function saveOrder() {
+            const results = await Promise.all(allPhotos.map((ph, i) =>
+                ph.sort_order === i ? null : window.db.from('gallery_photos').update({ sort_order: i }).eq('id', ph.id)
+            ));
+            const failed = results.find(r => r && r.error);
+            if (failed) { toast('Грешка: ' + failed.error.message, true); loadGallery(); return; }
+            allPhotos.forEach((ph, i) => { ph.sort_order = i; });
+            toast('Редът е запазен.');
+        }
+
+        (function () {
+            const wrap = document.getElementById('galleryAdmin');
+
+            wrap.addEventListener('change', async (e) => {
+                const card = e.target.closest('.g-card');
+                if (!card) return;
+                const ph = allPhotos.find(x => x.id === card.dataset.id);
+                if (!ph) return;
+                let patch = null;
+                if (e.target.classList.contains('g-caption')) patch = { caption: e.target.value.trim() || null };
+                if (e.target.classList.contains('g-published')) patch = { is_published: e.target.checked };
+                if (!patch) return;
+                const { error } = await window.db.from('gallery_photos').update(patch).eq('id', ph.id);
+                if (error) { toast('Грешка: ' + error.message, true); return; }
+                Object.assign(ph, patch);
+                card.classList.toggle('is-hidden', !ph.is_published);
+                toast('Запазено.');
+            });
+
+            wrap.addEventListener('click', async (e) => {
+                const card = e.target.closest('.g-card');
+                if (!card) return;
+                const i = allPhotos.findIndex(x => x.id === card.dataset.id);
+                if (i < 0) return;
+
+                const move = e.target.closest('.g-move');
+                if (move) {
+                    const j = i + Number(move.dataset.dir);
+                    if (j < 0 || j >= allPhotos.length) return;
+                    const [moved] = allPhotos.splice(i, 1);
+                    allPhotos.splice(j, 0, moved);
+                    renderGallery();
+                    await saveOrder();
+                    return;
+                }
+
+                if (e.target.closest('.g-delete')) {
+                    const ph = allPhotos[i];
+                    if (!confirm('Да изтрия ли тази снимка от галерията?')) return;
+                    const { error } = await window.db.from('gallery_photos').delete().eq('id', ph.id);
+                    if (error) { toast('Грешка: ' + error.message, true); return; }
+                    await removeStored(MEDIA_BUCKET, ph.image_path);
+                    allPhotos.splice(i, 1);
+                    renderGallery();
+                    toast('Снимката е изтрита.');
+                }
+            });
+
+            /* uploads go straight in, one after another, each at the end of the list */
+            async function uploadPhotos(fileList) {
+                const files = Array.from(fileList).filter(f => f.type.startsWith('image/'));
+                if (!files.length) return;
+                const progress = document.getElementById('galProgress');
+                let next = allPhotos.length ? Math.max(...allPhotos.map(x => x.sort_order || 0)) + 1 : 0;
+                let done = 0;
+                for (const file of files) {
+                    progress.textContent = 'Качване ' + (done + 1) + ' от ' + files.length + '…';
+                    try {
+                        const up = await uploadImage(MEDIA_BUCKET, 'gallery', file);
+                        const { data, error } = await window.db.from('gallery_photos')
+                            .insert({ image_url: up.url, image_path: up.path, sort_order: next++, is_published: true })
+                            .select().single();
+                        if (error) { await removeStored(MEDIA_BUCKET, up.path); throw error; }
+                        allPhotos.push(data);
+                        renderGallery();
+                        done++;
+                    } catch (err) {
+                        console.error(err);
+                        toast('Грешка при „' + file.name + '“: ' + err.message, true);
+                    }
+                }
+                progress.textContent = done ? 'Качени ' + done + ' от ' + files.length + '. Добавете подписи по-долу.' : '';
+            }
+
+            const dz = document.getElementById('galDropzone');
+            const input = document.getElementById('gal_images');
+            dz.addEventListener('click', () => input.click());
+            input.addEventListener('change', (e) => { uploadPhotos(e.target.files); input.value = ''; });
+            ['dragenter', 'dragover'].forEach(ev => dz.addEventListener(ev, (e) => { e.preventDefault(); dz.classList.add('dragover'); }));
+            dz.addEventListener('dragleave', (e) => { if (!dz.contains(e.relatedTarget)) dz.classList.remove('dragover'); });
+            dz.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dz.classList.remove('dragover');
+                if (e.dataTransfer && e.dataTransfer.files) uploadPhotos(e.dataTransfer.files);
+            });
+        })();
+
 
         /* ===== INIT ===== */
         initAuth();

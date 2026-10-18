@@ -1,0 +1,198 @@
+/* =====================================================================
+   Legal pages (terms / withdrawal / privacy / cookies).
+   Tokens, navbar and footer come from css/site.css, linked first.
+   This file only sets the reading column and the few legal devices:
+   table of contents, trader identity, cookie table, callouts and the
+   printable withdrawal form.
+   ===================================================================== */
+
+/* PAGE HEADER */
+.page-header { padding: clamp(2.5rem, 6vw, 5rem) var(--margin) 1.5rem; }
+.page-header-container { max-width: 52rem; margin: 0 auto; }
+
+.breadcrumb { font-size: var(--step-small); color: var(--muted); margin-bottom: 1.25rem; }
+.breadcrumb a { text-decoration: underline; text-underline-offset: 0.2em; text-decoration-color: transparent; transition: color var(--t-hover) ease, text-decoration-color var(--t-hover) ease; }
+.breadcrumb a:hover { color: var(--ink); text-decoration-color: currentColor; }
+.breadcrumb span { margin: 0 0.5rem; }
+
+.page-header h1 { font-size: var(--step-head); }
+.page-header h1 em { font-style: normal; }
+
+.page-header-sub { margin-top: 1rem; font-size: var(--step-lead); line-height: 1.3; max-width: 36ch; }
+
+/* POLICY CONTENT */
+.policy {
+    max-width: 52rem;
+    margin: 0 auto;
+    padding: 1.5rem var(--margin) var(--section);
+}
+
+.policy section { margin-bottom: 3rem; }
+
+.policy h2 {
+    font-size: clamp(1.75rem, 1.4rem + 1.2vw, 2.25rem);
+    margin-bottom: 1rem;
+    scroll-margin-top: calc(var(--nav-h) + 1rem);
+}
+
+.policy p { margin-bottom: 0.9rem; max-width: 68ch; }
+
+.policy ul { margin: 0.5rem 0 1rem; }
+.policy li {
+    position: relative;
+    padding-left: 1.4rem;
+    margin-bottom: 0.6rem;
+    max-width: 66ch;
+}
+.policy li::before {
+    content: "";
+    position: absolute;
+    left: 0.2rem;
+    top: 0.7em;
+    width: 6px;
+    height: 6px;
+    background: var(--fig);
+}
+
+.policy a { color: var(--fig); text-decoration: underline; text-underline-offset: 0.2em; }
+.policy a:hover { color: var(--ink); }
+.policy strong { font-weight: 600; }
+
+.updated-note { color: var(--muted); margin-bottom: 2.5rem; }
+
+/* table of contents for the longer documents (a real ordered list) */
+.toc {
+    background: var(--surface);
+    padding: 1.5rem 1.75rem;
+    margin-bottom: 3rem;
+}
+.toc h2 {
+    font-family: var(--font-text);
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 0;
+    margin-bottom: 0.9rem;
+}
+.toc ol {
+    list-style: none;
+    counter-reset: toc;
+    columns: 2;
+    column-gap: 2.5rem;
+}
+.policy .toc li {
+    counter-increment: toc;
+    margin-bottom: 0.45rem;
+    padding-left: 0;
+    break-inside: avoid;
+}
+.policy .toc li::before {
+    position: static;
+    width: auto;
+    height: auto;
+    background: none;
+    content: counter(toc) ".";
+    color: var(--muted);
+    margin-right: 0.45rem;
+    font-variant-numeric: tabular-nums;
+}
+.toc a { color: var(--ink); text-decoration: underline; text-underline-offset: 0.2em; text-decoration-color: transparent; }
+.toc a:hover { color: var(--fig); text-decoration-color: currentColor; }
+
+/* trader identity block — the ЗЕТ / КЗП "clearly posted" requirement */
+.identity {
+    background: var(--surface);
+    padding: 1.5rem 1.75rem;
+    margin-bottom: 3rem;
+}
+.identity dl {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.45rem 1.5rem;
+}
+.identity dt { color: var(--muted); }
+.identity dd a { color: var(--fig); text-decoration: underline; }
+
+/* cookie table (a real table keeps its lines) */
+.policy .table-wrap {
+    overflow-x: auto;
+    margin: 1rem 0 1.5rem;
+    background: var(--paper);
+}
+.policy table { border-collapse: collapse; width: 100%; font-size: 1rem; }
+.policy th, .policy td {
+    text-align: left;
+    padding: 0.75rem 0.9rem;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+}
+.policy th {
+    font-weight: 500;
+    background: var(--surface);
+    white-space: nowrap;
+}
+.policy tr:last-child td { border-bottom: none; }
+.policy td code {
+    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+    font-size: 0.9em;
+    background: var(--surface);
+    padding: 0.1em 0.35em;
+}
+
+/* callout for the things a reader must not miss */
+.callout {
+    background: var(--blush-soft);
+    padding: 1.1rem 1.4rem;
+    margin: 1.25rem 0;
+}
+
+/* the prescribed withdrawal form */
+.form-box {
+    background: var(--paper);
+    padding: 2rem 2.25rem;
+    margin: 1.5rem 0 1rem;
+}
+.form-box h3 { font-size: 1.75rem; margin-bottom: 0.4rem; }
+.form-box .form-note { color: var(--muted); margin-bottom: 1.5rem; }
+.form-box p { margin-bottom: 1rem; }
+.form-box .fill {
+    display: inline-block;
+    min-width: 12rem;
+    border-bottom: 1px dotted var(--mauve);
+}
+.form-box .rule {
+    display: block;
+    border-bottom: 1px dotted var(--mauve);
+    height: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+.print-btn {
+    display: inline-flex;
+    align-items: center;
+    min-height: 3rem;
+    padding: 0 1.5rem;
+    border: 0;
+    background: var(--ink);
+    color: var(--on-dark);
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color var(--t-hover) ease, transform var(--t-press) var(--ease-out);
+}
+.print-btn:hover { background: var(--fig); }
+.print-btn:active { transform: scale(0.97); }
+
+@media (max-width: 768px) {
+    .toc ol { columns: 1; }
+    .identity, .form-box { padding-left: 1.1rem; padding-right: 1.1rem; }
+    .identity dl { grid-template-columns: 1fr; gap: 0.15rem; }
+    .identity dt { margin-top: 0.5rem; }
+}
+
+@media print {
+    .navbar, .nav-overlay, .skip-link, .page-header, .footer,
+    .print-btn, .toc, .breadcrumb { display: none !important; }
+    body { background: #fff; color: #000; }
+    .policy { padding: 0; max-width: none; }
+    .form-box { padding: 0; background: none; }
+    a { text-decoration: none; color: #000; }
+}

@@ -9,6 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
     <script src="../js/config.js"></script>
     <script src="../js/supabase-client.js"></script>
+    <script src="../js/compress-image.js"></script>
 
     <style>
         *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
@@ -402,10 +403,13 @@
 
         async function uploadImages(productId, files) {
             const urls = [];
-            for (const file of Array.from(files)) {
+            for (const original of Array.from(files)) {
+                const file = window.compressImage ? await window.compressImage(original) : original;
                 const safeName = file.name.replace(/[^a-zA-Z0-9.\-_]/g, '_');
                 const path = productId + '/' + Date.now() + '-' + safeName;
-                const { error } = await window.db.storage.from(BUCKET).upload(path, file, { upsert: false });
+                const { error } = await window.db.storage.from(BUCKET).upload(path, file, {
+                    upsert: false, cacheControl: "31536000", contentType: file.type,
+                });
                 if (error) throw error;
                 const { data } = window.db.storage.from(BUCKET).getPublicUrl(path);
                 urls.push(data.publicUrl);

@@ -15,6 +15,8 @@
  *   FROM_EMAIL    verified Resend sender, e.g. "orders@yourdomain.com"
  */
 
+const { createClient } = require("@supabase/supabase-js");
+
 const REQUIRED_FIELDS = ["fullName", "email", "subject", "message"];
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -36,6 +38,34 @@ module.exports = async function handler(req, res) {
     }
     if (!EMAIL_RE.test(body.email)) {
         return res.status(400).json({ success: false, error: "Invalid email address" });
+    }
+
+    // ---- abuse protection: captcha + per-IP rate limit ---------------------
+    const ip = getClientIp(req);
+
+    if (process.env.TURNSTILE_SECRET_KEY) {
+        const ok = await verifyTurnstile(process.env.TURNSTILE_SECRET_KEY, body.turnstileToken, ip);
+        if (!ok) {
+            return res.status(400).json({ success: false, error: "Проверката за сигурност не бе успешна. Опитайте отново." });
+        }
+    }
+
+    // Max 5 messages per IP per 10 minutes. Best-effort: skips if Supabase env
+    // is absent, fails open if the check errors.
+    if (process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
+        try {
+            const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);
+            const { data: allowed, error: rlError } = await supabase.rpc("check_rate_limit", {
+                p_key: `contact:${ip}`, p_max: 5, p_window_seconds: 600,
+            });
+            if (rlError) {
+                console.error("[send-contact-message] rate limit check error (allowing):", rlError);
+            } else if (allowed === false) {
+                return res.status(429).json({ success: false, error: "Твърде много съобщения от тази връзка. Изчакайте няколко минути." });
+            }
+        } catch (err) {
+            console.error("[send-contact-message] rate limit exception (allowing):", err);
+        }
     }
 
     const { RESEND_API_KEY, OWNER_EMAIL, FROM_EMAIL } = process.env;
@@ -98,4 +128,30 @@ function escapeHtml(str) {
         .replace(/>/g, "&gt;")
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#039;");
+}
+
+function getClientIp(req) {
+    const xff = req.headers["x-forwarded-for"];
+    if (xff) return String(xff).split(",")[0].trim();
+    return req.headers["x-real-ip"] || req.socket?.remoteAddress || "unknown";
+}
+
+async function verifyTurnstile(secret, token, remoteip) {
+    if (!token) return false;
+    try {
+        const params = new URLSearchParams();
+        params.append("secret", secret);
+        params.append("response", token);
+        if (remoteip && remoteip !== "unknown") params.append("remoteip", remoteip);
+        const resp = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: params.toString(),
+        });
+        const data = await resp.json();
+        return !!data.success;
+    } catch (err) {
+        console.error("[turnstile] verify error:", err);
+        return false;
+    }
 }

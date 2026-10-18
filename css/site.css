@@ -1,0 +1,462 @@
+/* =====================================================================
+   Закачалката — shared stylesheet
+   Tokens, reset, type, the site-wide navbar and footer, buttons, focus
+   and the motion helpers. Every public page links this file first; its
+   own <style> block only holds what is specific to that page.
+
+   Palette: fig + thyme. One light ground for reading, aubergine and fig
+   for the few dark fields, coral only on the main action.
+   ===================================================================== */
+
+:root {
+    /* ---- colour ---- */
+    --ground:       #FAF4F0;   /* page background: a pale bone between the cream and the blush */
+    --paper:        #FFFBF8;   /* inputs and panels that sit on the ground      */
+    --surface:      #F6EBCD;   /* cream: one tone step up from the ground        */
+    --surface-deep: #EFDFBC;   /* hover / pressed step on cream                  */
+    --blush:        #F5C1AC;
+    --blush-soft:   #F9DDD0;
+    --coral:        #ED917A;   /* the main action on dark fields, with ink text (4.7:1) */
+    --coral-press:  #E47E65;
+    --fig:          #783C44;   /* links, sale prices, the events field           */
+    --fig-deep:     #5E2D35;
+    --ink:          #4A3844;   /* aubergine: text, hero and footer fields        */
+    --muted:        #6B5E68;   /* mauve, darkened to pass 4.5:1 on the ground    */
+    --mauve:        #7B6E78;   /* decorative only, never small text              */
+    --on-dark:      #F6EBCD;   /* text on aubergine / fig                        */
+    --on-dark-soft: #F5C1AC;   /* secondary text on aubergine / fig              */
+    --line:         #E3D2B4;   /* form-field borders only                        */
+    --danger:       #A3343A;
+    --danger-soft:  #F8E0DC;
+    --ok:           #3F6B58;
+
+    /* ---- type ---- */
+    --font-display: 'Oranienbaum', 'Times New Roman', serif;
+    --font-text:    'Onest', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+    --step-small:   0.875rem;                                   /* 14px      */
+    --step-body:    clamp(1.0625rem, 1rem + 0.25vw, 1.125rem);  /* 17–18px   */
+    --step-lead:    clamp(1.25rem, 1.1rem + 0.7vw, 1.625rem);   /* 20–26px   */
+    --step-head:    clamp(2.25rem, 1.4rem + 3.2vw, 4.25rem);    /* 36–68px   */
+    --step-display: clamp(4.5rem, 1rem + 12vw, 13rem);
+
+    /* ---- space ---- */
+    --margin:  clamp(1rem, 2.6vw, 2.5rem);
+    --gutter:  clamp(1rem, 2vw, 2rem);
+    --section: clamp(5rem, 10vw, 10rem);
+    --radius:  0px;
+    --nav-h:   84px;
+
+    /* ---- motion ---- */
+    --ease-out:    cubic-bezier(0.22, 1, 0.36, 1);
+    --ease-in-out: cubic-bezier(0.76, 0, 0.24, 1);
+    --ease-soft:   cubic-bezier(0.33, 1, 0.68, 1);
+    --t-press:  140ms;
+    --t-hover:  180ms;
+    --t-ui:     240ms;
+    --t-reveal: 800ms;
+
+    /* ---- legacy names ----
+       store, product, contact and legal.css were written against the old
+       token names. They point at the new palette here so those pages
+       follow it without a rename in every rule. */
+    --bg:             var(--ground);
+    --white:          var(--paper);
+    --border:         var(--line);
+    --border-soft:    var(--surface);
+    --text:           var(--ink);
+    --faint:          var(--muted);
+    --accent:         var(--fig);
+    --accent-dark:    var(--fig-deep);
+    --accent-soft:    var(--blush-soft);
+    --gold:           var(--fig);
+    --gold-light:     var(--surface);
+    --bg-card:        var(--surface);
+    --rose:           var(--blush);
+    --rose-dark:      var(--fig);
+    --mulberry:       var(--fig);
+    --mulberry-light: var(--blush-soft);
+    --serif:          var(--font-display);
+    --sans:           var(--font-text);
+    --ease:           240ms var(--ease-out);
+    --transition:     240ms var(--ease-out);
+}
+
+
+/* ===================================================================== */
+/* RESET                                                                 */
+/* ===================================================================== */
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+body {
+    font-family: var(--font-text);
+    font-size: var(--step-body);
+    line-height: 1.5;
+    background: var(--ground);
+    color: var(--ink);
+    overflow-x: hidden;
+    font-kerning: normal;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+[hidden] { display: none !important; }
+img, video, svg { display: block; max-width: 100%; }
+ul, ol { list-style: none; }
+a { color: inherit; text-decoration: none; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+
+::selection { background: var(--blush); color: var(--ink); }
+
+:focus-visible { outline: 2px solid var(--fig); outline-offset: 3px; }
+.on-dark :focus-visible { outline-color: var(--on-dark); }
+
+.sr-only {
+    position: absolute; width: 1px; height: 1px; overflow: hidden;
+    clip-path: inset(50%); white-space: nowrap;
+}
+
+.skip-link {
+    position: absolute; left: var(--margin); top: -100px; z-index: 200;
+    background: var(--ink); color: var(--on-dark);
+    padding: 0.75rem 1.1rem; font-size: var(--step-small);
+}
+.skip-link:focus { top: 0.75rem; }
+
+
+/* ===================================================================== */
+/* TYPE                                                                  */
+/* ===================================================================== */
+
+h1, h2, h3 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 0.98;
+    text-wrap: balance;
+}
+
+.display { font-family: var(--font-display); font-size: var(--step-display); line-height: 0.86; letter-spacing: -0.035em; }
+.head    { font-size: var(--step-head); }
+.lead    { font-size: var(--step-lead); line-height: 1.35; }
+.small   { font-size: var(--step-small); line-height: 1.5; }
+.muted   { color: var(--muted); }
+.nums    { font-variant-numeric: tabular-nums; }
+
+.prose p { max-width: 62ch; text-wrap: pretty; }
+.prose p + p { margin-top: 0.9em; }
+
+.link {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.22em;
+    text-decoration-color: currentColor;
+    transition: color var(--t-hover) ease, text-decoration-color var(--t-hover) ease;
+}
+.link:hover { color: var(--fig); }
+.on-dark .link:hover { color: var(--on-dark-soft); }
+
+
+/* ===================================================================== */
+/* BUTTONS — one shape on the whole site: square, 48px tall              */
+/* ===================================================================== */
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    min-height: 3rem;
+    padding: 0 1.5rem;
+    border: 0;
+    border-radius: var(--radius);
+    background: var(--ink);
+    color: var(--on-dark);
+    font-family: var(--font-text);
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.1;
+    text-align: center;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: transform var(--t-press) var(--ease-out),
+                background-color var(--t-hover) ease,
+                color var(--t-hover) ease;
+}
+.btn:hover  { background: var(--fig); }
+.btn:active { transform: scale(0.97); }
+.btn:disabled { opacity: 0.55; cursor: default; transform: none; }
+
+/* the main action: aubergine on light pages, coral where the field is dark */
+.btn-primary { background: var(--ink); color: var(--on-dark); }
+.btn-primary:hover { background: var(--fig); color: var(--on-dark); }
+.on-dark .btn-primary { background: var(--coral); color: var(--ink); }
+.on-dark .btn-primary:hover { background: var(--coral-press); color: var(--ink); }
+
+.btn-soft { background: var(--surface); color: var(--ink); }
+.btn-soft:hover { background: var(--surface-deep); }
+
+.btn-light { background: var(--on-dark); color: var(--ink); }
+.btn-light:hover { background: var(--blush); color: var(--ink); }
+
+
+/* ===================================================================== */
+/* NAVBAR                                                                */
+/* ===================================================================== */
+
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--ground);
+}
+
+.nav-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    padding: 0.85rem var(--margin);
+}
+
+.logo { display: block; flex-shrink: 0; line-height: 0; }
+.logo img {
+    height: 62px;
+    width: auto;
+    mix-blend-mode: multiply;   /* the JPEG's white disappears into the ground */
+}
+
+.nav-links { margin-left: auto; }
+.nav-links ul { display: flex; gap: clamp(1.25rem, 2.6vw, 2.5rem); }
+.nav-links a {
+    display: inline-block;
+    padding: 0.5rem 0;
+    font-size: 1rem;
+    font-weight: 500;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.35em;
+    text-decoration-color: transparent;
+    transition: text-decoration-color var(--t-hover) ease, color var(--t-hover) ease;
+}
+.nav-links a:hover { text-decoration-color: currentColor; }
+.nav-links a[aria-current="page"],
+.nav-links a.active { color: var(--fig); text-decoration-color: currentColor; }
+
+.nav-drawer-social { display: none; }
+
+.nav-icons { display: flex; align-items: center; gap: 0.25rem; }
+.nav-icons .social-link {
+    display: flex; align-items: center; justify-content: center;
+    width: 44px; height: 44px;
+    color: var(--ink);
+    transition: color var(--t-hover) ease, transform var(--t-press) var(--ease-out);
+}
+.nav-icons .social-link:hover { color: var(--fig); }
+.nav-icons .social-link:active { transform: scale(0.92); }
+
+.nav-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    width: 44px;
+    height: 44px;
+    background: transparent;
+    border: none;
+}
+.nav-toggle span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--ink);
+    transition: transform var(--t-ui) var(--ease-out), opacity var(--t-ui) ease;
+}
+.nav-toggle.open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+.nav-toggle.open span:nth-child(2) { opacity: 0; }
+.nav-toggle.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+.nav-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 98;
+    background: rgba(74, 56, 68, 0.4);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--t-ui) ease, visibility var(--t-ui) ease;
+}
+.nav-overlay.open { opacity: 1; visibility: visible; }
+
+@media (max-width: 860px) {
+    .nav-toggle { display: flex; }
+    .nav-icons .social-link { display: none; }
+    .logo img { height: 50px; }
+    .nav-container { padding-block: 0.6rem; }
+
+    .nav-links {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 99;
+        width: min(84vw, 360px);
+        padding: 6rem 1.75rem 2rem;
+        background: var(--ground);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        overflow-y: auto;
+        transform: translateX(100%);
+        transition: transform 360ms var(--ease-out);
+    }
+    .nav-links.open { transform: translateX(0); box-shadow: -12px 0 40px rgba(74, 56, 68, 0.18); }
+
+    .nav-links ul { flex-direction: column; gap: 0.25rem; }
+    .nav-links a {
+        display: block;
+        padding: 0.35rem 0;
+        font-family: var(--font-display);
+        font-size: 2.6rem;
+        font-weight: 400;
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+    }
+
+    .nav-drawer-social { display: flex; gap: 1.5rem; padding-top: 2rem; }
+    .nav-drawer-social a { font-size: 1rem; padding: 0.6rem 0; }
+}
+
+
+/* ===================================================================== */
+/* FOOTER — an aubergine field; the name returns across the full width   */
+/* ===================================================================== */
+
+.footer {
+    background: var(--ink);
+    color: var(--on-dark);
+    padding: clamp(3.5rem, 7vw, 6rem) var(--margin) 1.5rem;
+    overflow: hidden;
+}
+
+.footer-top {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) repeat(3, minmax(0, 1fr));
+    gap: 2rem var(--gutter);
+    align-items: start;
+}
+
+.footer-lead {
+    font-family: var(--font-display);
+    font-size: var(--step-lead);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    max-width: 16ch;
+}
+
+.footer-col { display: flex; flex-direction: column; gap: 0.35rem; }
+.footer-col a {
+    display: inline-block;
+    padding: 0.25rem 0;
+    font-size: 1rem;
+    color: var(--on-dark);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.3em;
+    text-decoration-color: transparent;
+    transition: text-decoration-color var(--t-hover) ease, color var(--t-hover) ease;
+}
+.footer-col a:hover { color: var(--on-dark-soft); text-decoration-color: currentColor; }
+
+.footer-identity {
+    margin-top: clamp(2.5rem, 5vw, 4rem);
+    max-width: 62ch;
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--on-dark-soft);
+}
+.footer-identity a { color: inherit; text-decoration: underline; text-underline-offset: 0.2em; }
+.footer-identity a:hover { color: var(--on-dark); }
+
+.footer-wordmark {
+    display: block;
+    margin-top: clamp(1.5rem, 4vw, 3rem);
+    font-family: var(--font-display);
+    /* fitted to the width: the word is ~4.66 em wide in Oranienbaum at this tracking */
+    font-size: calc((100vw - 2 * var(--margin)) / 4.7);
+    line-height: 0.78;
+    letter-spacing: -0.045em;
+    white-space: nowrap;
+    color: var(--on-dark);
+    margin-left: -0.04em;
+    user-select: none;
+}
+
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem 2rem;
+    margin-top: 1.25rem;
+    font-size: var(--step-small);
+    color: var(--on-dark-soft);
+}
+
+@media (max-width: 860px) {
+    .footer-top { grid-template-columns: 1fr 1fr; }
+    .footer-lead { grid-column: 1 / -1; }
+}
+
+
+/* ===================================================================== */
+/* PAGE HEADER — the plain opening of store / contact / legal pages      */
+/* ===================================================================== */
+
+.page-intro {
+    padding: clamp(2.5rem, 6vw, 5rem) var(--margin) clamp(2rem, 4vw, 3rem);
+}
+.page-intro h1 { font-size: var(--step-head); max-width: 18ch; }
+.page-intro p { margin-top: 1rem; max-width: 52ch; color: var(--muted); }
+
+
+/* ===================================================================== */
+/* MOTION — content stays visible when scripting is off                  */
+/* ===================================================================== */
+
+@media (prefers-reduced-motion: no-preference) {
+    .js [data-reveal] {
+        opacity: 0;
+        transform: translateY(24px);
+        transition: opacity 700ms var(--ease-out), transform 900ms var(--ease-out);
+        transition-delay: calc(var(--i, 0) * 80ms);
+    }
+    .js [data-reveal].is-in { opacity: 1; transform: none; }
+
+    .js [data-rise] {
+        opacity: 0;
+        transform: translateY(20px);
+        animation: zk-rise var(--t-reveal) var(--ease-out) forwards;
+        animation-delay: calc(var(--i, 0) * 90ms + 120ms);
+    }
+
+    /* legacy class used by contact.html */
+    .js .reveal { opacity: 0; transform: translateY(24px); transition: opacity 700ms var(--ease-out), transform 900ms var(--ease-out); }
+    .js .reveal.visible { opacity: 1; transform: none; }
+}
+@keyframes zk-rise { to { opacity: 1; transform: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 1ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 1ms !important;
+        scroll-behavior: auto !important;
+    }
+}

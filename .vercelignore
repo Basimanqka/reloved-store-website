@@ -1,0 +1,7 @@
+# Internal notes and tooling: keep them in the repo, not on the public site.
+*.md
+scripts
+supabase
+bazar-promo2.png
+.taste-skill
+bazar-promo.png

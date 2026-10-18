@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>За нас — Закачалката</title>
+    <meta name="description" content="Закачалката е малък магазин във Варна за дизайнерска мода втора ръка, подбрана парче по парче. Вижте магазина и снимки от релсата." />
+    <link rel="canonical" href="https://www.zakachalkata.com/about.html" />
+    <meta name="robots" content="index, follow" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Закачалката" />
+    <meta property="og:locale" content="bg_BG" />
+    <meta property="og:title" content="За нас — Закачалката" />
+    <meta property="og:description" content="Малък магазин във Варна за дизайнерска мода втора ръка, подбрана парче по парче." />
+    <meta property="og:url" content="https://www.zakachalkata.com/about.html" />
+    <meta property="og:image" content="https://www.zakachalkata.com/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png" />
+    <link rel="apple-touch-icon" href="favicon-180.png" />
+    <meta name="theme-color" content="#FAF4F0" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oranienbaum&family=Onest:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/site.css">
+    <script>document.documentElement.classList.add('js')</script>
+    <script src="js/site.js" defer></script>
+
+    <style>
+
+        /* ===================================================================== */
+        /* THE SPLIT STAGE — the shop holds still on the left while you read     */
+        /* ===================================================================== */
+
+        .stage {
+            display: grid;
+            grid-template-columns: 45% 55%;
+            align-items: start;
+        }
+
+        .stage-photo {
+            position: sticky;
+            top: var(--nav-h);
+            height: calc(100svh - var(--nav-h));
+            padding: 0 20px 20px;
+        }
+
+        .stage-frame {
+            position: relative;
+            height: 100%;
+            overflow: hidden;
+            background: var(--surface);
+        }
+        .stage-frame img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 700ms var(--ease-out);
+        }
+        .stage-frame img.is-active { opacity: 1; }
+
+        .reading {
+            padding: clamp(2.5rem, 5vw, 5rem) clamp(1.5rem, 6vw, 6.5rem) calc(var(--section) * 0.8) clamp(1.5rem, 4vw, 4rem);
+        }
+
+        .chapter { max-width: 46ch; }
+        .chapter + .chapter { margin-top: clamp(5rem, 11vw, 10rem); }
+
+        .chapter h1 { font-size: var(--step-head); }
+        .chapter h2 { font-size: var(--step-head); margin-bottom: 2rem; }
+        .chapter .lead { margin-top: 1.75rem; }
+
+        .letter p { max-width: 44ch; text-wrap: pretty; }
+        .letter p + p { margin-top: 1em; }
+        .letter p:first-child { font-weight: 500; }
+        .letter-sign {
+            margin-top: 2.25rem;
+            font-family: var(--font-display);
+            font-size: var(--step-lead);
+            line-height: 1.1;
+        }
+
+        .ways { display: grid; gap: 2.25rem; }
+        .ways dt {
+            font-family: var(--font-display);
+            font-size: var(--step-lead);
+            line-height: 1.1;
+            letter-spacing: -0.01em;
+        }
+        .ways dd { margin-top: 0.5rem; max-width: 42ch; }
+
+        .visit-address { font-size: var(--step-lead); line-height: 1.3; }
+        .hours {
+            display: grid;
+            grid-template-columns: max-content 1fr;
+            gap: 0.4rem 1.25rem;
+            margin-top: 1.75rem;
+            padding: 1.5rem 1.75rem;
+            background: var(--surface);
+            font-variant-numeric: tabular-nums;
+        }
+        .hours dt { font-weight: 500; }
+        .hours dd { white-space: nowrap; }
+        .visit-actions {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 1rem 1.75rem;
+            margin-top: 2rem;
+        }
+        .visit-actions .link { font-weight: 500; padding: 0.75rem 0; }
+
+        @media (max-width: 900px) {
+            .stage { display: block; }
+            .stage-photo {
+                position: relative;
+                top: auto;
+                height: 60svh;
+                min-height: 320px;
+                padding: 12px 12px 0;
+            }
+            .reading { padding: 2.5rem var(--margin) 5rem; }
+            .chapter { max-width: none; }
+        }
+
+
+        /* ===================================================================== */
+        /* GALLERY — a full-width aubergine field; click a picture to enlarge    */
+        /* ===================================================================== */
+
+        .gallery {
+            background: var(--ink);
+            color: var(--on-dark);
+            padding: var(--section) var(--margin) calc(var(--section) * 0.4);
+        }
+
+        .gallery-head {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: end;
+            justify-content: space-between;
+            gap: 1rem 3rem;
+            margin-bottom: clamp(2.5rem, 5vw, 4rem);
+        }
+        .gallery-head h2 { font-size: var(--step-head); }
+        .gallery-head p { max-width: 36ch; color: var(--on-dark-soft); }
+
+        .gallery-grid {
+            columns: 3 300px;
+            column-gap: var(--gutter);
+        }
+
+        .shot {
+            break-inside: avoid;
+            margin-bottom: var(--gutter);
+        }
+        .shot button {
+            display: block;
+            width: 100%;
+            padding: 0;
+            border: 0;
+            background: var(--fig-deep);
+            cursor: zoom-in;
+            overflow: hidden;
+        }
+        .shot img {
+            width: 100%;
+            height: auto;
+            transition: transform 700ms var(--ease-out), opacity var(--t-hover) ease;
+        }
+        .shot button:hover img { transform: scale(1.03); }
+        .shot button:active img { opacity: 0.85; }
+        .shot figcaption {
+            margin-top: 0.75rem;
+            font-size: var(--step-small);
+            color: var(--on-dark-soft);
+        }
+
+
+        /* ===================================================================== */
+        /* LIGHTBOX                                                              */
+        /* ===================================================================== */
+
+        .lightbox {
+            width: 100vw;
+            height: 100svh;
+            max-width: none;
+            max-height: none;
+            margin: 0;
+            padding: 0;
+            border: 0;
+            background: rgba(43, 31, 40, 0.97);
+            color: var(--on-dark);
+        }
+        .lightbox::backdrop { background: rgba(43, 31, 40, 0.6); }
+        .lightbox[open] { display: grid; grid-template-rows: auto 1fr auto; }
+
+        .lightbox-bar {
+            display: flex;
+            justify-content: flex-end;
+            padding: 12px;
+        }
+        .lightbox-stage {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            align-items: center;
+            gap: 0.5rem;
+            min-height: 0;
+            padding: 0 12px;
+            touch-action: pan-y;
+        }
+        .lightbox-stage figure {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 0;
+            height: 100%;
+        }
+        .lightbox-stage img {
+            max-width: 100%;
+            max-height: calc(100svh - 170px);
+            width: auto;
+            height: auto;
+            object-fit: contain;
+        }
+        .lightbox-stage figcaption {
+            margin-top: 1rem;
+            min-height: 1.5em;
+            color: var(--on-dark-soft);
+            text-align: center;
+        }
+        .lightbox-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 52px;
+            height: 52px;
+            border: 0;
+            background: rgba(246, 235, 205, 0.1);
+            color: var(--on-dark);
+            transition: background-color var(--t-hover) ease, transform var(--t-press) var(--ease-out);
+        }
+        .lightbox-btn:hover { background: rgba(246, 235, 205, 0.2); }
+        .lightbox-btn:active { transform: scale(0.94); }
+        .lightbox-btn:focus-visible { outline-color: var(--on-dark); }
+
+        @media (prefers-reduced-motion: no-preference) {
+            .lightbox[open] img { animation: zk-fade 320ms var(--ease-out) both; }
+            @keyframes zk-fade { from { opacity: 0; } to { opacity: 1; } }
+        }
+
+        @media (max-width: 640px) {
+            .lightbox-stage { grid-template-columns: 1fr; }
+            .lightbox-stage .lightbox-btn { display: none; }
+            .lightbox-stage img { max-height: calc(100svh - 140px); }
+        }
+
+    </style>
+</head>
+<body>
+
+    <a class="skip-link" href="#main">Към съдържанието</a>
+
+    <!-- NAVBAR -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a class="logo" href="index.html" aria-label="Закачалката — начало"><img src="img/logo.jpg" width="701" height="384" alt="Закачалката — reloved store"></a>
+            <nav class="nav-links" id="navLinks" aria-label="Основна навигация">
+                <ul>
+                    <li><a href="index.html">Начало</a></li>
+                    <li><a href="store.html">Магазин</a></li>
+                    <li><a href="about.html" aria-current="page">За нас</a></li>
+                    <li><a href="contact.html">Контакти</a></li>
+                </ul>
+                <div class="nav-drawer-social">
+                    <a href="https://www.instagram.com/zakachalkatarelovedstore/" target="_blank" rel="noopener">Instagram</a>
+                    <a href="https://www.facebook.com/p/%D0%97%D0%B0%D0%BA%D0%B0%D1%87%D0%B0%D0%BB%D0%BA%D0%B0%D1%82%D0%B0-Reloved-Store-100083130402532/" target="_blank" rel="noopener">Facebook</a>
+                </div>
+            </nav>
+            <div class="nav-icons">
+                <a class="social-link" href="https://www.instagram.com/zakachalkatarelovedstore/" target="_blank" rel="noopener" aria-label="Instagram"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+                <a class="social-link" href="https://www.facebook.com/p/%D0%97%D0%B0%D0%BA%D0%B0%D1%87%D0%B0%D0%BB%D0%BA%D0%B0%D1%82%D0%B0-Reloved-Store-100083130402532/" target="_blank" rel="noopener" aria-label="Facebook"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+                <button class="nav-toggle" id="navToggle" aria-label="Отвори меню" aria-expanded="false" aria-controls="navLinks">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+    <div class="nav-overlay" id="navOverlay"></div>
+
+
+    <main id="main">
+
+        <div class="stage">
+
+            <div class="stage-photo">
+                <div class="stage-frame" id="stageFrame">
+                    <img class="is-active" src="img/shop-rail.jpg" width="900" height="1024" alt="Релсата с дрехи в магазина" fetchpriority="high" />
+                    <img src="img/shop-table.jpg" width="900" height="1024" alt="Масата до прозореца с чанти, бижута и обувки" loading="lazy" />
+                    <img src="img/shop.jpg" width="1535" height="1024" alt="Магазинът: релсата, масата и прозорецът" loading="lazy" style="object-position: 58% 50%;" />
+                </div>
+            </div>
+
+            <div class="reading">
+
+                <section class="chapter" data-photo="0" aria-labelledby="aboutTitle">
+                    <h1 id="aboutTitle" data-rise>Кои сме ние</h1>
+                    <p class="lead" data-rise style="--i:1">Малък магазин във Варна за дизайнерска мода втора ръка, подбрана парче по парче.</p>
+                </section>
+
+                <section class="chapter letter" data-photo="1" aria-label="Нашата история">
+                    <div class="prose">
+                        <p data-reveal>Закачалката започна от една проста мисъл: хубавите дрехи заслужават да бъдат носени, а не да чакат в гардероба.</p>
+                        <p data-reveal style="--i:1">Затова подбираме вещи, които си струват: дизайнерски дрехи, обувки, чанти и аксесоари с история. Всяка минава през ръцете ни, преди да стигне до закачалката.</p>
+                        <p data-reveal style="--i:2">През магазина са минавали Miu Miu, Burberry, Dolce &amp; Gabbana, Armani, Furla и Karl Lagerfeld, редом с по-малко известни марки, които също заслужават внимание.</p>
+                        <p data-reveal style="--i:3">Държим на качество на разумна цена, без компромиси. Ако нещо не е както трябва, ще го прочетете в описанието, а не ще го откриете вкъщи.</p>
+                    </div>
+                    <p class="letter-sign" data-reveal style="--i:4">Екипът на Закачалката</p>
+                </section>
+
+                <section class="chapter" data-photo="2" aria-labelledby="waysTitle">
+                    <h2 id="waysTitle" data-reveal>Как работим</h2>
+                    <dl class="ways">
+                        <div data-reveal>
+                            <dt>Всяка вещ е проверена</dt>
+                            <dd>Оглеждаме я, преди да я снимаме. Състоянието е описано с една от три оценки: отлично, много добро или добро.</dd>
+                        </div>
+                        <div data-reveal style="--i:1">
+                            <dt>Едно парче, един размер</dt>
+                            <dd>Нямаме склад с повторения. Когато някой вземе парчето, то изчезва от магазина и от сайта.</dd>
+                        </div>
+                        <div data-reveal style="--i:2">
+                            <dt>Честна цена</dt>
+                            <dd>Когато има намаление, виждате и старата цена до новата.</dd>
+                        </div>
+                        <div data-reveal style="--i:3">
+                            <dt>Плащате при доставка</dt>
+                            <dd>Поръчвате онлайн и плащате с наложен платеж, когато пратката пристигне. Имате 14 дни да се откажете, без да обяснявате защо.</dd>
+                        </div>
+                    </dl>
+                </section>
+
+                <section class="chapter" data-photo="0" aria-labelledby="visitTitle">
+                    <h2 id="visitTitle" data-reveal>Елате в магазина</h2>
+                    <p class="visit-address" data-reveal style="--i:1">ул. „Юрий Венелин“ 4, Варна Център</p>
+                    <dl class="hours" data-reveal style="--i:2">
+                        <dt>Понеделник – петък</dt><dd>10:00 – 18:00</dd>
+                        <dt>Събота</dt><dd>11:00 – 16:00</dd>
+                        <dt>Неделя</dt><dd>по уговорка</dd>
+                    </dl>
+                    <div class="visit-actions" data-reveal style="--i:3">
+                        <a class="btn btn-primary" href="https://www.google.com/maps/place//data=!4m2!3m1!1s0x40a455006f3550e1:0x9dd11590732b6887?sa=X&amp;ved=1t:8290&amp;hl=en-BG&amp;ictx=111" target="_blank" rel="noopener">Виж на картата</a>
+                        <a class="link" href="tel:+359884161889">088 416 1889</a>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+
+
+        <!-- GALLERY (photos are managed from the admin panel) -->
+        <section class="gallery on-dark" aria-labelledby="galleryTitle">
+            <div class="gallery-head">
+                <h2 id="galleryTitle" data-reveal>Снимки от магазина</h2>
+                <p data-reveal style="--i:1">Релсата, витрината и събитията на ул. „Юрий Венелин“. Натиснете снимка, за да я видите на цял екран.</p>
+            </div>
+
+            <div class="gallery-grid" id="galleryGrid">
+                <figure class="shot"><button type="button" data-index="0"><img src="img/shop-rail.jpg" width="900" height="1024" alt="Релсата с дрехи в магазина" loading="lazy" /></button><figcaption>Релсата</figcaption></figure>
+                <figure class="shot"><button type="button" data-index="1"><img src="img/shop.jpg" width="1535" height="1024" alt="Магазинът: релсата, масата и прозорецът" loading="lazy" /></button><figcaption>Магазинът</figcaption></figure>
+                <figure class="shot"><button type="button" data-index="2"><img src="img/shop-table.jpg" width="900" height="1024" alt="Масата до прозореца" loading="lazy" /></button><figcaption>Масата до прозореца</figcaption></figure>
+            </div>
+        </section>
+
+    </main>
+
+
+    <dialog class="lightbox" id="lightbox" aria-label="Снимка на цял екран">
+        <div class="lightbox-bar">
+            <button type="button" class="lightbox-btn" id="lbClose" aria-label="Затвори">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+            </button>
+        </div>
+        <div class="lightbox-stage" id="lbStage">
+            <button type="button" class="lightbox-btn" id="lbPrev" aria-label="Предишна снимка">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+            </button>
+            <figure>
+                <img id="lbImg" src="" alt="" />
+                <figcaption id="lbCaption" aria-live="polite"></figcaption>
+            </figure>
+            <button type="button" class="lightbox-btn" id="lbNext" aria-label="Следваща снимка">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+            </button>
+        </div>
+        <div style="height: 12px"></div>
+    </dialog>
+
+
+    <!-- FOOTER -->
+    <footer class="footer on-dark">
+        <div class="footer-top">
+            <p class="footer-lead">Внимателно избрана препродадена мода.</p>
+            <nav class="footer-col" aria-label="Страници">
+                <a href="index.html">Начало</a>
+                <a href="store.html">Магазин</a>
+                <a href="about.html">За нас</a>
+                <a href="contact.html">Контакти</a>
+            </nav>
+            <nav class="footer-col" aria-label="Условия">
+                <a href="terms.html">Общи условия</a>
+                <a href="withdrawal.html">Право на отказ</a>
+                <a href="privacy.html">Поверителност</a>
+                <a href="cookies.html">Бисквитки</a>
+            </nav>
+            <div class="footer-col">
+                <a href="https://www.instagram.com/zakachalkatarelovedstore/" target="_blank" rel="noopener">Instagram</a>
+                <a href="https://www.facebook.com/p/%D0%97%D0%B0%D0%BA%D0%B0%D1%87%D0%B0%D0%BB%D0%BA%D0%B0%D1%82%D0%B0-Reloved-Store-100083130402532/" target="_blank" rel="noopener">Facebook</a>
+                <a href="mailto:zakachalkata@gmail.com">zakachalkata@gmail.com</a>
+            </div>
+        </div>
+        <p class="footer-identity">
+            ДЗЗД София Велвет, ЕИК 177491919, гр. Варна, ул. „Петър Райчев“ №22.
+            Тел. <a href="tel:+359884161889">+359 88 416 1889</a>, <a href="mailto:zakachalkata@gmail.com">zakachalkata@gmail.com</a>
+        </p>
+        <span class="footer-wordmark" aria-hidden="true">закачалката</span>
+        <div class="footer-bottom">
+            <p>© 2026 Закачалката. Всички права запазени.</p>
+            <p>Варна</p>
+        </div>
+    </footer>
+
+
+    <script src="js/config.js"></script>
+    <script src="js/data.js"></script>
+    <script>
+    (function () {
+        "use strict";
+
+        /* ================================================================= */
+        /* The stage picture follows the chapter in the middle of the screen  */
+        /* ================================================================= */
+
+        var frameImgs = document.querySelectorAll("#stageFrame img");
+        var chapters  = document.querySelectorAll(".chapter[data-photo]");
+
+        function showStage(i) {
+            frameImgs.forEach(function (img, j) { img.classList.toggle("is-active", j === i); });
+        }
+
+        /* the active chapter is the last one whose top has passed 40% of the screen */
+        function syncStage() {
+            if (!matchMedia("(min-width: 901px)").matches) return;
+            var line = window.innerHeight * 0.4;
+            var active = 0;
+            chapters.forEach(function (c) {
+                if (c.getBoundingClientRect().top < line) active = Number(c.dataset.photo) || 0;
+            });
+            showStage(active);
+        }
+        /* four rect reads per scroll event: cheap enough to run directly */
+        window.addEventListener("scroll", syncStage, { passive: true });
+        window.addEventListener("resize", syncStage);
+        syncStage();
+
+
+        /* ================================================================= */
+        /* Gallery + lightbox                                                 */
+        /* ================================================================= */
+
+        var grid    = document.getElementById("galleryGrid");
+        var box     = document.getElementById("lightbox");
+        var lbImg   = document.getElementById("lbImg");
+        var lbCap   = document.getElementById("lbCaption");
+        var photos  = [];
+        var current = 0;
+        var opener  = null;
+
+        function collect() {
+            photos = Array.prototype.map.call(grid.querySelectorAll(".shot"), function (fig) {
+                var img = fig.querySelector("img");
+                var cap = fig.querySelector("figcaption");
+                return { src: img.currentSrc || img.src, alt: img.alt, caption: cap ? cap.textContent : "" };
+            });
+        }
+
+        function show(i) {
+            if (!photos.length) return;
+            current = (i + photos.length) % photos.length;
+            var ph = photos[current];
+            lbImg.src = ph.src;
+            lbImg.alt = ph.alt;
+            lbCap.textContent = ph.caption;
+            /* replay the fade on every change */
+            lbImg.style.animation = "none";
+            void lbImg.offsetWidth;
+            lbImg.style.animation = "";
+        }
+
+        function open(i, trigger) {
+            collect();
+            opener = trigger || null;
+            show(i);
+            if (typeof box.showModal === "function") box.showModal();
+            else box.setAttribute("open", "");
+            document.body.style.overflow = "hidden";
+            document.getElementById("lbClose").focus();
+        }
+
+        /* cleanup runs on every way out: the button, a click outside, Escape */
+        function cleanup() {
+            document.body.style.overflow = "";
+            if (opener) { opener.focus(); opener = null; }
+        }
+
+        function close() {
+            if (box.open && typeof box.close === "function") box.close();
+            else box.removeAttribute("open");
+            cleanup();
+        }
+
+        box.addEventListener("cancel", function (e) { e.preventDefault(); close(); });
+        box.addEventListener("close", cleanup);
+
+        grid.addEventListener("click", function (e) {
+            var btn = e.target.closest("button[data-index]");
+            if (btn) open(Number(btn.dataset.index), btn);
+        });
+
+        document.getElementById("lbClose").addEventListener("click", close);
+        document.getElementById("lbPrev").addEventListener("click", function () { show(current - 1); });
+        document.getElementById("lbNext").addEventListener("click", function () { show(current + 1); });
+
+        box.addEventListener("keydown", function (e) {
+            if (e.key === "ArrowLeft")  { e.preventDefault(); show(current - 1); }
+            if (e.key === "ArrowRight") { e.preventDefault(); show(current + 1); }
+        });
+
+        /* clicking the dark area around the picture closes it */
+        box.addEventListener("click", function (e) {
+            if (e.target === box || e.target.classList.contains("lightbox-stage") || e.target.tagName === "FIGURE") close();
+        });
+
+        /* swipe on touch screens */
+        var startX = null;
+        var stage = document.getElementById("lbStage");
+        stage.addEventListener("pointerdown", function (e) { startX = e.clientX; });
+        stage.addEventListener("pointerup", function (e) {
+            if (startX === null) return;
+            var dx = e.clientX - startX;
+            startX = null;
+            if (Math.abs(dx) > 50) show(current + (dx < 0 ? 1 : -1));
+        });
+
+        zkRest("gallery_photos?select=image_url,caption&is_published=eq.true&order=sort_order.asc,created_at.desc&limit=80")
+            .then(function (data) {
+                if (!Array.isArray(data) || !data.length) return;
+                grid.innerHTML = data.map(function (ph, i) {
+                    var cap = ph.caption || "";
+                    return '<figure class="shot" data-reveal style="--i:' + (i % 3) + '">' +
+                        '<button type="button" data-index="' + i + '">' +
+                        '<img src="' + zkEsc(ph.image_url) + '" alt="' + zkEsc(cap || "Снимка от магазина") + '" loading="lazy">' +
+                        "</button>" +
+                        (cap ? "<figcaption>" + zkEsc(cap) + "</figcaption>" : "") +
+                        "</figure>";
+                }).join("");
+                if (window.zkObserveReveals) window.zkObserveReveals(grid);
+            })
+            .catch(function (err) { console.error("[about] gallery:", err); });
+    })();
+    </script>
+
+</body>
+</html>

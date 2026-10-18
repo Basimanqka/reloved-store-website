@@ -3,730 +3,207 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Закачалката — Контакти</title>
+    <!-- META:START -->
+    <title>Контакти — Закачалката</title>
+    <meta name="description" content="Свържете се със Закачалката за въпроси относно артикули, размери, мерки и доставка — телефон, имейл и социални мрежи." />
+    <link rel="canonical" href="https://www.zakachalkata.com/contact.html" />
+    <meta name="robots" content="index, follow" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Закачалката" />
+    <meta property="og:locale" content="bg_BG" />
+    <meta property="og:title" content="Контакти — Закачалката" />
+    <meta property="og:description" content="Свържете се със Закачалката за въпроси относно артикули, размери, мерки и доставка — телефон, имейл и социални мрежи." />
+    <meta property="og:url" content="https://www.zakachalkata.com/contact.html" />
+    <meta property="og:image" content="https://www.zakachalkata.com/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png" />
+    <link rel="apple-touch-icon" href="favicon-180.png" />
+    <!-- META:END -->
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oranienbaum&family=Onest:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/site.css">
+    <script>document.documentElement.classList.add('js')</script>
+    <script src="js/site.js" defer></script>
 
     <style>
 
-        /* ========================= */
-        /* RESET & BASE */
-        /* ========================= */
+        /* ===================================================================== */
+        /* CONTACT — details and map on the left, the message form on the right  */
+        /* ===================================================================== */
 
-        *, *::before, *::after {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        .contact-head {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+            gap: clamp(2rem, 5vw, 5rem);
+            align-items: end;
+            padding: clamp(2.5rem, 6vw, 5rem) var(--margin) clamp(2.5rem, 5vw, 4.5rem);
         }
-
-        :root {
-            --bg:          #FAF7F4;
-            --white:       #FFFFFF;
-            --border:      #EDE2D8;
-            --text:        #2C2420;
-            --muted:        #8B5E52;
-            --faint:       #C9B4AB;
-            --accent:      #AA5878;
-            --gold:        #C9998A;
-            --gold-light:  #F2EBE3;
-            --bg-card:      #F2EBE3;
-            --rose:         #C9998A;
-            --rose-dark:    #8B5E52;
-            --mulberry:     #89CECA;
-            --mulberry-light: #5BA8A0;
-            --serif:       'Cormorant Garamond', serif;
-            --sans:        'Inter', sans-serif;
-            --ease:        0.35s ease;
-        }
-
-        html { scroll-behavior: smooth; }
-
-        body {
-            font-family: var(--sans);
-            background-color: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        img { display: block; }
-        ul  { list-style: none; }
-        a   { text-decoration: none; color: inherit; }
-        button, input, select, textarea { font-family: inherit; }
-
-
-        /* ========================= */
-        /* NAVBAR */
-        /* ========================= */
-
-        .navbar {
-            width: 100%;
-            background-color: var(--white);
-            border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .nav-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 1.4rem 3rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .logo a {
-            display: flex;
-            align-items: center;
-            line-height: 1;
-        }
-
-        .logo img { height: 56px; width: auto; display: block; }
-
-        .nav-links ul { display: flex; gap: 2.5rem; }
-
-        .nav-links a {
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: color 0.3s;
-            position: relative;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            left: 0; bottom: -5px;
-            width: 0; height: 1px;
-            background-color: var(--accent);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover::after,
-        .nav-links a.active::after { width: 100%; }
-        .nav-links a.active { color: var(--accent); }
-
-        .nav-icons { display: flex; gap: 1rem; }
-
-        .nav-icons button {
-            border: none;
-            background: transparent;
-            font-size: 0;
-            line-height: 1;
-            cursor: pointer;
-            transition: color 0.3s;
-            display: flex;
-            align-items: center;
-        }
-
-        .nav-icons button:hover { color: var(--accent); }
-
-        .nav-icons .social-link {
-            display: flex;
-            align-items: center;
-            color: var(--text);
-            transition: color 0.3s;
-        }
-        .nav-icons .social-link:hover { color: var(--accent); }
-
-        /* hamburger toggle (mobile) */
-        .nav-toggle {
-            display: none;
-            flex-direction: column;
-            justify-content: center;
-            gap: 5px;
-            width: 40px;
-            height: 40px;
-            background: transparent;
-            border: none;
-            padding: 0;
-            flex-shrink: 0;
-        }
-
-        .nav-toggle span {
-            display: block;
-            width: 22px;
-            height: 1.5px;
-            background: var(--text);
-            transition: transform 0.3s ease, opacity 0.3s ease;
-        }
-
-        .nav-toggle.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
-        .nav-toggle.open span:nth-child(2) { opacity: 0; }
-        .nav-toggle.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
-
-        .nav-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(44,36,32,0.35);
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-            z-index: 98;
-        }
-
-        .nav-overlay.open { opacity: 1; visibility: visible; }
-
-        @media (max-width: 860px) {
-            .nav-toggle { display: flex; }
-
-            .nav-links {
-                position: fixed;
-                top: 0;
-                right: 0;
-                bottom: 0;
-                width: min(78vw, 320px);
-                background: var(--white);
-                padding: 5.5rem 2rem 2.5rem;
-                display: flex;
-                flex-direction: column;
-                transform: translateX(100%);
-                transition: transform 0.35s ease;
-                z-index: 99;
-                overflow-y: auto;
-                box-shadow: -8px 0 30px rgba(0,0,0,0.10);
-            }
-
-            .nav-links.open { transform: translateX(0); }
-
-            .nav-links ul { flex-direction: column; gap: 0; }
-            .nav-links li { border-bottom: 1px solid var(--border); }
-
-            .nav-links a {
-                display: block;
-                padding: 1rem 0.2rem;
-                font-size: 1rem;
-            }
-
-            .nav-container { padding: 1.1rem 1.5rem; }
-            .logo img { height: 46px; }
-        }
-
-
-        /* ========================= */
-        /* PAGE HEADER */
-        /* ========================= */
-
-        .page-header {
-            padding: 4rem 3rem 2.5rem;
-        }
-
-        .page-header-container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .breadcrumb {
-            font-size: 0.82rem;
-            color: var(--muted);
-            margin-bottom: 0.8rem;
-        }
-
-        .breadcrumb a { transition: color 0.2s; }
-        .breadcrumb a:hover { color: var(--mulberry); }
-        .breadcrumb span { margin: 0 0.5rem; opacity: 0.5; }
-
-        .page-header h1 {
-            font-family: var(--serif);
-            font-size: 3.2rem;
-            font-weight: 400;
-            line-height: 1.1;
-        }
-
-        .page-header h1 em {
-            font-style: italic;
-            color: var(--mulberry);
-        }
-
-        .page-header-sub {
-            font-size: 0.9rem;
-            color: var(--muted);
-            margin-top: 0.7rem;
-            letter-spacing: 0.3px;
-        }
-
-
-        /* ========================= */
-        /* MAIN CONTACT LAYOUT */
-        /* ========================= */
+        .contact-photo { aspect-ratio: 3 / 2; overflow: hidden; background: var(--surface); }
+        .contact-photo img { width: 100%; height: 100%; object-fit: cover; }
+        @media (max-width: 900px) { .contact-head { grid-template-columns: 1fr; } }
+        .contact-head h1 { font-size: var(--step-display); line-height: 0.86; letter-spacing: -0.035em; }
+        .contact-head p { margin-top: 1.5rem; font-size: var(--step-lead); line-height: 1.3; max-width: 34ch; }
 
         .contact-layout {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 3rem 7rem;
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 5rem;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+            gap: clamp(2rem, 5vw, 5rem);
             align-items: start;
+            padding: 0 var(--margin) var(--section);
         }
 
+        .contact-email {
+            display: inline-block;
+            font-family: var(--font-display);
+            font-size: clamp(1.75rem, 1rem + 2.6vw, 3.25rem);
+            line-height: 1;
+            letter-spacing: -0.02em;
+            text-decoration: underline;
+            text-decoration-thickness: 1px;
+            text-underline-offset: 0.15em;
+            text-decoration-color: transparent;
+            transition: color var(--t-hover) ease, text-decoration-color var(--t-hover) ease;
+            overflow-wrap: anywhere;
+        }
+        .contact-email:hover { color: var(--fig); text-decoration-color: currentColor; }
 
-        /* ========================= */
-        /* LEFT — MAP + DETAILS */
-        /* ========================= */
-
-        .map-column {}
+        .contact-details {
+            display: grid;
+            grid-template-columns: max-content 1fr;
+            gap: 1rem 2rem;
+            margin-top: 2.25rem;
+        }
+        .contact-details dt { color: var(--muted); }
+        .contact-details dd a { text-decoration: underline; text-underline-offset: 0.2em; text-decoration-color: transparent; transition: text-decoration-color var(--t-hover) ease, color var(--t-hover) ease; }
+        .contact-details dd a:hover { color: var(--fig); text-decoration-color: currentColor; }
+        .hours-grid {
+            display: grid;
+            grid-template-columns: max-content max-content;
+            gap: 0.2rem 1.5rem;
+            font-variant-numeric: tabular-nums;
+        }
 
         .map-wrapper {
-            width: 100%;
-            height: 400px;
-            overflow: hidden;
-            position: relative;
-            margin-bottom: 2.5rem;
-            filter: grayscale(30%) contrast(0.92);
-            transition: filter 0.4s ease;
+            margin-top: 2.5rem;
+            aspect-ratio: 4 / 3;
+            background: var(--surface);
         }
-
-        .map-wrapper:hover {
-            filter: grayscale(0%) contrast(1);
-        }
-
         .map-wrapper iframe {
+            display: block;
             width: 100%;
             height: 100%;
             border: 0;
-            display: block;
+            filter: saturate(0.6) sepia(0.15);
         }
 
-        .contact-details {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .detail-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 1.2rem;
-        }
-
-        .detail-icon {
-            width: 40px;
-            height: 40px;
-            flex-shrink: 0;
-            border: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0;
-            color: var(--gold);
-            background: var(--white);
-            transition: border-color 0.25s, background 0.25s, color 0.25s;
-        }
-
-        .detail-item:hover .detail-icon {
-            border-color: var(--mulberry);
-            background: rgba(137,206,202,0.12);
-            color: var(--mulberry-light);
-        }
-
-        .detail-text {}
-
-        .detail-label {
-            font-size: 0.7rem;
-            letter-spacing: 2.5px;
-            text-transform: uppercase;
-            color: var(--muted);
-            margin-bottom: 0.2rem;
-        }
-
-        .detail-value {
-            font-size: 0.93rem;
-            color: var(--text);
-            line-height: 1.5;
-        }
-
-        .detail-value a {
-            transition: color 0.2s;
-        }
-
-        .detail-value a:hover {
-            color: var(--accent);
-        }
-
-        .hours-grid {
-            display: grid;
-            grid-template-columns: auto 1fr;
-            gap: 0.15rem 1.2rem;
-            font-size: 0.88rem;
-        }
-
-        .hours-day { color: var(--muted); }
-        .hours-time { color: var(--text); }
-
-
-        /* ========================= */
-        /* RIGHT — CONTACT FORM */
-        /* ========================= */
+        /* ---- form ---- */
 
         .form-column {
-            background: var(--white);
-            padding: 3.5rem;
-            border: 1px solid var(--border);
+            padding: clamp(1.5rem, 3.5vw, 3rem);
+            background: var(--surface);
         }
 
-        .form-eyebrow {
-            font-size: 0.7rem;
-            letter-spacing: 3.5px;
-            text-transform: uppercase;
-            color: var(--gold);
-            margin-bottom: 0.8rem;
-        }
+        .form-heading { font-size: var(--step-head); }
+        .form-intro { margin: 1rem 0 2rem; max-width: 40ch; }
 
-        .form-heading {
-            font-family: var(--serif);
-            font-size: 2.2rem;
-            font-weight: 400;
-            line-height: 1.15;
-            margin-bottom: 0.5rem;
+        .form-error {
+            display: none;
+            margin-bottom: 1.25rem;
+            padding: 0.75rem 1rem;
+            background: var(--danger-soft);
+            color: var(--danger);
         }
+        .form-error.visible { display: block; }
 
-        .form-heading em {
-            font-style: italic;
-            color: var(--accent);
-        }
-
-        .form-intro {
-            font-size: 0.87rem;
-            color: var(--muted);
-            margin-bottom: 2.5rem;
-            padding-bottom: 2rem;
-            border-bottom: 1px solid var(--border);
-            line-height: 1.65;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-label {
-            display: block;
-            font-size: 0.7rem;
-            letter-spacing: 2.5px;
-            text-transform: uppercase;
-            color: var(--muted);
-            margin-bottom: 0.55rem;
-        }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0 1rem; }
+        .form-group { margin-bottom: 1.1rem; }
+        .form-label { display: block; margin-bottom: 0.4rem; font-weight: 500; }
 
         .form-input,
         .form-select,
         .form-textarea {
             width: 100%;
-            border: 1px solid var(--border);
-            background: var(--bg);
-            padding: 0.9rem 1rem;
-            font-size: 0.9rem;
-            color: var(--text);
-            outline: none;
-            transition: border-color 0.22s ease, background 0.22s ease;
+            min-height: 3rem;
+            padding: 0.75rem 0.9rem;
+            border: 1px solid var(--line);
+            background: var(--paper);
+            color: var(--ink);
+            font-size: 1rem;
             appearance: none;
             -webkit-appearance: none;
+            transition: border-color var(--t-hover) ease;
         }
-
-        .form-input::placeholder,
-        .form-textarea::placeholder {
-            color: var(--faint);
-        }
-
         .form-input:focus,
         .form-select:focus,
-        .form-textarea:focus {
-            border-color: var(--accent);
-            background: var(--white);
-        }
-
+        .form-textarea:focus { outline: 2px solid var(--fig); outline-offset: 0; border-color: var(--fig); }
         .form-input.error,
         .form-select.error,
-        .form-textarea.error {
-            border-color: #c0392b;
-        }
+        .form-textarea.error { border-color: var(--danger); }
+        .form-textarea { min-height: 150px; resize: vertical; }
 
-        .select-wrapper {
-            position: relative;
-        }
-
+        .select-wrapper { position: relative; }
         .select-wrapper::after {
-            content: '↓';
+            content: "";
             position: absolute;
-            right: 1rem;
+            right: 1.1rem;
             top: 50%;
-            transform: translateY(-50%);
-            font-size: 0.8rem;
-            color: var(--muted);
+            width: 7px;
+            height: 7px;
+            border-right: 1.5px solid var(--muted);
+            border-bottom: 1.5px solid var(--muted);
+            rotate: 45deg;
+            translate: 0 -70%;
             pointer-events: none;
         }
 
-        .form-select {
-            cursor: pointer;
+        .send-btn { width: 100%; min-height: 3.5rem; margin-top: 0.5rem; }
+
+        .form-body.hidden { display: none; }
+        .form-success { display: none; }
+        .form-success.visible { display: block; }
+        .success-title { font-size: var(--step-head); }
+        .success-msg { margin: 1rem 0 2rem; max-width: 40ch; }
+
+        @media (max-width: 900px) {
+            .contact-layout { grid-template-columns: 1fr; }
         }
-
-        .form-textarea {
-            resize: vertical;
-            min-height: 130px;
-            line-height: 1.6;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-        }
-
-        .send-btn {
-            width: 100%;
-            padding: 1.15rem 2rem;
-            background-color: var(--text);
-            color: var(--white);
-            border: none;
-            font-size: 0.76rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: background-color 0.3s, letter-spacing 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.7rem;
-            margin-top: 0.5rem;
-        }
-
-        .send-btn:hover {
-            background-color: var(--accent);
-            letter-spacing: 4px;
-        }
-
-        .send-btn:disabled {
-            background-color: var(--faint);
-            cursor: not-allowed;
-        }
-
-        .send-btn-arrow {
-            transition: transform 0.3s;
-        }
-
-        .send-btn:hover .send-btn-arrow {
-            transform: translateX(4px);
-        }
-
-        .form-error {
-            background: #FBEAEA;
-            color: #B23A3A;
-            font-size: 0.82rem;
-            padding: 0.8rem 1rem;
-            margin-bottom: 1.2rem;
-            display: none;
-        }
-
-        .form-error.visible { display: block; }
-
-
-        /* ========================= */
-        /* SUCCESS STATE */
-        /* ========================= */
-
-        .form-success {
-            display: none;
-            text-align: center;
-            padding: 2rem 0;
-        }
-
-        .form-success.visible {
-            display: block;
-        }
-
-        .form-body.hidden {
-            display: none;
-        }
-
-        .success-icon {
-            width: 66px;
-            height: 66px;
-            border-radius: 50%;
-            background: var(--gold-light);
-            border: 1px solid rgba(201,153,138,0.40);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.6rem;
-            margin: 0 auto 1.8rem;
-        }
-
-        .success-title {
-            font-family: var(--serif);
-            font-size: 2rem;
-            font-weight: 400;
-            margin-bottom: 0.8rem;
-        }
-
-        .success-msg {
-            font-size: 0.9rem;
-            color: var(--muted);
-            line-height: 1.7;
-            max-width: 320px;
-            margin: 0 auto 2rem;
-        }
-
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.74rem;
-            letter-spacing: 2.5px;
-            text-transform: uppercase;
-            color: var(--muted);
-            border: 1px solid var(--border);
-            padding: 0.8rem 1.8rem;
-            transition: all 0.25s;
-            cursor: pointer;
-            background: none;
-        }
-
-        .back-link:hover {
-            border-color: var(--accent);
-            color: var(--accent);
-        }
-
-
-        /* ========================= */
-        /* FOOTER */
-        /* ========================= */
-
-        .footer {
-            background-color: var(--white);
-            border-top: 1px solid var(--border);
-        }
-
-        .footer-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 4rem 3rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 2rem;
-        }
-
-        .footer-branding h2 {
-            font-family: var(--serif);
-            font-size: 2rem;
-            margin-bottom: 0.7rem;
-        }
-
-        .footer-branding p { color: var(--muted); font-size: 0.9rem; }
-
-        .footer-links,
-        .footer-socials {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .footer-links a,
-        .footer-socials a {
-            font-size: 0.9rem;
-            color: #7A6560;
-            transition: color 0.3s;
-        }
-
-        .footer-links a:hover,
-        .footer-socials a:hover { color: var(--mulberry); }
-
-        .footer-bottom {
-            border-top: 1px solid var(--border);
-            padding: 1.2rem 3rem;
-            text-align: center;
-        }
-
-        .footer-bottom p {
-            font-size: 0.78rem;
-            color: var(--faint);
-            letter-spacing: 0.5px;
-        }
-
-
-        /* ========================= */
-        /* REVEAL */
-        /* ========================= */
-
-        .reveal {
-            opacity: 0;
-            transform: translateY(24px);
-            transition: opacity 0.65s ease, transform 0.65s ease;
-        }
-
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-
-        /* ========================= */
-        /* RESPONSIVE */
-        /* ========================= */
-
-        @media (max-width: 1000px) {
-            .contact-layout {
-                grid-template-columns: 1fr;
-                gap: 3.5rem;
-                padding-bottom: 5rem;
-            }
-
-            .map-wrapper {
-                height: 320px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .page-header,
-            .contact-layout {
-                padding-left: 1.5rem;
-                padding-right: 1.5rem;
-            }
-
-            .form-column {
-                padding: 2.5rem 1.8rem;
-            }
-
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-
-            .page-header h1 {
-                font-size: 2.3rem;
-            }
-
-            .footer-container {
-                flex-direction: column;
-                padding: 2.5rem 1.5rem;
-            }
-
-            .footer-bottom {
-                padding: 1rem 1.5rem;
-            }
+        @media (max-width: 600px) {
+            .form-row { grid-template-columns: 1fr; }
+            .contact-details { grid-template-columns: 1fr; gap: 0.15rem; }
+            .contact-details dd + dt { margin-top: 0.9rem; }
         }
 
     </style>
 </head>
 <body>
 
+    <a class="skip-link" href="#main">Към съдържанието</a>
+
     <!-- NAVBAR -->
     <header class="navbar">
         <div class="nav-container">
-            <div class="logo"><a href="index.html"><img src="logo.jpeg" height="56" alt="Закачалката — reloved store" style="display:block"></a></div>
-            <nav class="nav-links" id="navLinks">
+            <a class="logo" href="index.html" aria-label="Закачалката — начало"><img src="img/logo.jpg" width="701" height="384" alt="Закачалката — reloved store"></a>
+            <nav class="nav-links" id="navLinks" aria-label="Основна навигация">
                 <ul>
                     <li><a href="index.html">Начало</a></li>
                     <li><a href="store.html">Магазин</a></li>
-                    <li><a href="contact.html" class="active">Контакти</a></li>
+                    <li><a href="about.html">За нас</a></li>
+                    <li><a href="contact.html" aria-current="page">Контакти</a></li>
                 </ul>
+                <div class="nav-drawer-social">
+                    <a href="https://www.instagram.com/zakachalkatarelovedstore/" target="_blank" rel="noopener">Instagram</a>
+                    <a href="https://www.facebook.com/p/%D0%97%D0%B0%D0%BA%D0%B0%D1%87%D0%B0%D0%BB%D0%BA%D0%B0%D1%82%D0%B0-Reloved-Store-100083130402532/" target="_blank" rel="noopener">Facebook</a>
+                </div>
             </nav>
             <div class="nav-icons">
-                <a class="social-link" href="https://www.facebook.com/p/%D0%97%D0%B0%D0%BA%D0%B0%D1%87%D0%B0%D0%BB%D0%BA%D0%B0%D1%82%D0%B0-Reloved-Store-100083130402532/" target="_blank" rel="noopener" aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
-                <a class="social-link" href="https://www.instagram.com/zakachalkatarelovedstore/" target="_blank" rel="noopener" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+                <a class="social-link" href="https://www.instagram.com/zakachalkatarelovedstore/" target="_blank" rel="noopener" aria-label="Instagram"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+                <a class="social-link" href="https://www.facebook.com/p/%D0%97%D0%B0%D0%BA%D0%B0%D1%87%D0%B0%D0%BB%D0%BA%D0%B0%D1%82%D0%B0-Reloved-Store-100083130402532/" target="_blank" rel="noopener" aria-label="Facebook"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
                 <button class="nav-toggle" id="navToggle" aria-label="Отвори меню" aria-expanded="false" aria-controls="navLinks">
                     <span></span><span></span><span></span>
                 </button>
@@ -735,326 +212,220 @@
     </header>
     <div class="nav-overlay" id="navOverlay"></div>
 
+    <main id="main">
 
-    <!-- PAGE HEADER -->
-    <section class="page-header">
-        <div class="page-header-container">
-            <p class="breadcrumb">
-                <a href="index.html">Начало</a>
-                <span>›</span>
-                Контакти
-            </p>
-            <h1>Свържи се <em>с нас</em></h1>
-            <p class="page-header-sub">Имаш въпрос за конкретна вещ, искаш да уговориш оглед или търсиш нещо конкретно — пиши ни и ще се свържем с теб в рамките на 24 часа.</p>
-        </div>
-    </section>
+        <section class="contact-head" aria-labelledby="contactTitle">
+            <div>
+                <h1 id="contactTitle" data-rise>Пишете ни</h1>
+                <p data-rise style="--i:1">Въпрос за конкретна вещ, оглед или нещо, което търсите? Отговаряме до 24 часа, а магазинът ни е на ул. „Юрий Венелин“ 4.</p>
+            </div>
+            <figure class="contact-photo" data-rise style="--i:2">
+                <img src="img/shop.jpg" width="1535" height="1024" alt="Магазинът отвътре: релсата с дрехи и масата до прозореца" />
+            </figure>
+        </section>
 
+        <div class="contact-layout">
 
-    <!-- ========================= -->
-    <!-- CONTACT LAYOUT -->
-    <!-- ========================= -->
+            <div class="map-column">
+                <a class="contact-email" href="mailto:zakachalkata@gmail.com" data-reveal>zakachalkata@gmail.com</a>
 
-    <main class="contact-layout">
+                <dl class="contact-details" data-reveal style="--i:1">
+                    <dt>Магазин</dt>
+                    <dd><a href="https://www.google.com/maps/place//data=!4m2!3m1!1s0x40a455006f3550e1:0x9dd11590732b6887?sa=X&amp;ved=1t:8290&amp;hl=en-BG&amp;ictx=111" target="_blank" rel="noopener">ул. „Юрий Венелин“ 4, Варна Център</a></dd>
+                    <dt>Телефон</dt>
+                    <dd><a href="tel:+359884161889">088 416 1889</a></dd>
+                    <dt>Работно време</dt>
+                    <dd>
+                        <div class="hours-grid">
+                            <span>Пон – пет</span><span>10:00 – 18:00</span>
+                            <span>Събота</span><span>11:00 – 16:00</span>
+                            <span>Неделя</span><span>по уговорка</span>
+                        </div>
+                    </dd>
+                    <dt>Социални мрежи</dt>
+                    <dd><a href="https://www.instagram.com/zakachalkatarelovedstore/" target="_blank" rel="noopener">Instagram</a>, <a href="https://www.facebook.com/p/%D0%97%D0%B0%D0%BA%D0%B0%D1%87%D0%B0%D0%BB%D0%BA%D0%B0%D1%82%D0%B0-Reloved-Store-100083130402532/" target="_blank" rel="noopener">Facebook</a></dd>
+                </dl>
 
-
-        <!-- LEFT COLUMN — MAP + DETAILS -->
-        <div class="map-column">
-
-            <div class="map-wrapper reveal">
-                <!--
-                    Replace the src below with a real Google Maps embed URL.
-                    Go to maps.google.com → search your address → Share → Embed a map → copy the src.
-                    Example structure:
-                    https://www.google.com/maps/embed?pb=!1m18!...your_key...
-                -->
-                <iframe
-                    src="https://www.google.com/maps?q=Yuriy+Venelin+4,+9000+Varna,+Bulgaria&output=embed"
-                    title="Закачалката — Варна, ул. Юрий Венелин 4"
-                    allowfullscreen=""
-                    loading="lazy"
-                    referrerpolicy="no-referrer-when-downgrade">
-                </iframe>
+                <div class="map-wrapper" data-reveal style="--i:2">
+                    <iframe
+                        src="https://www.google.com/maps?q=Yuriy+Venelin+4,+9000+Varna,+Bulgaria&amp;output=embed"
+                        title="Карта: Закачалката, Варна, ул. Юрий Венелин 4"
+                        allowfullscreen=""
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
             </div>
 
-            <div class="contact-details reveal" style="transition-delay:0.1s;">
+            <div class="form-column" data-reveal style="--i:1">
 
-                <div class="detail-item">
-                    <div class="detail-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
-                    <div class="detail-text">
-                        <p class="detail-label">Адрес</p>
-                        <p class="detail-value"><a href="https://www.google.com/maps/place//data=!4m2!3m1!1s0x40a455006f3550e1:0x9dd11590732b6887?sa=X&ved=1t:8290&hl=en-BG&ictx=111" target="_blank" rel="noopener">ул. „Юрий Венелин" 4, Варна Център (Одесос), 9000 Варна</a></p>
-                    </div>
-                </div>
+                <div class="form-body" id="formBody">
+                    <h2 class="form-heading" data-reveal>Изпратете съобщение</h2>
+                    <p class="form-intro" data-reveal style="--i:1">Ако питате за конкретно парче, напишете името му или поставете линка.</p>
 
-                <div class="detail-item">
-                    <div class="detail-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.63 3.48 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l.27-.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 17z"/></svg></div>
-                    <div class="detail-text">
-                        <p class="detail-label">Телефон</p>
-                        <p class="detail-value">
-                            <a href="tel:+359884161889">088 416 1889</a>
-                        </p>
-                    </div>
-                </div>
+                    <div class="form-error" id="formError" role="alert"></div>
 
-                <div class="detail-item">
-                    <div class="detail-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
-                    <div class="detail-text">
-                        <p class="detail-label">Имейл</p>
-                        <p class="detail-value">
-                            <a href="mailto:zakachalkata@gmail.com">zakachalkata@gmail.com</a>
-                        </p>
-                    </div>
-                </div>
-
-                <div class="detail-item">
-                    <div class="detail-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
-                    <div class="detail-text">
-                        <p class="detail-label">Работно Време</p>
-                        <div class="detail-value">
-                            <div class="hours-grid">
-                                <span class="hours-day">Пон – Пет</span>
-                                <span class="hours-time">10:00 – 18:00</span>
-                                <span class="hours-day">Събота</span>
-                                <span class="hours-time">11:00 – 16:00</span>
-                                <span class="hours-day">Неделя</span>
-                                <span class="hours-time">По уговорка</span>
+                    <form id="contactForm" novalidate data-reveal style="--i:2">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" for="fullName">Име</label>
+                                <input class="form-input" type="text" id="fullName" autocomplete="name" required />
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="email">Имейл</label>
+                                <input class="form-input" type="email" id="email" placeholder="you@email.com" autocomplete="email" required />
                             </div>
                         </div>
-                    </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="subject">Тема</label>
+                            <div class="select-wrapper">
+                                <select class="form-select" id="subject" required>
+                                    <option value="">Изберете тема</option>
+                                    <option>Въпрос за продукт</option>
+                                    <option>Искане за оглед</option>
+                                    <option>Продажба / Комисионна</option>
+                                    <option>Поръчка и доставка</option>
+                                    <option>Друго</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="message">Съобщение</label>
+                            <textarea class="form-textarea" id="message" required></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary send-btn" id="sendBtn"><span id="sendBtnLabel">Изпрати съобщението</span></button>
+                    </form>
+                </div>
+
+                <div class="form-success" id="formSuccess" aria-live="polite">
+                    <h2 class="success-title">Съобщението е изпратено</h2>
+                    <p class="success-msg">Благодарим ви. Ще отговорим до 24 часа на посочения имейл.</p>
+                    <a class="btn" href="store.html">Обратно към магазина</a>
                 </div>
 
             </div>
-
-        </div>
-
-
-        <!-- RIGHT COLUMN — FORM -->
-        <div class="form-column reveal" style="transition-delay:0.15s;">
-
-            <!-- FORM BODY -->
-            <div class="form-body" id="formBody">
-
-                <p class="form-eyebrow">Изпрати Съобщение</p>
-                <h2 class="form-heading">Тук сме <em>за теб</em></h2>
-                <p class="form-intro">
-                    Имаш въпрос за конкретна вещ, искаш да уговориш оглед или търсиш нещо конкретно — пиши ни и ще се свържем с теб в рамките на 24 часа.
-                </p>
-
-                <div class="form-error" id="formError"></div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label class="form-label" for="fullName">Пълно Име</label>
-                        <input class="form-input" type="text" id="fullName" placeholder="Вашето име" autocomplete="name" />
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label" for="email">Имейл адрес</label>
-                        <input class="form-input" type="email" id="email" placeholder="you@email.com" autocomplete="email" />
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="subject">Относно</label>
-                    <div class="select-wrapper">
-                        <select class="form-select" id="subject">
-                            <option value="">Изберете тема…</option>
-                            <option>Въпрос за продукт</option>
-                            <option>Искане за оглед</option>
-                            <option>Продажба / Комисионна</option>
-                            <option>Поръчка и доставка</option>
-                            <option>Друго</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="message">Съобщение</label>
-                    <textarea class="form-textarea" id="message" placeholder="Напишете вашето съобщение…"></textarea>
-                </div>
-
-                <button class="send-btn" id="sendBtn" onclick="submitForm()">
-                    <span id="sendBtnLabel">Изпрати</span>
-                    <span class="send-btn-arrow">→</span>
-                </button>
-
-            </div>
-
-            <!-- SUCCESS STATE -->
-            <div class="form-success" id="formSuccess">
-                <div class="success-icon" aria-hidden="true">✓</div>
-                <h3 class="success-title">Съобщението е получено</h3>
-                <p class="success-msg">
-                    Благодарим ти! Ще се свържем с теб в рамките на 24 часа на посочения имейл.
-                </p>
-                <a href="store.html" class="back-link">← Обратно към магазина</a>
-            </div>
-
         </div>
 
     </main>
 
 
     <!-- FOOTER -->
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-branding">
-                <h2>Закачалката</h2>
-                <p>Внимателно избрана препродадена мода.</p>
-            </div>
-            <div class="footer-links">
+    <footer class="footer on-dark">
+        <div class="footer-top">
+            <p class="footer-lead">Внимателно избрана препродадена мода.</p>
+            <nav class="footer-col" aria-label="Страници">
                 <a href="index.html">Начало</a>
                 <a href="store.html">Магазин</a>
+                <a href="about.html">За нас</a>
                 <a href="contact.html">Контакти</a>
+            </nav>
+            <nav class="footer-col" aria-label="Условия">
+                <a href="terms.html">Общи условия</a>
+                <a href="withdrawal.html">Право на отказ</a>
                 <a href="privacy.html">Поверителност</a>
-            </div>
-            <div class="footer-socials">
+                <a href="cookies.html">Бисквитки</a>
+            </nav>
+            <div class="footer-col">
                 <a href="https://www.instagram.com/zakachalkatarelovedstore/" target="_blank" rel="noopener">Instagram</a>
                 <a href="https://www.facebook.com/p/%D0%97%D0%B0%D0%BA%D0%B0%D1%87%D0%B0%D0%BB%D0%BA%D0%B0%D1%82%D0%B0-Reloved-Store-100083130402532/" target="_blank" rel="noopener">Facebook</a>
+                <a href="mailto:zakachalkata@gmail.com">zakachalkata@gmail.com</a>
             </div>
         </div>
+        <p class="footer-identity">
+            ДЗЗД София Велвет, ЕИК 177491919, гр. Варна, ул. „Петър Райчев“ №22.
+            Тел. <a href="tel:+359884161889">+359 88 416 1889</a>, <a href="mailto:zakachalkata@gmail.com">zakachalkata@gmail.com</a>
+        </p>
+        <span class="footer-wordmark" aria-hidden="true">закачалката</span>
         <div class="footer-bottom">
             <p>© 2026 Закачалката. Всички права запазени.</p>
+            <p>Варна</p>
         </div>
     </footer>
 
-
     <script>
+    (function () {
+        "use strict";
 
-        /* Scroll reveal */
-        const revealEls = document.querySelectorAll('.reveal');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(e => {
-                if (e.isIntersecting) {
-                    e.target.classList.add('visible');
-                    observer.unobserve(e.target);
-                }
-            });
-        }, { threshold: 0.1 });
-        revealEls.forEach(el => observer.observe(el));
+        /* Sends to /api/send-contact-message (Resend), the same backend
+           pattern as the order form on product.html. */
+        var $ = function (id) { return document.getElementById(id); };
 
+        function showFormError(message) { var box = $("formError"); box.textContent = message; box.classList.add("visible"); }
+        function hideFormError() { $("formError").classList.remove("visible"); }
 
-        /* Form submission — sends to /api/send-contact-message (Resend),
-           same backend pattern as the order form on product.html. This used
-           to be a front-end-only stub that faked a success message without
-           actually delivering the message anywhere. */
-        function showFormError(message) {
-            const box = document.getElementById('formError');
-            box.textContent = message;
-            box.classList.add('visible');
-        }
+        $("contactForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+            submitForm();
+        });
 
-        function hideFormError() {
-            document.getElementById('formError').classList.remove('visible');
-        }
-
-        async function submitForm() {
+        function submitForm() {
             hideFormError();
 
-            const fields = [
-                { id: 'fullName',  check: v => v.trim().length > 1 },
-                { id: 'email',     check: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) },
-                { id: 'subject',   check: v => v !== '' },
-                { id: 'message',   check: v => v.trim().length > 5 },
+            var fields = [
+                { id: "fullName", check: function (v) { return v.trim().length > 1; } },
+                { id: "email",    check: function (v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); } },
+                { id: "subject",  check: function (v) { return v !== ""; } },
+                { id: "message",  check: function (v) { return v.trim().length > 5; } },
             ];
 
-            let valid = true;
-
-            fields.forEach(({ id, check }) => {
-                const el = document.getElementById(id);
-                const ok = check(el.value);
-                el.classList.toggle('error', !ok);
-                if (!ok) {
-                    valid = false;
-                    el.addEventListener('input', () => el.classList.remove('error'), { once: true });
-                    el.addEventListener('change', () => el.classList.remove('error'), { once: true });
-                }
+            var firstBad = null;
+            fields.forEach(function (f) {
+                var el = $(f.id);
+                var ok = f.check(el.value);
+                el.classList.toggle("error", !ok);
+                if (ok) { el.removeAttribute("aria-invalid"); return; }
+                el.setAttribute("aria-invalid", "true");
+                if (!firstBad) firstBad = el;
+                var clear = function () { el.classList.remove("error"); el.removeAttribute("aria-invalid"); };
+                el.addEventListener("input", clear, { once: true });
+                el.addEventListener("change", clear, { once: true });
             });
 
-            if (!valid) return;
+            if (firstBad) {
+                showFormError("Попълнете отбелязаните полета. Имейлът трябва да е валиден, а съобщението поне няколко думи.");
+                firstBad.focus();
+                return;
+            }
 
-            const sendBtn = document.getElementById('sendBtn');
-            const sendBtnLabel = document.getElementById('sendBtnLabel');
+            var sendBtn = $("sendBtn");
+            var label = $("sendBtnLabel");
             sendBtn.disabled = true;
-            sendBtnLabel.textContent = 'Изпращане…';
+            label.textContent = "Изпращане…";
 
-            const payload = {
-                fullName: document.getElementById('fullName').value.trim(),
-                email: document.getElementById('email').value.trim(),
-                subject: document.getElementById('subject').value,
-                message: document.getElementById('message').value.trim(),
+            var payload = {
+                fullName: $("fullName").value.trim(),
+                email: $("email").value.trim(),
+                subject: $("subject").value,
+                message: $("message").value.trim(),
             };
 
-            try {
-                const response = await fetch('/api/send-contact-message', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload),
-                });
-                const result = await response.json();
-
-                if (!response.ok || !result.success) {
-                    throw new Error(result.error || 'Нещо се обърка. Опитайте отново.');
-                }
-
-                const formBody    = document.getElementById('formBody');
-                const formSuccess = document.getElementById('formSuccess');
-
-                formBody.style.opacity    = '0';
-                formBody.style.transform  = 'translateY(-12px)';
-                formBody.style.transition = 'opacity 0.35s ease, transform 0.35s ease';
-
-                setTimeout(() => {
-                    formBody.classList.add('hidden');
-                    formSuccess.classList.add('visible');
-                    formSuccess.style.opacity   = '0';
-                    formSuccess.style.transform = 'translateY(12px)';
-                    formSuccess.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
-
-                    requestAnimationFrame(() => {
-                        requestAnimationFrame(() => {
-                            formSuccess.style.opacity   = '1';
-                            formSuccess.style.transform = 'translateY(0)';
-                        });
+            fetch("/api/send-contact-message", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload),
+            })
+                .then(function (res) {
+                    return res.json().catch(function () { return {}; }).then(function (result) {
+                        if (!res.ok || !result.success) throw new Error(result.error || "Нещо се обърка. Опитайте отново.");
                     });
-                }, 320);
-            } catch (err) {
-                console.error('[submitForm]', err);
-                showFormError(err.message || 'Нещо се обърка. Опитайте отново или ни пишете директно на имейла по-долу.');
-            } finally {
-                sendBtn.disabled = false;
-                sendBtnLabel.textContent = 'Изпрати';
-            }
+                })
+                .then(function () {
+                    $("formBody").classList.add("hidden");
+                    $("formSuccess").classList.add("visible");
+                })
+                .catch(function (err) {
+                    console.error("[contact]", err);
+                    showFormError(err.message || "Нещо се обърка. Опитайте отново или ни пишете директно на имейла.");
+                })
+                .then(function () {
+                    sendBtn.disabled = false;
+                    label.textContent = "Изпрати съобщението";
+                });
         }
-
-        /* ——— mobile nav toggle ——— */
-        (function () {
-            const toggle  = document.getElementById('navToggle');
-            const links   = document.getElementById('navLinks');
-            const overlay = document.getElementById('navOverlay');
-            if (!toggle || !links) return;
-
-            function closeMenu() {
-                toggle.classList.remove('open');
-                links.classList.remove('open');
-                if (overlay) overlay.classList.remove('open');
-                toggle.setAttribute('aria-expanded', 'false');
-                document.body.style.overflow = '';
-            }
-            function openMenu() {
-                toggle.classList.add('open');
-                links.classList.add('open');
-                if (overlay) overlay.classList.add('open');
-                toggle.setAttribute('aria-expanded', 'true');
-                document.body.style.overflow = 'hidden';
-            }
-            toggle.addEventListener('click', () => {
-                links.classList.contains('open') ? closeMenu() : openMenu();
-            });
-            if (overlay) overlay.addEventListener('click', closeMenu);
-            links.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
-            window.addEventListener('resize', () => { if (window.innerWidth > 860) closeMenu(); });
-        })();
-
+    })();
     </script>
 
 </body>

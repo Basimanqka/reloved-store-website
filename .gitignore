@@ -10,3 +10,6 @@ scratch1.txt
 
 .vercel
 .env*
+
+# design inspector output
+.taste-skill/
