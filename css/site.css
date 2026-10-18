@@ -12,8 +12,8 @@
     /* ---- colour ---- */
     --ground:       #FAF4F0;   /* page background: a pale bone between the cream and the blush */
     --paper:        #FFFBF8;   /* inputs and panels that sit on the ground      */
-    --surface:      #F6EBCD;   /* cream: one tone step up from the ground        */
-    --surface-deep: #EFDFBC;   /* hover / pressed step on cream                  */
+    --surface:      #F0EAE5;   /* warm bone: one tone step up from the ground    */
+    --surface-deep: #E6DDD6;   /* hover / pressed step on warm bone              */
     --blush:        #F5C1AC;
     --blush-soft:   #F9DDD0;
     --coral:        #ED917A;   /* the main action on dark fields, with ink text (4.7:1) */
@@ -23,9 +23,9 @@
     --ink:          #4A3844;   /* aubergine: text, hero and footer fields        */
     --muted:        #6B5E68;   /* mauve, darkened to pass 4.5:1 on the ground    */
     --mauve:        #7B6E78;   /* decorative only, never small text              */
-    --on-dark:      #F6EBCD;   /* text on aubergine / fig                        */
+    --on-dark:      #F6EBCD;   /* cream: text on aubergine / fig only, never a fill */
     --on-dark-soft: #F5C1AC;   /* secondary text on aubergine / fig              */
-    --line:         #E3D2B4;   /* form-field borders only                        */
+    --line:         #E2D8D0;   /* form-field borders only                        */
     --danger:       #A3343A;
     --danger-soft:  #F8E0DC;
     --ok:           #3F6B58;
@@ -203,7 +203,7 @@ h1, h2, h3 {
 .btn-soft { background: var(--surface); color: var(--ink); }
 .btn-soft:hover { background: var(--surface-deep); }
 
-.btn-light { background: var(--on-dark); color: var(--ink); }
+.btn-light { background: var(--surface); color: var(--ink); }
 .btn-light:hover { background: var(--blush); color: var(--ink); }
 
 
@@ -336,7 +336,7 @@ h1, h2, h3 {
 
 
 /* ===================================================================== */
-/* FOOTER — an aubergine field; the name returns across the full width   */
+/* FOOTER — an aubergine field                                          */
 /* ===================================================================== */
 
 .footer {
@@ -385,26 +385,13 @@ h1, h2, h3 {
 .footer-identity a { color: inherit; text-decoration: underline; text-underline-offset: 0.2em; }
 .footer-identity a:hover { color: var(--on-dark); }
 
-.footer-wordmark {
-    display: block;
-    margin-top: clamp(1.5rem, 4vw, 3rem);
-    font-family: var(--font-display);
-    /* fitted to the width: the word is ~4.66 em wide in Oranienbaum at this tracking */
-    font-size: calc((100vw - 2 * var(--margin)) / 4.7);
-    line-height: 0.78;
-    letter-spacing: -0.045em;
-    white-space: nowrap;
-    color: var(--on-dark);
-    margin-left: -0.04em;
-    user-select: none;
-}
 
 .footer-bottom {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
     gap: 0.5rem 2rem;
-    margin-top: 1.25rem;
+    margin-top: clamp(3rem, 6vw, 5rem);
     font-size: var(--step-small);
     color: var(--on-dark-soft);
 }
