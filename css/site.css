@@ -198,8 +198,13 @@ h1, h2, h3 {
 /* the main action: aubergine on light pages, fig where the field is dark */
 .btn-primary { background: var(--ink); color: var(--on-dark); }
 .btn-primary:hover { background: var(--fig); color: var(--on-dark); }
-.on-dark .btn-primary { background: var(--fig); color: var(--on-dark); }      /* cream on fig: 7:1 */
-.on-dark .btn-primary:hover { background: var(--fig-light); color: var(--on-dark); }
+.on-dark .btn-primary {                                                      /* cream on fig: 7:1 */
+    background: var(--fig);
+    color: var(--on-dark);
+    border: 1px solid rgba(246, 235, 205, 0.55);   /* a cream edge lifts it off the aubergine */
+    transition: transform var(--t-press) var(--ease-out), background-color var(--t-hover) ease, border-color var(--t-hover) ease;
+}
+.on-dark .btn-primary:hover { background: var(--fig-light); color: var(--on-dark); border-color: var(--on-dark); }
 
 .btn-soft { background: var(--surface); color: var(--ink); }
 .btn-soft:hover { background: var(--surface-deep); }
