@@ -646,7 +646,7 @@
 
                 <div class="filter-price">
                     <label class="price-label" for="priceRange">Цена до</label>
-                    <input type="range" id="priceRange" min="0" max="2000" step="10" value="2000" />
+                    <input type="range" id="priceRange" min="0" max="100" step="1" value="100" aria-valuetext="всички цени" />
                     <span class="price-value" id="priceDisplay">всички</span>
                 </div>
 
@@ -850,12 +850,37 @@
             }).join(""));
         }
 
+        /* The slider runs 0-100, but not evenly: the first 80 steps cover
+           EUR 0-300 in EUR 5 steps, where most pieces are priced, and the
+           last 20 cover everything above, up to the dearest piece. The far
+           right end means "all prices". */
+        var PRICE_FOCUS = 300;
+        var FOCUS_STEPS = 80;
+        var PRICE_ALL = 100;
+
         function setupPrice() {
             var top = PRODUCTS.reduce(function (m, p) { return Math.max(m, p.price); }, 0);
-            priceMax = Math.max(50, Math.ceil(top / 50) * 50);
-            var range = $("priceRange");
-            range.max = priceMax;
-            range.value = priceMax;
+            priceMax = Math.max(PRICE_FOCUS, Math.ceil(top / 50) * 50);
+            resetPrice();
+        }
+
+        /* slider position → price limit in EUR (Infinity = no limit) */
+        function priceLimit() {
+            var pos = parseInt($("priceRange").value, 10);
+            if (pos >= PRICE_ALL) return Infinity;
+            if (priceMax <= PRICE_FOCUS) {
+                return Math.round(pos / PRICE_ALL * PRICE_FOCUS / 5) * 5;
+            }
+            if (pos <= FOCUS_STEPS) {
+                return Math.round(pos / FOCUS_STEPS * PRICE_FOCUS / 5) * 5;
+            }
+            var above = (pos - FOCUS_STEPS) / (PRICE_ALL - FOCUS_STEPS) * (priceMax - PRICE_FOCUS);
+            var step = priceMax - PRICE_FOCUS > 500 ? 50 : 10;
+            return PRICE_FOCUS + Math.round(above / step) * step;
+        }
+
+        function resetPrice() {
+            $("priceRange").value = PRICE_ALL;
             updatePrice();
         }
 
@@ -950,7 +975,7 @@
         function applyFilters() {
             var v = {};
             SELECTS.forEach(function (id) { v[id] = $(id).value; });
-            var price = parseInt($("priceRange").value, 10);
+            var price = priceLimit();
             var sort = $("sortBy").value;
             var search = $("searchInput").value.trim().toLowerCase();
 
@@ -964,7 +989,7 @@
                 if (v.filterMaterial && p.material !== v.filterMaterial) return false;
                 if (v.filterBrand && p.brand !== v.filterBrand) return false;
                 if (v.filterCondition && p.condition !== v.filterCondition) return false;
-                if (price < priceMax && p.price > price) return false;
+                if (p.price > price) return false;
                 if (search) {
                     var terms = search.split(/\s+/).filter(Boolean);
                     if (!terms.every(function (t) { return p.searchBlob.indexOf(t) >= 0; })) return false;
@@ -995,7 +1020,7 @@
             if (v.filterMaterial) active.push({ label: MATERIAL_LABELS[v.filterMaterial] || v.filterMaterial, id: "filterMaterial" });
             if (v.filterBrand) active.push({ label: v.filterBrand, id: "filterBrand" });
             if (v.filterCondition) active.push({ label: v.filterCondition, id: "filterCondition" });
-            if (price < priceMax) active.push({ label: "До €" + price, reset: function () { $("priceRange").value = priceMax; updatePrice(); } });
+            if (price !== Infinity) active.push({ label: "До €" + price, reset: resetPrice });
 
             var badge = $("filterCount");
             badge.textContent = active.length;
@@ -1028,14 +1053,14 @@
         function clearFilters() {
             SELECTS.forEach(function (id) { $(id).value = ""; });
             $("searchInput").value = "";
-            $("priceRange").value = priceMax;
-            updatePrice();
+            resetPrice();
             applyFilters();
         }
 
         function updatePrice() {
-            var val = parseInt($("priceRange").value, 10);
-            $("priceDisplay").textContent = val >= priceMax ? "всички" : "€" + val;
+            var limit = priceLimit();
+            $("priceDisplay").textContent = limit === Infinity ? "всички" : "€" + limit;
+            $("priceRange").setAttribute("aria-valuetext", limit === Infinity ? "всички цени" : "до €" + limit);
         }
 
         function updateCategoryCounts() {
