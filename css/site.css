@@ -16,10 +16,11 @@
     --surface-deep: #E6DDD6;   /* hover / pressed step on warm bone              */
     --blush:        #F5C1AC;
     --blush-soft:   #F9DDD0;
-    --coral:        #ED917A;   /* the main action on dark fields, with ink text (4.7:1) */
+    --coral:        #ED917A;   /* small accents only (e.g. the filter count badge) */
     --coral-press:  #E47E65;
     --fig:          #783C44;   /* links, sale prices, the events field           */
     --fig-deep:     #5E2D35;
+    --fig-light:    #8E4752;   /* hover step for fig buttons on dark fields */
     --ink:          #4A3844;   /* aubergine: text, hero and footer fields        */
     --muted:        #6B5E68;   /* mauve, darkened to pass 4.5:1 on the ground    */
     --mauve:        #7B6E78;   /* decorative only, never small text              */
@@ -194,11 +195,11 @@ h1, h2, h3 {
 .btn:active { transform: scale(0.97); }
 .btn:disabled { opacity: 0.55; cursor: default; transform: none; }
 
-/* the main action: aubergine on light pages, coral where the field is dark */
+/* the main action: aubergine on light pages, fig where the field is dark */
 .btn-primary { background: var(--ink); color: var(--on-dark); }
 .btn-primary:hover { background: var(--fig); color: var(--on-dark); }
-.on-dark .btn-primary { background: var(--coral); color: var(--ink); }
-.on-dark .btn-primary:hover { background: var(--coral-press); color: var(--ink); }
+.on-dark .btn-primary { background: var(--fig); color: var(--on-dark); }      /* cream on fig: 7:1 */
+.on-dark .btn-primary:hover { background: var(--fig-light); color: var(--on-dark); }
 
 .btn-soft { background: var(--surface); color: var(--ink); }
 .btn-soft:hover { background: var(--surface-deep); }
