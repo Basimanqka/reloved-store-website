@@ -15,6 +15,6 @@
    ===================================================================== */
 
 window.SITE_CONFIG = {
-    SUPABASE_URL: "https://YOUR-PROJECT-REF.supabase.co",
-    SUPABASE_ANON_KEY: "YOUR-PUBLISHABLE-KEY",
+    SUPABASE_URL: "https://ozwydlffpvrcgnhdcjvw.supabase.co",
+    SUPABASE_ANON_KEY: "sb_publishable_wyBLx6NPlR8uk-jC-qyupQ_FeQzE37l",
 };
