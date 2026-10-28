@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>За нас — Закачалката</title>
-    <meta name="description" content="Закачалката е малък магазин във Варна за дизайнерска мода втора ръка, подбрана парче по парче. Вижте магазина и снимки от релсата." />
+    <meta name="description" content="Закачалката е малък магазин във Варна за дизайнерска мода втора ръка, подбрана с внимание. Вижте магазина и снимки от релсата." />
     <link rel="canonical" href="https://www.zakachalkata.com/about.html" />
     <meta name="robots" content="index, follow" />
 
@@ -12,7 +12,7 @@
     <meta property="og:site_name" content="Закачалката" />
     <meta property="og:locale" content="bg_BG" />
     <meta property="og:title" content="За нас — Закачалката" />
-    <meta property="og:description" content="Малък магазин във Варна за дизайнерска мода втора ръка, подбрана парче по парче." />
+    <meta property="og:description" content="Малък магазин във Варна за дизайнерска мода втора ръка, подбрана с внимание." />
     <meta property="og:url" content="https://www.zakachalkata.com/about.html" />
     <meta property="og:image" content="https://www.zakachalkata.com/og-image.png" />
     <meta property="og:image:width" content="1200" />
@@ -76,6 +76,11 @@
         .chapter h1 { font-size: var(--step-head); }
         .chapter h2 { font-size: var(--step-head); margin-bottom: 2rem; }
         .chapter .lead { margin-top: 1.75rem; }
+        .chapter-sub {
+            margin: clamp(2.5rem, 5vw, 3.5rem) 0 1.5rem;
+            font-size: var(--step-lead);
+            line-height: 1.1;
+        }
 
         .letter p { max-width: 44ch; text-wrap: pretty; }
         .letter p + p { margin-top: 1em; }
@@ -303,9 +308,10 @@
 
             <div class="stage-photo">
                 <div class="stage-frame" id="stageFrame">
-                    <img class="is-active" src="img/shop-rail.jpg" width="900" height="1024" alt="Релсата с дрехи в магазина" fetchpriority="high" />
-                    <img src="img/shop-table.jpg" width="900" height="1024" alt="Масата до прозореца с чанти, бижута и обувки" loading="lazy" />
-                    <img src="img/shop.jpg" width="1535" height="1024" alt="Магазинът: релсата, масата и прозорецът" loading="lazy" style="object-position: 58% 50%;" />
+                    <img class="is-active" src="img/shop-rack.jpg" width="1200" height="1600" alt="Релсата с дрехи и манекенът в магазина" fetchpriority="high" />
+                    <img src="img/styling.jpg" width="1200" height="1600" alt="Пробваме нова визия в магазина" loading="lazy" />
+                    <img src="img/accessories.jpg" width="1200" height="1600" alt="Обувки, колани и чанти от любими брандове" loading="lazy" />
+                    <img src="img/storefront.jpg" width="1200" height="1600" alt="Входът на магазина на ул. „Юрий Венелин“" loading="lazy" />
                 </div>
             </div>
 
@@ -313,20 +319,46 @@
 
                 <section class="chapter" data-photo="0" aria-labelledby="aboutTitle">
                     <h1 id="aboutTitle" data-rise>Кои сме ние</h1>
-                    <p class="lead" data-rise style="--i:1">Малък магазин във Варна за дизайнерска мода втора ръка, подбрана парче по парче.</p>
+                    <p class="lead" data-rise style="--i:1">Бутик за устойчива мода във Варна, създаден през 2022 г. от нас — Тели и Дари.</p>
                 </section>
 
                 <section class="chapter letter" data-photo="1" aria-label="Нашата история">
                     <div class="prose">
-                        <p data-reveal>Закачалката започна от една проста мисъл: хубавите дрехи заслужават да бъдат носени, а не да чакат в гардероба.</p>
-                        <p data-reveal style="--i:1">Затова подбираме вещи, които си струват: дизайнерски дрехи, обувки, чанти и аксесоари с история. Всяка минава през ръцете ни, преди да стигне до закачалката.</p>
-                        <p data-reveal style="--i:2">През магазина са минавали Miu Miu, Burberry, Dolce &amp; Gabbana, Armani, Furla и Karl Lagerfeld, редом с по-малко известни марки, които също заслужават внимание.</p>
-                        <p data-reveal style="--i:3">Държим на качество на разумна цена, без компромиси. Ако нещо не е както трябва, ще го прочетете в описанието, а не ще го откриете вкъщи.</p>
+                        <p data-reveal>Закачалката започна от една проста идея: хубавите дрехи заслужават да бъдат носени.</p>
+                        <p data-reveal style="--i:1">Затова подбираме с внимание всеки артикул — дрехи, обувки, чанти и аксесоари.</p>
+                        <p data-reveal style="--i:2">Държим на личното отношение, защото вярваме, че всяка от вас е специална. Нашата мисия е да ви предложим качество на разумна цена.</p>
                     </div>
-                    <p class="letter-sign" data-reveal style="--i:4">Екипът на Закачалката</p>
+                    <p class="letter-sign" data-reveal style="--i:3">Тели и Дари</p>
                 </section>
 
-                <section class="chapter" data-photo="2" aria-labelledby="waysTitle">
+                <section class="chapter" data-photo="2" aria-labelledby="consignTitle">
+                    <h2 id="consignTitle" data-reveal>Консигнация</h2>
+                    <div class="prose">
+                        <p data-reveal style="--i:1">Имате дрехи, обувки, чанти или аксесоари от любими брандове, които вече не носите, но заслужават да бъдат открити от някой друг? Ние от „Закачалката“ ви предлагаме възможност да им намерите нови собственици.</p>
+                        <p data-reveal style="--i:2">Приемаме предложения за артикули от висок и среден клас брандове, които отговарят на концепцията и критериите за качество на нашия магазин.</p>
+                    </div>
+
+                    <h3 class="chapter-sub" data-reveal>Как работи консигнацията?</h3>
+                    <dl class="ways">
+                        <div data-reveal>
+                            <dt>1. Предложете ни вашите артикули</dt>
+                            <dd>Свържете се с нас и ни покажете дрехите, обувките, чантите или аксесоарите, които искате да предложите за продажба.</dd>
+                        </div>
+                        <div data-reveal style="--i:1">
+                            <dt>2. Оглед и оценка</dt>
+                            <dd>Ще разгледаме внимателно всеки артикул, като вземем предвид бранда, състоянието, актуалността и пазарната му стойност. На тази база ще ви предложим продажна цена.</dd>
+                        </div>
+                        <div data-reveal style="--i:2">
+                            <dt>3. Продажба в „Закачалката“</dt>
+                            <dd>След като уточним условията, ще представим одобрените артикули в магазина ни за предварително определен период, през който те ще очакват своите нови притежатели.</dd>
+                        </div>
+                    </dl>
+
+                    <h3 class="chapter-sub" data-reveal>Защо да изберете „Закачалката“?</h3>
+                    <p data-reveal style="--i:1">Защото вярваме, че хубавите вещи заслужават повече от един живот. Консигнацията е удобен начин да освободите място в гардероба си, да дадете нов шанс на качествените си находки и да подкрепите идеята за по-устойчива мода.</p>
+                </section>
+
+                <section class="chapter" data-photo="1" aria-labelledby="waysTitle">
                     <h2 id="waysTitle" data-reveal>Как работим</h2>
                     <dl class="ways">
                         <div data-reveal>
@@ -334,8 +366,8 @@
                             <dd>Оглеждаме я, преди да я снимаме. Състоянието е описано с една от три оценки: отлично, много добро или добро.</dd>
                         </div>
                         <div data-reveal style="--i:1">
-                            <dt>Едно парче, един размер</dt>
-                            <dd>Нямаме склад с повторения. Когато някой вземе парчето, то изчезва от магазина и от сайта.</dd>
+                            <dt>Един артикул, един размер</dt>
+                            <dd>Нямаме склад с повторения. Когато някой вземе артикула, той изчезва от магазина и от сайта.</dd>
                         </div>
                         <div data-reveal style="--i:2">
                             <dt>Честна цена</dt>
@@ -348,7 +380,7 @@
                     </dl>
                 </section>
 
-                <section class="chapter" data-photo="0" aria-labelledby="visitTitle">
+                <section class="chapter" data-photo="3" aria-labelledby="visitTitle">
                     <h2 id="visitTitle" data-reveal>Елате в магазина</h2>
                     <p class="visit-address" data-reveal style="--i:1">ул. „Юрий Венелин“ 4, Варна Център</p>
                     <dl class="hours" data-reveal style="--i:2">
@@ -374,9 +406,18 @@
             </div>
 
             <div class="gallery-grid" id="galleryGrid">
-                <figure class="shot"><button type="button" data-index="0"><img src="img/shop-rail.jpg" width="900" height="1024" alt="Релсата с дрехи в магазина" loading="lazy" /></button><figcaption>Релсата</figcaption></figure>
-                <figure class="shot"><button type="button" data-index="1"><img src="img/shop.jpg" width="1535" height="1024" alt="Магазинът: релсата, масата и прозорецът" loading="lazy" /></button><figcaption>Магазинът</figcaption></figure>
-                <figure class="shot"><button type="button" data-index="2"><img src="img/shop-table.jpg" width="900" height="1024" alt="Масата до прозореца" loading="lazy" /></button><figcaption>Масата до прозореца</figcaption></figure>
+                <figure class="shot"><button type="button" data-index="0"><img src="img/bazaar-banner.jpg" width="640" height="960" alt="Банерът на базара" loading="lazy" /></button><figcaption>Базарът</figcaption></figure>
+                <figure class="shot"><button type="button" data-index="1"><img src="img/shop-interior.jpg" width="1254" height="1254" alt="Магазинът отвътре" loading="lazy" /></button><figcaption>Магазинът</figcaption></figure>
+                <figure class="shot"><button type="button" data-index="2"><img src="img/event-guests.jpg" width="1200" height="1600" alt="Гостите на базара" loading="lazy" /></button><figcaption>Гостите на базара</figcaption></figure>
+                <figure class="shot"><button type="button" data-index="3"><img src="img/shop-rack.jpg" width="1200" height="1600" alt="Релсата и манекенът" loading="lazy" /></button><figcaption>Релсата</figcaption></figure>
+                <figure class="shot"><button type="button" data-index="4"><img src="img/styling.jpg" width="1200" height="1600" alt="Пробваме нова визия" loading="lazy" /></button><figcaption>Нова визия</figcaption></figure>
+                <figure class="shot"><button type="button" data-index="5"><img src="img/event-group.jpg" width="1440" height="1232" alt="Събиране в магазина" loading="lazy" /></button><figcaption>Събиране в магазина</figcaption></figure>
+                <figure class="shot"><button type="button" data-index="6"><img src="img/bag-chain.jpg" width="1200" height="1600" alt="Чанта с верижка" loading="lazy" /></button><figcaption>Чанта с верижка</figcaption></figure>
+                <figure class="shot"><button type="button" data-index="7"><img src="img/storefront.jpg" width="1200" height="1600" alt="Пред входа на ул. „Юрий Венелин“" loading="lazy" /></button><figcaption>Пред входа</figcaption></figure>
+                <figure class="shot"><button type="button" data-index="8"><img src="img/event-trio.jpg" width="1200" height="1600" alt="Три дами на базара" loading="lazy" /></button><figcaption>На базара</figcaption></figure>
+                <figure class="shot"><button type="button" data-index="9"><img src="img/shoes-studded.jpg" width="1200" height="1600" alt="Обувки с капси" loading="lazy" /></button><figcaption>Обувки с капси</figcaption></figure>
+                <figure class="shot"><button type="button" data-index="10"><img src="img/shop-look.jpg" width="1060" height="1600" alt="Визия от магазина" loading="lazy" /></button><figcaption>Визия от магазина</figcaption></figure>
+                <figure class="shot"><button type="button" data-index="11"><img src="img/accessories.jpg" width="1200" height="1600" alt="Обувки, колани и чанти" loading="lazy" /></button><figcaption>Аксесоари</figcaption></figure>
             </div>
         </section>
 

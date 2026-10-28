@@ -530,9 +530,9 @@
         <section class="store-head" aria-labelledby="storeTitle">
             <div>
                 <h1 id="storeTitle" data-rise>Магазин</h1>
-                <p class="store-sub" data-rise style="--i:1">Всяко парче е в един екземпляр и един размер.</p>
+                <p class="store-sub" data-rise style="--i:1">Всеки артикул е в един екземпляр и един размер.</p>
             </div>
-            <p class="store-count" aria-live="polite" data-rise style="--i:2"><strong id="totalCount">…</strong> <span id="totalLabel">налични парчета</span></p>
+            <p class="store-count" aria-live="polite" data-rise style="--i:2"><strong id="totalCount">…</strong> <span id="totalLabel">налични артикула</span></p>
         </section>
 
 
@@ -704,7 +704,7 @@
                 </ul>
             </aside>
 
-            <section class="store-content" aria-label="Налични парчета">
+            <section class="store-content" aria-label="Налични артикули">
 
                 <div class="active-filters" id="activeFilters" aria-live="polite"></div>
 
@@ -716,7 +716,7 @@
 
                 <div class="empty-state" id="emptyState">
                     <h2 class="empty-title">Нищо не отговаря</h2>
-                    <p class="empty-msg" id="emptyMsg">Няма парчета с тези филтри в момента. Махнете някой от тях или изчистете всички.</p>
+                    <p class="empty-msg" id="emptyMsg">Няма артикули с тези филтри в момента. Махнете някой от тях или изчистете всички.</p>
                     <button type="button" class="btn" id="emptyReset">Изчисти филтрите</button>
                 </div>
 
@@ -765,7 +765,7 @@
     (function () {
         "use strict";
 
-        var FALLBACK_IMG = "img/shop-rail.jpg";
+        var FALLBACK_IMG = "img/shop-rack.jpg";
         var PAGE_SIZE = 12;
 
         var CAT_LABELS = {
@@ -794,7 +794,7 @@
         var priceMax = 2000;
 
         function sizeLabel(s) { return s === "one-size" ? "един размер" : "размер " + s; }
-        function piecesWord(n) { return n === 1 ? "налично парче" : "налични парчета"; }
+        function piecesWord(n) { return n === 1 ? "наличен артикул" : "налични артикула"; }
 
         /* ---------------------------------------------------------------- */
         /* load                                                             */
@@ -835,7 +835,7 @@
                     console.error("[store] products:", err);
                     $("productsGrid").innerHTML = "";
                     $("totalCount").textContent = "0";
-                    $("emptyMsg").textContent = "Парчетата не можаха да се заредят. Проверете връзката и презаредете страницата.";
+                    $("emptyMsg").textContent = "Артикулите не можаха да се заредят. Проверете връзката и презаредете страницата.";
                     $("emptyReset").hidden = true;
                     $("emptyState").classList.add("visible");
                 });
@@ -931,8 +931,8 @@
                 var shopEmpty = PRODUCTS.length === 0;
                 empty.querySelector(".empty-title").textContent = shopEmpty ? "Закачалката е празна" : "Нищо не отговаря";
                 $("emptyMsg").textContent = shopEmpty
-                    ? "В момента няма налични парчета. Новите се появяват тук веднага щом ги качим."
-                    : "Няма парчета с тези филтри в момента. Махнете някой от тях или изчистете всички.";
+                    ? "В момента няма налични артикули. Новите се появяват тук веднага щом ги качим."
+                    : "Няма артикули с тези филтри в момента. Махнете някой от тях или изчистете всички.";
                 $("emptyReset").hidden = shopEmpty;
                 grid.innerHTML = "";
                 empty.classList.add("visible");

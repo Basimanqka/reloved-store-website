@@ -430,7 +430,7 @@
             <div class="main-image-wrapper">
                 <img id="mainImage" src="" alt="" width="800" height="1000" />
             </div>
-            <div class="thumbnails" id="thumbnails" aria-label="Снимки на парчето"></div>
+            <div class="thumbnails" id="thumbnails" aria-label="Снимки на артикула"></div>
         </div>
 
         <div class="product-info">
@@ -506,7 +506,7 @@
             <div class="modal-form-state" id="formState">
 
                 <h2 class="modal-title" id="modalTitle">Къде да го изпратим?</h2>
-                <p class="modal-subtitle">Запазваме парчето за 24 часа, докато потвърдим поръчката. Плащате при доставка.</p>
+                <p class="modal-subtitle">Запазваме артикула за 24 часа, докато потвърдим поръчката. Плащате при доставка.</p>
 
                 <div class="modal-product-summary">
                     <img class="modal-product-img" id="modalImg" src="" alt="" width="64" height="80" />
@@ -592,7 +592,7 @@
         /* EUR is the master currency site-wide; BGN is derived using the fixed,
            legally pegged rate (1 EUR = 1.95583 BGN) and shown on this page only. */
         var BGN_PER_EUR = 1.95583;
-        var FALLBACK_IMG = "img/shop-rail.jpg";
+        var FALLBACK_IMG = "img/shop-rack.jpg";
 
         var CAT_LABELS = {
             outerwear: "Връхни дрехи", dresses: "Рокли", tops: "Блузи", shirts: "Ризи",
@@ -635,7 +635,7 @@
                 })
                 .catch(function (err) {
                     console.error("[product]", err);
-                    showMissing("Парчето не можа да се зареди. Проверете връзката и презаредете страницата.");
+                    showMissing("Артикулът не можа да се зареди. Проверете връзката и презаредете страницата.");
                 });
         }
 
@@ -712,7 +712,7 @@
             /* sold */
             if (p.is_sold) {
                 var buy = $("buyBtn");
-                buy.textContent = "Това парче вече е продадено";
+                buy.textContent = "Този артикул вече е продаден";
                 buy.disabled = true;
             }
 
@@ -753,8 +753,8 @@
             layout.classList.remove("is-loading");
             layout.innerHTML =
                 '<div class="product-missing">' +
-                "<h1>Това парче не е тук</h1>" +
-                "<p>" + zkEsc(msg || "Може вече да е продадено. Всяко парче при нас е в един екземпляр.") + "</p>" +
+                "<h1>Този артикул не е тук</h1>" +
+                "<p>" + zkEsc(msg || "Може вече да е продаден. Всеки артикул при нас е в един екземпляр.") + "</p>" +
                 '<a class="btn" href="store.html">Разгледай наличните</a>' +
                 "</div>";
         }
