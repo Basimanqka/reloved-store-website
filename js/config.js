@@ -15,6 +15,6 @@
    ===================================================================== */
 
 window.SITE_CONFIG = {
-    SUPABASE_URL: "https://ozwydlffpvrcgnhdcjvw.supabase.co",
-    SUPABASE_ANON_KEY: "sb_publishable_wyBLx6NPlR8uk-jC-qyupQ_FeQzE37l",
+    SUPABASE_URL: "https://gctrvznjoumvmoyukfah.supabase.co",
+    SUPABASE_ANON_KEY: "sb_publishable_m6FuaelH04iHTlEA2ORf1Q_2aJS6HhP",
 };
