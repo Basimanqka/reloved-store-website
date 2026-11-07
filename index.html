@@ -36,15 +36,16 @@
     <style>
 
         /* ===================================================================== */
-        /* HERO — the shop's rail, inset; the name crosses its corner            */
+        /* HERO — the shop's rail, nearly full-bleed; the words sit in a framed  */
+        /* panel across its lower edge                                           */
         /* ===================================================================== */
 
         .hero {
-            --wm: clamp(5.5rem, 12.4vw, 15.5rem);   /* the name's size; the copy above it is measured from it */
             position: relative;
             height: calc(100svh - var(--nav-h));
             min-height: 620px;
             max-height: 1080px;
+            padding: 20px;
             background: var(--ink);
             color: var(--on-dark);
             overflow: hidden;
@@ -52,10 +53,7 @@
 
         .hero-photo {
             position: absolute;
-            top: 20px;
-            left: 20px;
-            bottom: 20px;
-            width: 47%;
+            inset: 20px;
             overflow: hidden;
             background: var(--fig-deep);
         }
@@ -64,36 +62,44 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            object-position: 35% 50%;
+            object-position: 50% 45%;
         }
 
-        /* a neutral scrim, only where the name lies over the picture */
+        /* a soft shade under the panel so its edge never fights a bright patch */
         .hero-photo::after {
             content: "";
             position: absolute;
             inset: 0;
-            background: linear-gradient(to top, rgba(43, 31, 40, 0.55), rgba(43, 31, 40, 0) 38%); /* taste-skill-ignore: scrim over the photo */
+            background: linear-gradient(to top, rgba(43, 31, 40, 0.45), rgba(43, 31, 40, 0) 45%); /* taste-skill-ignore: scrim over the photo */
             pointer-events: none;
         }
 
-        /* the copy is centred in the free area of the right half: between the
-           top of the hero and the top of the name */
         .hero-copy {
             position: absolute;
-            top: 0;
-            right: 0;
-            bottom: calc(var(--wm) * 0.8 + 18px);
-            left: calc(47% + 20px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem var(--margin);
+            left: calc(20px + var(--margin));
+            bottom: calc(20px + var(--margin));
+            z-index: 2;
+            max-width: min(620px, calc(100% - 40px - 2 * var(--margin)));
+            padding: clamp(1.75rem, 1rem + 2vw, 2.75rem) clamp(1.5rem, 1rem + 2vw, 3rem);
+            background: rgba(74, 56, 68, 0.94); /* taste-skill-ignore: --ink, nearly opaque over the photo */
+            border: 1px solid rgba(246, 235, 205, 0.35); /* taste-skill-ignore: --on-dark hairline */
+            outline: 1px solid rgba(246, 235, 205, 0.18); /* taste-skill-ignore: second, offset frame line */
+            outline-offset: 6px;
+        }
+
+        .hero-eyebrow {
+            font-family: var(--font-text);
+            font-size: var(--step-small);
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--on-dark-soft);
+            margin-bottom: 1rem;
         }
 
         .hero-sentence {
-            font-size: clamp(1.375rem, 0.9rem + 1.1vw, 2.25rem);
-            line-height: 1.25;
-            max-width: 26ch;
+            font-size: clamp(2rem, 1.1rem + 2.6vw, 3.5rem);
+            line-height: 1.1;
+            max-width: 16ch;
             text-wrap: balance;
         }
 
@@ -102,39 +108,18 @@
             align-items: center;
             flex-wrap: wrap;
             gap: 1rem 1.75rem;
-            margin-top: 2.25rem;
+            margin-top: 2rem;
         }
 
         .hero-actions .link { color: var(--on-dark); font-weight: 500; padding: 0.75rem 0; }
-
-        .hero-wordmark {
-            position: absolute;
-            right: var(--margin);
-            bottom: 18px;
-            z-index: 2;
-            font-size: var(--wm);
-            line-height: 0.8;
-            letter-spacing: -0.04em;
-            white-space: nowrap;
-            color: var(--on-dark);
-            transform-origin: 100% 100%;
-        }
 
         @media (prefers-reduced-motion: no-preference) {
             .hero-photo img { animation: hero-settle 2.4s var(--ease-soft) both; }
             @keyframes hero-settle { from { scale: 1.07; } to { scale: 1; } }
         }
 
-        /* signature move: the name sinks back a few percent as the first screen leaves */
         @supports (animation-timeline: scroll()) {
             @media (prefers-reduced-motion: no-preference) {
-                .hero-wordmark {
-                    animation: wordmark-recede linear both;
-                    animation-timeline: scroll(root);
-                    animation-range: 0px 85vh;
-                }
-                @keyframes wordmark-recede { to { scale: 0.93; opacity: 0.85; } }
-
                 .hero-photo img {
                     animation: hero-settle 2.4s var(--ease-soft) both, hero-drift linear both;
                     animation-timeline: auto, scroll(root);
@@ -146,36 +131,25 @@
 
         @media (max-width: 900px) {
             .hero {
-                display: flex;
-                flex-direction: column;
                 height: auto;
                 min-height: 0;
                 max-height: none;
-                padding: 12px 0 3rem;
+                padding: 12px 12px 2.5rem;
             }
-            .hero-photo    { order: 1; }
-            .hero-wordmark { order: 2; }
-            .hero-copy     { order: 3; }
             .hero-photo {
                 position: relative;
                 inset: auto;
-                width: auto;
-                height: 58svh;
-                min-height: 340px;
-                margin: 0 12px;
+                height: 62svh;
+                min-height: 360px;
             }
-            .hero-wordmark {
-                position: relative;
-                right: auto;
-                bottom: auto;
-                margin: -0.32em var(--margin) 0;
-                font-size: calc((100vw - 2 * var(--margin)) / 4.7);
-                transform-origin: 0 100%;
-            }
+            .hero-photo::after { display: none; }
             .hero-copy {
-                position: static;
-                align-items: flex-start;
-                padding: 1.5rem var(--margin) 0;
+                position: relative;
+                left: auto;
+                bottom: auto;
+                max-width: none;
+                margin: -4.5rem 12px 0;
+                padding: 1.75rem 1.25rem;
             }
             .hero-actions { margin-top: 1.5rem; }
         }
@@ -630,16 +604,13 @@
             </figure>
 
             <div class="hero-copy">
-                <div class="hero-copy-inner">
-                    <h1 class="hero-sentence" data-rise>Модата заслужава втори шанс</h1>
-                    <div class="hero-actions" data-rise style="--i:1">
-                        <a class="btn btn-primary" href="store.html">Разгледай магазина</a>
-                        <a class="link" href="about.html">Кои сме ние</a>
-                    </div>
+                <p class="hero-eyebrow" data-rise>Закачалката · reloved store, Варна</p>
+                <h1 class="hero-sentence" id="heroTitle" data-rise style="--i:1">Модата заслужава втори шанс</h1>
+                <div class="hero-actions" data-rise style="--i:2">
+                    <a class="btn btn-primary" href="store.html">Разгледай магазина</a>
+                    <a class="link" href="about.html">Кои сме ние</a>
                 </div>
             </div>
-
-            <h1 class="hero-wordmark" id="heroTitle">закачалката</h1>
         </section>
 
 
