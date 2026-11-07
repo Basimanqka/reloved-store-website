@@ -24,6 +24,7 @@ const STATIC_PAGES = [
     { path: "/store.html", priority: "0.9", changefreq: "daily" },
     { path: "/about.html", priority: "0.6", changefreq: "monthly" },
     { path: "/contact.html", priority: "0.5", changefreq: "monthly" },
+    { path: "/info.html", priority: "0.4", changefreq: "yearly" },
     { path: "/terms.html", priority: "0.3", changefreq: "yearly" },
     { path: "/withdrawal.html", priority: "0.3", changefreq: "yearly" },
     { path: "/privacy.html", priority: "0.3", changefreq: "yearly" },
