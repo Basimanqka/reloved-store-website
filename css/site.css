@@ -453,3 +453,16 @@ h1, h2, h3 {
         scroll-behavior: auto !important;
     }
 }
+
+/* free-delivery strip, part of the sticky header so --nav-h includes it */
+.promo-bar {
+    margin: 0;
+    padding: 0.5rem var(--margin);
+    background: var(--fig);
+    color: var(--on-dark);
+    font-size: var(--step-small);
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    line-height: 1.3;
+    text-align: center;
+}
